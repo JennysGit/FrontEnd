@@ -1,0 +1,13 @@
+click事件：
+1.mousedown
+2.mouseup
+3.click
+4.mousedown
+5.click
+6.dbclick
+
+event.clientX
+event.clientY
+
+event.pageX
+event.pageY

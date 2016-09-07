@@ -1,0 +1,14 @@
+SVG 形状
+1. <rect> 矩形
+		width
+		height
+		style属性：fill，stroke-width，stroke, fill-opacity
+		x,y 表示x坐标与y坐标,左边顶点的位置
+		rx，ry 可以产生圆角矩形
+		
+2. <circle> 圆形
+3. <ellipse> 椭圆
+4. <line> 线
+5. <polyline> 折线
+6. <polygon> 多边形
+7. <path> 路径

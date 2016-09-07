@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>For in</title>
+</head>
+<script type="text/javascript">
+
+	function Person(){
+
+	};
+	// Person.prototype.age = 22;
+	// Person.prototype.name = "Jenny";
+	// Person.prototype.sayHi = function(){
+	// 	return "Hi, I am " + this.name;
+	// }
+
+	//简写
+	Person.prototype = {
+		age: 22,
+		name: "Jin",
+		sayHi: function(){
+			return "Hi, I am " + this.name;
+		}
+	};
+
+	var obj = new Person();
+	obj.name = "Jin";
+
+	for(var i in obj){
+		console.log(obj[i]);
+	}
+	
+	//Person.prototype 指向Object对象。
+	//Person.protoyype.constructor 指向Object构造函数。
+</script>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>递归算法查找DOM元素最后的子节点</title>
+	<style type="text/css">
+	</style>
+	<script type="text/javascript">
+		var items = document.getElementsByTagName("li");
+		for(var i = 0 ; i < items.length; i++){
+			items[i].onclick = function(){
+				alert(i);
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="containner">
+		<ul class="list">
+			<li>我是第一个元素</li>
+			<li>我是第二个元素</li>
+			<li>我是第三个元素</li>
+			<li>我是第四个元素</li>
+			<li>我是第五个元素</li>
+		</ul>
+	</div>
+</body>
+</html>

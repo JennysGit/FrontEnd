@@ -1,0 +1,20 @@
+1.二进制和八进制表示法
+	ES6中，二进制和八进制数值新写法采用 0b(0B) 和0o(0O)
+
+2.Number.isFinite(), Number.isNaN()
+	Number.isFinite()检查数值是否有限, 只对数值有效，不再进行转化。
+
+3.Number.parseInt(), Number.parseFloat()
+
+4.Number.isInteger()
+
+5.Number.EPSILON
+
+6.安全整数和Number.isSafeInteger()
+	判断数值是否在安全数值的范围内 2^53
+
+7.Math对象的扩展
+	Math.trunc() 去除小数部分，返回整数
+	Math.sign() 判断是正数、负数还是0
+	Math.cbrt() 计算数的平方根
+8.指数运算符

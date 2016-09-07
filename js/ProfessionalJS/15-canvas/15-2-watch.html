@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.box{
+		width: 800px;
+		margin: 0 auto;
+		text-align:  center;
+	}
+
+	</style>
+</head>
+<body>
+	<div class="box">
+		<canvas id="watch" width="200" height="200"> I am a bad watch</canvas>
+	</div>
+	<script type="text/javascript">
+
+		(function(){
+		var watch = document.getElementById("watch");
+
+
+		//圆心坐标
+		var x = 100, y = 100;
+
+		//半径, outer raidus, inner radius. little radius
+		var or = 80, ir = 75,lr = 3;
+
+		//指针长度,hour line, minute line, second line
+		var sl = 60, ml = 55, hl = 50;
+
+		var time = new Date();
+		var hour = time.getHours();
+		var current = {
+			hour: hour > 12 ? hour - 12 : hour,
+			minute: time.getMi
+		}
+
+		function Time(){
+			var date = new Date();
+			var hour = date.getHours();
+			this.hours = hour > 12 ? hour - 12 : hour;
+			this.minutes = date.getMinutes();
+			this.seconds = date.getSeconds();
+
+		}
+		if(watch.getContext){
+			var ctx = watch.getContext("2d");
+			// window.setInterval(function(){
+			// 	var time = new Time();
+			// 	ctx.clearRect(0,0, 2* x, 2* y);
+			// 	strokeWatch(ctx, time);
+			// }, 1000);
+
+			var time = { hour:1}
+		}
+
+
+		function strokeWatch(ctx, time){
+			var ctx = watch.getContext("2d");
+
+			//begin Path.
+			ctx.beginPath();
+
+			//外圆边
+			ctx.arc( x,y,or,0, 2 * Math.PI, false);
+
+			//内圆边
+			ctx.moveTo(x + ir,y);
+			ctx.arc(x, y, ir,0,2* Math.PI, false);
+			ctx.closePath();
+			ctx.stroke();
+
+			//中心的圆点
+			ctx.beginPath();
+			ctx.moveTo(x,y);
+			ctx.arc(x, y ,lr,0, 2* Math.PI, false);
+			ctx.closePath();
+			ctx.fill();
+
+			ctx.beginPath();
+
+			//秒针 
+			var thetaS = (360 / 60)* time.seconds;
+			ctx.moveTo(x,y);
+			ctx.lineTo(x + sl * (Math.sin(thetaS)), y - sl*(Math.cos(thetaS)));
+			ctx.stroke();
+
+			//分针，指向12
+			ctx.moveTo(x,y);
+			ctx.lineTo( x, y - ml);
+			ctx.stroke();
+
+			//时针 指向9
+			ctx.moveTo(x, y);
+			ctx.lineTo(x - hl, y);
+			ctx.stroke();
+
+			ctx.closePath();
+
+			ctx.font = "12px";
+			ctx.textBaseline = "middle";
+			ctx.textAlign = "center";
+
+			for(var n = 1; n<= 12; n++){
+				var theta = (n-1) * (Math.PI * 2) / 12;
+
+				var a = 100 + 68 * Math.sin(theta);
+				var b = 100 - 68 * Math.cos(theta);
+
+				ctx.fillText(n, a, b);
+			}
+			ctx.closePath();
+			}
+		})();
+	</script>
+</body>
+</html>

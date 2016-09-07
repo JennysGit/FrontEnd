@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>使用构造函数模式和原型模式</title>
+	<script type="text/javascript">
+		function Person(name, age, job){
+			this.name = name;
+			this.age = age;
+			this.job = job;
+		}
+
+		Person.prototype = {
+			constructor: Person,
+			sayHi: function(){
+				return "Hi, I am " + this.name;
+			}
+		}
+
+
+		var p1 = new Person("Jenny");
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

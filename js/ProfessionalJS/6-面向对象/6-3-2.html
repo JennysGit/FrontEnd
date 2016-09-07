@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>借用构造函数实现继承</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function Super(){
+			this.colors = ["red", "green", "blue","black"];
+		}
+
+		function Sub(){
+
+			debugger;
+			Super.call(this);
+		}
+		//调用Sub构造函数，Super.call中，this指向Sub对象。
+		//在Sub中调用Supper构造函数时，又将this指向Sub对象。
+		var color1 = new Sub(); 
+
+	</script>
+</body>
+</html>

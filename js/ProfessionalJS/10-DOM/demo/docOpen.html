@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document.open 方法</title>
+</head>
+<body>
+	<input type="button" value="替换新文档" onclick="replaceHtml()">
+</body>
+<script type="text/javascript">
+	function replaceHtml(){
+		var doc = document.open("text/html", "replace");
+		document.write('<html lang="en"><head><meta charset="UTF-8"><title>Document.open 方法</title></head><body><p>我是新文档</p></body></html>');
+		doc.close();
+	}
+</script>
+</html>

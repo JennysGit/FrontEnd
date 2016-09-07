@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基本用法和样式</title>
+	<style>
+		canvas{
+			background-color: #fba;
+			box-shadow: 0 0 5px;
+			width: 200px;
+			height: 200px;
+			border-radius: 2px;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="drawing"> A drawing of something.</canvas>
+
+	<script type="text/javascript">
+		var drawing = document.getElementById("drawing");
+
+		//浏览器支持
+		if(drawing.getContext){
+			var ctx = drawing.getContext("2d");
+			ctx.strokeStyle = "red";
+			ctx.fillStyle = "#00f";
+		}
+	</script>
+</body>
+</html>

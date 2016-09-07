@@ -1,0 +1,18 @@
+1. 使用ember CLI 创建一个新项目
+	ember new appname
+
+生成目录：
+	|-- app
+	|-- bower_components
+	|-- config
+	|-- dist
+	|-- node_modules
+	|-- public
+	|-- tests
+	|-- tmp
+	|--vendor
+
+	bower.json
+	ember-cli-build.js
+	package.json
+	README.md

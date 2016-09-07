@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Global对象和Math对象</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+	//encodeURI() and encodeURIComponent()
+	var uri = "http://www.baidu.com/index.html?keyword=my name";
+	console.log(encodeURI(uri));
+	console.log(encodeURIComponent(uri));
+
+	//eval()
+	eval('function sayHi(){return "Hello, Jenny!";}');
+
+	var str = sayHi();
+	console.log(str);
+
+	console.log(Math.E);
+	console.log(Math.LN10);
+	console.log(Math.LN2);
+	console.log(Math.LOG2E);
+	console.log(Math.LOG10E);
+	console.log(Math.SQRT2);
+	console.log(Math.SQRT1_2);
+
+	//Math.min Math.max
+
+	//找到数组的最大值。
+	//思路，用Math.max 和apply
+	var array = [5,10,3,4,2];
+	var maxNum = Math.max.apply(Math, array);
+	console.log(maxNum);
+	
+	// Math.ceil, Math.floor, Math.round
+	var number = 2.699;
+	console.log(Math.ceil(number));
+	console.log(Math.floor(number));
+	console.log(Math.round(number));
+	console.log(number.toFixed(2));
+
+	//返回一个5~8的随机数
+	var random = Math.random();
+	var s = Math.ceil( random * 3 + 5);
+	var s1 = Math.floor(random * 3 + 6);
+	console.log(random);
+	console.log(s);
+	console.log(s1);
+	</script>
+</body>
+</html>

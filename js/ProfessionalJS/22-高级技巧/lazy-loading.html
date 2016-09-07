@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>惰性载入函数</title>
+</head>
+<body>
+
+<script type="text/javascript">
+	function createHXR(){
+		if(typeof XMLHttpRequest != "undifined"){
+			createHXR = function(){
+				return new XMLHttpRequest();
+			}
+		}else if( typeof ActiveXObject != "undifined"){
+			createHXR = function(){
+				if(typeof arguments.callee.activeXString !="string"){
+					var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0","MSXML2.XMLHttp"], i, len;
+					for( i = 0,len=versions.length; i<len; i++){
+						try{
+							new ActiveXObject(versions[i]);
+							arguments.callee.activeXString = versions[i];
+						}catch(ex){
+							throw "error"
+						}
+					}
+				}
+				return new ActiveXObject(arguments.callee.activeXString);
+			};
+		}else{
+			createHXR = function(){
+				throw new Error("No XHR for your browser");
+			}
+		}
+	}
+
+	var createHXR1 = (function (){
+		if(typeof XMLHttpRequest != "undifined"){
+				return new XMLHttpRequest();
+		}else if( typeof ActiveXObject != "undifined"){
+			 return function(){
+				if(typeof arguments.callee.activeXString !="string"){
+					var versions = ["MSXML2.XMLHttp.6.0", "MSXML2.XMLHttp.3.0","MSXML2.XMLHttp"], i, len;
+					for( i = 0,len=versions.length; i<len; i++){
+						try{
+							new ActiveXObject(versions[i]);
+							arguments.callee.activeXString = versions[i];
+						}catch(ex){
+							throw "error"
+						}
+					}
+				}
+				return new ActiveXObject(arguments.callee.activeXString);
+			};
+		}else{
+			return function(){
+				throw new Error("No XHR for your browser");
+			}
+		}
+	})();
+</script>	
+</body>
+</html>

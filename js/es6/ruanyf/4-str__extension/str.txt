@@ -1,0 +1,32 @@
+1.字符Unicode表示法
+	允许采用\uxxxx形式表示一个字符
+
+2.codePointAt()
+
+3.String.fromCodePoint() //从码点返回对应字符
+
+4.字符串的遍历器接口
+	for...of遍历
+
+5.at()
+
+
+6.normalize() 将字符的不同表示方法统一为同样的样式 ___Unicode正规化
+
+
+7. includes(), starstWith(), endsWith()
+includes() //返回布尔值， 是否有该字符串
+startsWith() //返回布尔值，以...开始
+endsWith() //以...结束
+可以支持两个参数，代表开始搜索的位置。endWith()从第二个参数的位置往前搜。
+
+8. repeat(n)
+将字符串重复n次并返回新字符串. n >=0.并且能转为数字
+
+9. padStart(), padEnd()
+字符串补全功能
+
+10.模板字符串
+
+11. String.raw
+

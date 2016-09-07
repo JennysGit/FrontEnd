@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Dom Events</title>
+</head>
+<body>
+	<p>Hello <span id="x">World</span>!</p>
+	<script>
+		function test(e){
+			debugger;
+			//debug(e.target, e.currentTarget, e.eventPhase);
+		}
+
+		document.addEventListener("hey", test, true);
+		document.body.addEventListener("hey",test);
+		var ev = new Event("hey", { bubbles: true });
+		document.getElementById("x").dispatchEvent(ev);
+	</script>
+</body>
+</html>

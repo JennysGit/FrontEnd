@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>函数表达式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var flag = true;
+		if(flag){
+			function sayHi(){
+				console.log("Hi");
+			}
+		}else{
+			function sayHi(){
+				console.log("Yo");
+			}
+		}
+
+		sayHi(); //IE中显示Hi，Chrome中显示Yo。
+
+
+		function factorial(num){
+			if(num > 1){
+				return num * factorial(num-1);
+			}else{
+				return num;
+			}
+		}
+
+		console.log(factorial(5));
+
+		function facorial1(num){
+			if(num > 1){
+				return num * arguments.callee(num-1);
+			}else{
+				return num;
+			}
+		}
+
+		//匿名函数
+		var sayName = function(){
+			console.log(sayName.name); 
+		}
+		function sayName1(){
+			console.log(sayName1.name);
+		}
+		sayName();
+		sayName1();
+
+
+		// comparison 
+		function createComparison(prop){
+			return function(obj1, obj2){
+				var v1 = obj1[prop];
+				var v2 = obj2[prop];
+				return v1 - v2;
+			}
+		}
+
+		var p1={name:"Jenny", age: 22};
+		var p2 = {name:"Tom", age: 11};
+		var arr = [{name:"Jenny", age: 22}, {name:"Tom", age: 11}];
+		console.log(arr.sort( createComparison("age")))
+
+	</script>
+</body>
+</html>

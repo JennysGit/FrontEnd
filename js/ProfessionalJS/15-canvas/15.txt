@@ -1,0 +1,29 @@
+15 使用Cavans绘图
+
+15.1 基本用法
+	(1) getContext 检测是否支持canvas
+	(2) toDataURL() 到处在canvas元素上绘制的图像。
+
+
+15.2 2D上下文
+	坐标原点(0,0)。
+	1.绘制矩形
+		fillStyle
+		fileRect
+		strokeStyle
+		strokeRect
+
+	2. 绘制路径
+		(1) beginPath()
+		(2) arc(x, y, radius, startAngle, endAngle, conterClockwise) 以(x, y) 为圆心绘制一条弧线，半径为radius, 起始和结束角度分别为startAngle和endAngle。最后一个参数表示是否按逆时针方向计算。值为false时表示按顺时针方向计算。
+		(3) arcTo(x1, y1, x2, y2, radius) 从上一点开始绘制弧线，到(x2,y2)为止。并且以给定半径传过x1,y1.
+		(4) bezierCurveTo(c1x, c1y, c2x, c2y, x, y).从上一点开始绘制一条曲线，到(x,y)为止， 并且以(c1x, c1y)和(c2x, c2y)为控制点.
+		(5) lineTo(x, y )从上一点开始绘制直线
+		(6) moveTo(x, y)
+		(7) quadraticCurveTo(cx, cy, x, y) 绘制二次曲线。
+		(8) rect(x, y, width, height)
+
+		closePath();
+		fill()
+		stroke() 描边
+		clip() 裁剪区域

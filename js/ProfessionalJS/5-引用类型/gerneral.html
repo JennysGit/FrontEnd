@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>基本包装类型</title>
+	<style type="text/css">
+		.general-type {background-color: #dcd; border-radius: 5px; padding: 10px; width: 80%; margin-left: auto; margin-right:auto; }
+		p span{ background-color: #fba;}
+	</style>
+</head>
+<body>
+	<div class="general-type">
+		<h3>Number类型</h3>
+		<p>原始值数值:<span id="originNum"></span></p>
+		<p>转化成8进制：<span id="eightNum"></span></p>	
+		<p>保留两位小数：<span id="roundDeciNum"></span></p>
+		<p>科学计数法：<span id="scientNum"></span></p>
+		<p>最合适的格式：：<span id="preciNum"></span></p>
+	</div>
+	
+
+	<script type="text/javascript">
+		var arr =[10, 200, 3000, 40000, 500000.998];
+		var i = Math.floor(Math.random()* arr.length);
+
+		var num = arr[i];
+		document.getElementById("originNum").innerText 		= num
+		document.getElementById("eightNum").innerText 		= num.toString(8);
+		document.getElementById("roundDeciNum").innerText 	= num.toFixed(2);
+		document.getElementById("scientNum").innerText 		= num.toExponential();
+		document.getElementById("preciNum").innerText		= num.toPrecision();
+
+		//String 类型
+		//1.concat
+		var str = "Hello ".concat("World ","!");
+		console.log(str);
+		
+		//slice, substr, substring，返回子串
+		console.log(str.substr(6));
+		console.log(str.substring(6));
+		console.log(str.slice(6)); //在不传第二个参数的情况下，返回相同
+
+		console.log(str.substr(6,5)); //从位置6开始，截取5个字符
+		console.log(str.substring(6,11));
+		console.log(str.slice(6,11)); //都返回world
+
+		//search
+		var searchTxt = "I love cat pat dog, and I am not fat";
+		var idx = searchTxt.search(/.at/);
+		console.log(idx);  //7
+
+		//replace
+		console.log(searchTxt.replace(/.at/, "Jenny")); //只会替换第一个
+		console.log(searchTxt.replace(/.at/g, "Jenny")); //所有匹配的都会被替换
+		console.log(searchTxt);  //replace不影响原数组。
+
+		//split
+		var greetText = "hello, I am Jenny";
+		var greetArray = greetText.split(" "); //还可以传第二个参数额
+		var splitArr = greetText.split(/[,. ]/); //传入正则表达式也可以
+		console.log(splitArr);
+		console.log(greetArray);
+
+
+
+		function htmlEscape(text){
+		
+		 	return text.replace(/[<>"&]/g, function(match, pos, oriText){
+			 	//console.log(pos);
+			 	//console.log(match);
+			 	//console.log(oriText);
+				switch(match){
+					case "<":
+						return "&lt";
+					case ">":
+						return "&gt";
+					case "&":
+						return "&amp";
+					case "\"":
+						
+						return "&quot";
+				}
+			});
+		 }
+
+		var htmlTxt = '<a hfef = "#"> Hello World </a>';
+		console.log(htmlEscape(htmlTxt));
+
+		//localeCompare
+		var a = "b";
+		console.log(a.localeCompare("b")); //0
+		console.log(a.localeCompare("abc")); //1
+		console.log(a.localeCompare("blcok")); //-1
+
+		// fromCharCode
+		var charCodeStr = String.fromCharCode(104,101,108,108,111);
+		console.log(charCodeStr); //hello
+	</script>
+</body>
+</html>

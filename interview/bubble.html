@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件冒泡</title>
+	<style type="text/css">
+		#box1{
+			border:green 40px solid;
+			width: 300px;
+			height: 300px;
+			
+			position: absolute;
+			left: 50%;
+			top:50%;
+			margin:-150px 0 0 -150px;
+		}
+		#box2{
+			border:yellow 40px solid;
+			width: 220px;
+			height:220px;
+			margin:auto;
+		}
+		span{
+			position: relative;
+			left: 50px;
+			top:50px;
+			bottom: 50%;
+			background-color: :rgba(128,128,128,0.22);
+		}
+	</style>
+	<script type="text/javascript">
+		
+		function eventHandler(event){
+			//console.log("时间：" + new Date(event.timeStamp) + "，产生时间的节点：" + event.target.id + "当前节点：" + event.currentTarget.id);
+			var date = new Date(event.timeStamp);
+			 console.log(date + " 产生事件的节点：" + event.target.id +"  当前节点："+event.currentTarget.id);
+		}
+		window.onload = function(){
+			document.getElementById("body").addEventListener("click",eventHandler,true);
+			document.getElementById("box1").addEventListener("click", function(event){
+				alert("box1");
+			},true);
+			// document.getElementById("box2").addEventListener("click", function(event){
+			// 	alert("box2");
+			// },true);
+			// document.getElementById("span").addEventListener("click", function(event){
+			// 	alert("span");
+			// 	event.stopPropagation();
+			// 	//event.cancelBubble = true;
+			// 	//event.preventDefault();
+			// },true);
+		}
+	</script>
+</head>
+<body id="body">
+	<div id="box1">
+		<!-- <div id="box2">
+			<span id="span">This is a span</span>
+		</div> -->
+	</div>
+</body>
+</html>

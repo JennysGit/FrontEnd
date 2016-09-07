@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>6-1理解对象</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+		var person = {};
+
+		person.name = "Nick";
+		Object.defineProperty(person,"name",{
+			configrable: false,
+			writable: false,
+			value: "Jenny"
+		});
+
+		person.name = "Nic";
+
+		//delete  person.name;
+		console.log("person name: " + person.name);
+
+
+		var book = {
+			_year: 2004,  //_通过只能通过对象方法访问的属性。
+			edition: 1
+		};
+
+		Object.defineProperty(book, "year", {
+			get: function(){
+				return this._year;
+			},
+			set: function(value){
+				if(value > 2004){
+					this._year = value;
+					this.edition ++;
+				}
+			}
+		});
+
+		book.year = "2005"; //设置属性。调用set函数。
+		console.log(book.year);
+	</script>
+</body>
+</html>

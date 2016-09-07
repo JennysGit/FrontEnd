@@ -1,0 +1,98 @@
+2.2.2 Dependencies
+This specification relies on several other underlying specifications.
+	1.Unicode and Encodeing.
+	2.XML and related specifications.
+	3.URLs
+		浏览器在发送HTTP请求时，会将URL进行编码。
+	4.HTTP and related specifications.
+		Accecpt,Host,Cooke,Link...
+	5.Fetch
+	6.Web IDL
+	7.JavaScript
+	8.DOM
+	9.File API
+	10.Media Providers
+	11.XMLHttpRequest
+	12.Media Queries
+	13.CSS modules
+	14.WebGL
+	15.WebVIT
+	15.The WebSocket protocol
+	16.ARIA
+		包括alert,dialog,button,checkbox....
+	17.Content Securitiy Policy
+	18.Service Workers
+
+2.2.3 Extensibility
+	WebGL 3D绘图标准。如Cavans
+
+2.3 Case-sensitivity and string comparison
+	大小写 ASCII码比较
+
+2.4 Common microsyntaxes
+	2.4.2 Boolean Attrubutes
+		1.bool类型的属性值不能用true和false表示。例如给input框的值设置disabled="fasle"还是会禁用文本框。disabled, disabled=disabled
+
+	2.4.3 Keywords and enumerated attributes
+
+	2.4.4 Numbers
+
+	2.4.5 Time and Date
+
+	2.4.6 Colours
+
+
+2.5 URLs
+
+
+2.6 Fetching resources
+	2.6.1 Terminology
+	
+
+
+2.7 Common DOM interfaces
+	2.7.2 Collections
+
+		1.HTMLAllCollection
+			interface HTMLALLCollection{
+				readonly attribute unsigned long length;
+				getter Element? item(unsigned long index);
+				(HTMLCollection or Element)? item(DOMString name);
+				legacycaller getter (HTMLColelction or Element)? namedItem(DomString name);
+			}
+		 所有HTML节点都有以上的属性或方法。
+
+		2.Radio 元素如果没有设置value值，并且被选中了，则其值为on.
+
+		3.OptionsCollection 
+			方法：add(element [,before]), remove(index)
+		
+
+
+	2.7.3 The DOMStringMap interface
+		[OverrideBuiltin]
+		interface DOMStringMap {
+			getter DOMString (DOMString name);
+			getter void (DOMString name, DOMString value);
+			deleter void(DOMString name);
+		}
+
+
+	2.7.4 Transferable objects
+		objects support being copied and closed in one operation.
+
+		typedef (ArrayBuffer or CanvasProxy or MeessagePort) Transferable;
+
+	2.7.5 Safe passing of structured data
+
+
+	2.7.6 Callbacks
+
+
+	2.7.7 Garbage collection
+
+
+2.8 Namespaces
+	include HTML, MathML, SVG, XLink, XML, XMLNS name spaces.
+
+

@@ -1,0 +1,171 @@
+第5章 引用类型
+
+5.1 Object类型
+	1. 在通过字面量创建对象时，实际上不会调用Object构造函数，
+	2. Object.Prop 或 Object[Prop] 访问对象的属性，后者支持变量的形式。
+
+
+5.2 Array类型
+	1.创建数组
+		（1）var colors = new Array(); //构造函数创建。
+		（2）var colors = new Array(20) //构造函数创建长度为20的数组，每项初始化为undefined.
+		 (3) var colors = nww Array("Blue", "Green", "Red"); //创建一个包含3个字符串值得数组。 
+		（4）var colors = [1,2,3] // 字面量创建，不调用Array构造函数。
+
+	2.检测数组
+		（1） instanceof -- value instanceof Array //会引起全局执行环境的问题
+		（2） Array.isArray(value) //ES5 中新增
+
+	3.转换方法
+		toString()	 //Array.toString(), 调用数组每项的toString() 方法。
+		toLocaleString() //调用数组每项的toLocaleString()方法。
+		valueOf() //返回数组
+
+	4.join(':') //以：作为分隔符来构建数组，返回字符串。
+
+	5.栈方法 
+		栈方法-LIFO 是一种后进先出的数据结构. 项的推入和弹出
+		push("a"); //插入字符串a进入数组，并返回数组的长度。
+		pop()	//删除数组的最后一项，并返回删除的项。
+
+	6.队列方法
+		队列方法-FIFO 是一种先进先出的数据结构。 在列表的末端添加项，在前端移除项。
+		push() and shift()可实现队列方法。
+		shift()		//删除第一项，并返回该项。
+		unshift("a")	//将a添加到第一项，并返回数组的长度。
+
+	6.重排序
+		reverse(); //反序排列数组。
+		sort(); //排序，调用toString()比较Ascii码值. 返回数组
+		sort(funCompare)	//funCompare接收两个参数，返回-1，则不交换。见array.js	
+
+	7.操作方法
+		(1) concat() 		//基于当前数组中的所有项，创建一个新数组。原数组的值不变。也可以传多个参数
+		(2) slice()			//把数组切片。可以传1个或两个参数。 传一个参数时，取后半部分的数组。传两个参数时，取中间部分的。不影响原数组。
+		(3) splice()  	//向数组中部插入项。	1.删除 -- 两个参数。splice(1,2);删除2，3项。 2.插入--3个参数或以上。 3.替换，3个参数 见array.js
+
+	8.位置方法
+		(1) indexOf() // 可以传两个参数。第二个参数指查找起点。
+		(2) lastIndexOf() //同indexOf，只是从后向前找。
+
+	9.迭代方法
+		可接收两个参数（每一项上运行的函数和运行该函数的作用域对象）。第一个函数中的三个参数为数组项的值，和该项在数组中的位置，和数组对象本身。
+		(1) every() 每个函数返回true则返回true。
+		(2) some() 有一个返回true，则返回true。
+		(3) filter() 过滤，返回函数返回true时的项组成的数组。
+		(4) map() 返回每次函数调用的结果返回的数组。
+		(5) forEachs 相当于for
+
+	10.归并方法
+		迭代所有项，然后构建一个最终返回的值。接收两个参数：一个在每项上调用的函数和作为归并基础的初始值（可选）。
+		(1) reduce()
+		(2) reduceRight()
+
+
+
+5.3 Date类型
+	var now = new Date(); //获取当前时间 UTC格式
+	Date.parse() 	//返回距离1970年1月1号的毫秒数。。不同浏览器有怪异行为。
+	Date.UTC()	//可以传入年月日小时，分钟，秒，毫秒
+	Date.now() 	//ES5新增，返回当前时间的毫秒数。 
+	1.日期格式化
+		(1) toDateString() 以特定于实现的格式显示星期几，年，月，日
+		(2) toTimeString() 时、分、秒、时区
+		(3) toUTCString()
+		.....省略了....
+
+	2.方法
+		getTime/setTime 返回/设置毫秒数
+		getFullYear()
+		.....
+		省略。。。
+
+
+
+5.4 RegExp类型
+	var expression = / partern / flags;
+	flags 取值有g,全局；i：不区分大小写；m，多行模式.
+	1. RegExp实例方法
+		（1）exec()  //返回数组，有index和input两个属性。index指在字符串中匹配的位置。
+		（2）test()
+
+
+5.5 Function 类型
+	1.函数名是一个指向函数的指针。
+	2.函数没有重载，后者会覆盖前者的方法。
+	3.函数声明和函数表达式：
+		解析器会率先读取函数声明，并使其在任何代码执行之前都可以访问。而函数表达式则要等到解析器执行到代码时，才会执行。
+	4.作为值得函数
+		(1) 函数可以作为参数传递
+		(2) 函数可以作为另一个函数的返回值，（可以把函数当成变量）
+	5.函数内部属性
+		arguments.callee //指向函数
+		this  //指执行环境对象
+		caller //ES5 新增。保存调用当前函数的函数引用，如果在全局作用域中调用函数，则为null.
+	6.函数的属性和方法
+		length 指函数希望接收参数的长度
+		prototype 在原型继承中，很有用
+		apply 传入运行作用域和数组
+		call 传入运行作用域和字符串
+		bind 创建一个函数实例，this值会绑定到传给bind函数的值. //ES5新增
+
+5.6 基本包装类型
+	包括Boolean, Number, String.创建后会被销毁，不能一直保存在内存中，所以不能为他们添加属性和事件。
+	1.Boolean
+		不要使用Boolean对象，因为她会返回true。eg: var bool = new Boolean(true); 
+
+	2.Number类型
+		toString(8)  转化成8进制代码
+		toFixed(2)   四舍五入保留两位小数
+		toExponetial()  //返回科学计数法
+		toPrecision()
+
+	3.String类型
+		charAt(1) //返回位置1所在的字符（0开始）。
+		charCodeAt(1) //同上，只是返回字符编码
+		类似数组访问 str[1]。 ES5新增
+		concat //拼接字符串
+		slice,substr,substring slice和substing的第二个参数指子串的结束位置，而substr指子串字符的个数
+		indexOf lastIndexOf 与数组类似。传递两个参数时，表示会从当前索引开始搜索。
+		match() 返回数组，与RegExp对象的exec方法类似。
+		search() 返回索引值，没有匹配则返回-1.
+		replace(str||regExp,str || func) //第二个参数传入特殊的字符串时，可以将匹配到的字符串插入到新字符串中.
+		split(',') 以逗号来分割字符串，并返回数组。还可以接收第二个参数，是要返回的数组的长度
+		localeCompare(str) 比较字符串，如果str应该放在比较串的后面，则返回-1。
+		fromCharCode() 接收一个或多个字符编码，把它们转化成字符串。与charCodeAt相反.
+
+5.7 单体内置对象
+	由ECMAScript实现提供的，不依赖宿主环境的对象。 如Object， String，Array等。
+		1.Global对象
+			不存在的对象。不属于任何其他对象的属性和方法。如isNaN(), parseInt()等。
+			URI编码
+				encodeURI()  用于整个URI，不会对本身属于URI的特殊字符编码，如：，/，？，#
+				encodeURIComponent() 主要用于URI的某一段.会对任何非标准字符编码.
+
+				decodeURI()
+				decodeURIComponent()
+
+				eval() 接收一个参数：要执行的js字符串代码。
+
+				window对象
+
+
+		2.Math对象
+			属性：
+				Math.e
+				Math.LN10
+				Math.LN10
+				Math.LN2
+				Math.LOG2
+				Math.LOG10E
+				Math.PI
+				Math.SQRT1_2 	1/2的平方根
+				Math.SQRT2 	2的平发根
+
+			方法
+				max() 可以接收多个参数，返回最大的那个。如果中间有非数字，并且不能转化成数字，则返回NaN
+				min() 
+				ceil() 向上取整数
+				floor() 向下取整数
+				round() 标准四舍五入
+				random() 返回0~1的随机数

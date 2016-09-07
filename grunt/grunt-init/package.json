@@ -1,0 +1,19 @@
+{
+  "name": "grunt-init",
+  "version": "1.0.0",
+  "description": "\u001b[A\u001b[Bgrunt learning first demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "grunt",
+    "demo"
+  ],
+  "author": "jingzhang",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0"
+  }
+}

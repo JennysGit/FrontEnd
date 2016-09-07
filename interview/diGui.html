@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>递归算法查找DOM元素最后的子节点</title>
+	<style type="text/css">
+	div[class="content"] {
+		color: #333;
+	}
+	</style>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript">
+		$(function(){
+
+			var number = jieCheng(5);
+			console.log(number);
+
+			var $element = getLastChildrendElement('body');
+			$element.css('background-color',"#fba");
+
+		});
+
+		//1. jQuery实现方法
+		function getLastChildrendElement(el){
+			if($(el).children().length){
+				var $lastChild = $(el).children().last();
+				return getLastChildrendElement($lastChild);
+			}else{
+				return el;
+			}
+		}
+
+		// 简单阶乘递归实现
+		function jieCheng(num){
+			if(num > 1){
+				return num * jieCheng(num - 1);
+			}else{
+				return num;
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div class="containner">
+		<p>我是第一个元素</p>
+		<p>我是第二个元素</p>
+		<p>我是第三个元素</p>
+		<div class="content">
+			<p>我是第一个元素</p>
+			<p>我是第二个元素</p>
+			<p>我是第三个元素</p>
+		</div>
+		<div class="content">
+			<p>我是第一个元素</p>
+			<p>我是第二个元素</p>
+			<div>
+				<p>我是第一个元素</p>
+				<p>我是最<i>后</i>一个元素</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

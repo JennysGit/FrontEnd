@@ -1,0 +1,9 @@
+{
+	"babel": "",
+	"babel-cli":"babel command prompt",
+	"babel-node": "ES6 command line execute evrioment.",
+	"babel-register": " atuo add hook for file that will auto conrvert file using babel.",
+	"babel-core": "babel api",
+	"babel-polyfill":"",
+	"babel": ""
+}

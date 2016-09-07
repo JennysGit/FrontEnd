@@ -1,0 +1,21 @@
+Babel 是一个广泛使用的ES6转码器。
+
+//转码前
+input.map(item => item + 1);
+
+//转码后
+input.map(function(item){
+	return item + 1;
+})
+
+
+配置文件.babelrc
+
+babel的配置文件是 .babelrc， 存放在项目的根目录下。 使用babel的第一步，就是配置这个文件。
+
+格式：
+{
+	"presets": [],
+	"plugins": []
+}
+presets 设置转码规则。

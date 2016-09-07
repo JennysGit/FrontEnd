@@ -1,0 +1,21 @@
+4 The element of HTML
+
+4.1 the root element
+	1.html element
+		manifest attribute. 通过创建chace manifest 文件，可轻松创建Web应用的离线版本。
+
+
+4.2 Document metadata
+	1.head element
+	2.title element
+	3.base element
+		href - document base URL, target.
+	4.link element
+		href --  url
+		crossorigin -- 处理跨域请求
+		rel -- 链接文档的资源的关系。
+		media -- 可用媒体
+		hreflang
+		type -- 引用资源的MIME type.
+		title -- 一般不声明
+		sizes -- 图标的大小

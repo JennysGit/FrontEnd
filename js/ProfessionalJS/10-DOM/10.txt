@@ -1,0 +1,73 @@
+10.1 节点层次（DOM树）
+	10.1.1 Node 类型
+		JS中，所有节点类型都继承自Node类型。每个节点都有nodeType属性(1--12)。
+		ElmentNode(1)
+		attributeNode(2)
+		textNode(3)
+		DocumentNode(9)
+
+		nodeType 1,2,3 到-12，每一个值对应不同类型的节点。
+		1.nodeName 和 nodeValue属性
+
+		2.节点关系
+			(1)每个节点都有childNodes属性，保存的是NodeList对象（类数组）。
+			(2)访问子元素： node.childNodes[0] == node.childNodes.item(1).
+			(3)将节点转化为数组对象 -> Array.prototype.slice.call(nodes, 0);
+			（4）parentNode属性，指向父节点。
+			（5）previousSibling 前一个节点
+			（6）nextSibling 后一个节点
+			（7） firstChild lastChild
+			(8)hasChildNodes
+			(9)cloneChild(true)
+
+		3.操作节点
+			appendChild()
+			insertBefore()
+			replaceChild() 替换节点
+			removeChild()
+
+
+	1.1.2 Document类型
+		HTMLDocument,是window对象的属性，nodeType = 9, nodeName="#document", nodeValue = null.
+		2.文档信息
+			（1）document.title
+			(2) document.URL
+			(3) document.domain
+			(4)document.referrer
+
+		3.查找元素
+			（1）document.getElementById
+			(2)getElementsByTagName //返回HTMLCollection对象
+			（3） document.getElementsByName()  //NodeList对象
+			NodeList对象和HTMLCollection对象的区别：NodeList，节点集合，childNodes属性的返回结果还包括文本节点。 HTMLCollection只包括 元素集合，children属性只返回元素节点。并且有namedItem属性
+
+		4.特殊集合
+			(1) document.anchors 带有 name 属性的a标签
+			(2) document.images
+			(3) document.links 带有 href 属性的a标签 
+
+		5.DOMS一致性检测
+			document.implementation.hasFeature("css") //是否支持CSS
+
+		6.文档写入
+			document.write()
+			open()
+			writeln
+			close
+
+
+	1.1.3 Element 类型
+		nodeType = 1
+		nodeName 为标签名，HTML格式为大写
+		nodeValue null
+		parentNode = Document, Element
+
+		访问标签名 可以使用nodeName 或者tagName属性
+
+		1.HTML元素的属性
+			id,
+			title,
+			lang,
+			dir, ltr -> left to right,rtl
+			className
+			

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>创建ul</title>
+</head>
+<body>
+
+
+	<div id="displayTime"></div>
+	<script type="text/javascript">
+		var ul = document.createElement("ul");
+		var body = document.getElementsByTagName("body");
+		document.body.appendChild(ul);
+		for(var i = 0; i < 5; i++){
+			var liNode = document.createElement("li");
+			var textNode = document.createTextNode("li" + i);
+			liNode.appendChild(textNode);
+			ul.appendChild(liNode);
+		}
+
+		function getTime(){
+			var now = new Date();
+			var year = now.getFullYear();
+			var month = now.getMonth() + 1;
+			var day = now.getDate();
+			var hour = now.getHours();
+			var min = now.getMinutes();
+			var seconds = now.getSeconds();
+			return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + seconds;
+
+		}
+		
+		setInterval(function(){
+			var time = getTime();
+			document.getElementById("displayTime").innerText = time;
+
+		}, 1000)
+
+
+	</script>
+</body>
+</html>

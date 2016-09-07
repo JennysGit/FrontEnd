@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态原型模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function Person(name, age){
+			this.name = name;
+			this.age = age;
+
+			Person.prototype.sayName = function(){
+				return "Hi, I am " + this.name;
+			}
+			//return this;
+
+		}
+
+		var p = new Person("Jenny",22);
+
+		//不使用new操作符调用时，构造函数中的this指向的是window对象。可以通过window.name,window.age 访问。
+		var w = Person("Jenny",22);
+		
+		console.log(p.sayName());
+	</script>
+</body>
+</html>

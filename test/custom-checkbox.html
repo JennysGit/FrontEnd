@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		input[type="checkbox"] + label::before{
+			content: "\a0";
+			display: inline-block;
+			vertical-align: .2em;
+			width: .8em;
+			height: .8em;
+			margin-right: .2em;
+			border-radius: .2em;
+			background-color: silver;
+			text-indent: .15em;
+			line-height: .65;
+		}
+
+		input[type="checkbox"]:checked + label::before{
+			/*content: '\2713';*/
+			background: yellow;
+		}
+		input[type="checkbox"]{
+			position: absolute;
+			clip:rect(0,0,0,0);
+		}
+	</style>
+</head>
+<body>
+	<label for="awesome">Awesome!</label>
+	<input type="checkbox" id="awesome">
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>2.7.2.3 The HTMLOptionsCollection interface </title>
+</head>
+<body>
+	<form action="submit">
+		<select id="testSelect" name="testSelect">
+			<option value="Hello">Hello</option>
+			<option value="World">World</option>
+			<option value="Welcome">Welcome</option>
+		</select>
+		<div>
+		<img class="tower img" id="tower5" data-x="12" data-y="5"
+     data-ai="robotarget" data-hp="46" data-ability="flames"
+     src="maomi.jpg" alt="Rocket Tower"/ width="200px;">
+     	<div>
+	</form>
+</body>
+<script type="text/javascript">
+	var select = document.getElementById("testSelect");
+	var node = document.getElementById("tower5");
+	var x = node.dataset.x;
+	var y = node.dataset.y;
+	splashDamage(node,x,y,12);
+
+	function splashDamage(node, x, y, damage) {
+	  if (node.classList.contains('tower') && // checking the 'class' attribute
+	      node.dataset.x == x && // reading the 'data-x' attribute
+	      node.dataset.y == y) { // reading the 'data-y' attribute
+	    var hp = parseInt(node.dataset.hp); // reading the 'data-hp' attribute
+	    hp = hp - damage;
+	    if (hp < 0) {
+	      hp = 0;
+	      node.dataset.ai = 'dead'; // setting the 'data-ai' attribute
+	      delete node.dataset.ability; // removing the 'data-ability' attribute
+	    }
+	    node.dataset.hp = hp; // setting the 'data-hp' attribute
+	  }
+	}
+</script>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CORS 案例</title>
+	<script type="text/javascript">
+		var xhr = new XMLHttpRequest();
+		xhr.onreadyStatechange = function(){
+			if(xhr.readyState ==4){
+				if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 203){
+					alert(xhr.responseText);
+				}else{
+					alert("error");
+				}
+			}
+		}
+
+		xhr.open("get","http://www.baidu.com");
+		xhr.send();
+
+		//No 'Access-Control-Allow-Origin' header is present on the requested resource.
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

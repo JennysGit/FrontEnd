@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>第5章引用类型 - JS案例</title>
+	<script>
+		//1. 对象属性参数传值
+		function displayCustomProperty(args){
+			var outPut = "";
+			if( typeof args.name == "string"){
+				outPut += "Name is " + args.name + "\n";
+			}
+
+			if( typeof args.age == "number" ){
+				outPut +=  "Age is " + args.age + "\n";
+			}
+
+			return outPut;
+		}
+
+		console.log(displayCustomProperty({ name: "Jenny", age: 22 }));
+
+		console.log(displayCustomProperty({ name: "Jane", age: 18}));
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,3 @@
+ember g route about = ember generate route about //创建一个名叫about的路由: about.js & about.hbs & test.
+
+{{#link-to}} text {{/link-to}}
