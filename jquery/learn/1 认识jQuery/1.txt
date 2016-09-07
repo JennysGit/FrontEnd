@@ -1,0 +1,6 @@
+1.4.2 jQuery对象和DOM对象的相互转换
+	1. jQuery -> DOM
+		(1)jQuery对象是一个类似数组的对象，可以通过[index]方法得到相应的DOM对象。
+		(2)jQuery对象$('#id').get(0)
+	2. DOM -> jQuery
+		$(DOM)

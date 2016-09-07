@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Diagonal stripes</title>
+</head>
+<style>
+	div.box{
+		width: 15em;
+		height: 8em;
+		margin: 20px;
+		line-height: 1;
+		font-family: Arial;
+		padding: .5em;
+		float: left;
+	}
+	.box1{
+		background: linear-gradient(45deg, #fb3 50%, #58a 0);
+		background-size: 30px 30px;
+	}
+	.box2{
+		background:linear-gradient(45deg, 
+			#fb3 25%, #58a 0, 
+			#58a 50%, #fb3 0, 
+			#fb3 75%, #58a 0);
+		background-size: 42.43px 42.43px;
+	}
+	.box3{
+
+		background: repeating-linear-gradient(45deg, #fb3,#58a 30px);
+	}
+	.box4{
+		background: repeating-linear-gradient(60deg, #fb3, #fb3 15px, #58a 0, #58a 30px);
+	}
+	.box5{
+		background: #58a;
+		background-image: repeating-linear-gradient(30deg, hsla(0, 0%, 100%, .1), hsla(0, 0%, 100%, .1) 15px, transparent 0, transparent 30px);
+	}
+</style>
+<body>
+	<div class="box box1">
+	</div>
+	<div class="box box2">
+		
+	</div>
+	<div class="box box3">
+		
+	</div>
+	<div class="box box4">
+		
+	</div>
+	<div class="box box5">
+		
+	</div>
+</body>
+</html>

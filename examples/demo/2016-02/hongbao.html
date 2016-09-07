@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>抽红包</title>
+</head>
+<body>
+	<div>
+		<label for="moneyOfPacket">Money:</label>
+		<input id="moneyOfPacket" type="text"/>
+
+		<label>Number：</label>
+		<select id="numberOfPacket">
+		</select>
+
+		<button id="start">Start</button>
+	</div>
+	<div id="resultNode"><p>result：</p></div>
+
+	<script type="text/javascript">
+
+		initPage();
+
+		function initPage(){
+
+			var optionStr = "";
+
+			// Create packed numbers.
+			for(var i = 1 ; i <= 10; i++){
+				if( i == 5){
+					optionStr += "<option selected value='"+ i +"'>" + i + "</option>";
+					continue;
+				}
+				optionStr += "<option value='"+ i +"'>" + i + "</option>";
+			}
+
+			document.getElementById("numberOfPacket").innerHTML = optionStr;
+		}
+		
+		
+
+		document.getElementById("start").addEventListener("click", function(){
+
+			var remainMoney = document.getElementById("moneyOfPacket").value;
+			var remainNum = document.getElementById("numberOfPacket").value;
+			var rusultNode = document.getElementById("resultNode");
+			var el = document.createElement("p");
+
+
+
+			if(remainMoney == 0){
+				alert("error");
+			}else{
+
+				while(remainNum > 0){
+					var m = createRandom(remainMoney);
+					remainMoney -= m;
+					--remainNum;
+					console.log(m);
+					el.innerHTML = m;
+					rusultNode.appendChild(el);
+				}
+			}
+
+			
+		});
+
+		function createRandom(num){
+			if(num){
+				var random = Math.random() * num;
+				return random.toFixed(2);
+			}
+			else{
+				return 0;
+			}
+		}
+
+
+	</script>
+</body>
+</html>

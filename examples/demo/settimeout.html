@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="button" onclick="startInterval()" value="开始记时"/>
+	<input type="button" onclick="clickInterval(timer)" value="停止" />
+
+	<script type="text/javascript">
+
+		function Hello(){
+			document.write("hello" + "\n");
+			setTimeout(arguments.callee,1000 );
+		}
+
+		Hello();
+
+		function hello(name, age){
+			var i = 0;
+			console.log("name: "+ name + ", age: "+ age);
+		}
+
+		function neverStop(time, fn){
+			var args = Array.prototype.slice.call(arguments,2);
+
+			setInterval(function(){fn.apply(null,args)},time);
+		}
+
+		//neverStop(2000, hello, "Jenny", 22);
+
+
+		function startInterval(){
+			var date
+		}
+
+		function User(login){
+			this.login = login;
+			this.sayHi = function(){
+				console.log(this.login);
+			}
+		}
+		var user = new User("John");
+		setTimeout(user.sayHi, 1000)
+
+	</script>
+</body>
+</html>

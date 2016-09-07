@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Multiple borders</title>
+</head>
+<style>
+	.box{
+		margin: 50px auto;
+		width: 100px;
+		height: 80px;
+	}
+	/* box-shadow solution */
+	.box1{
+		
+		background: yellowgreen;
+		box-shadow: 0 0 0 10px #655, 0 0 0 15px deeppink, 0 2px 5px 15px rgba(0,0,0,.6);
+	}
+	/* outline solution*/
+	.box2{
+		background:#655;
+		border:2px dashed white;
+		outline: 15px solid #655;
+		outline-offset: 5px;
+	}
+</style>
+<body>
+	<div class="box1 box">
+		box-shadow solution
+	</div>
+	<div class="box box2">
+		outline solution
+	</div>
+</body>
+</html>

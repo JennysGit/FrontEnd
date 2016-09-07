@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>纯CSS制作箭头</title>
+	<style>
+
+		html,body,div{
+			margin: 0;
+			padding: 0;
+		}
+		.box{
+			width: 200px;
+			height: 200px;
+			background-color: #fff;
+			border:1px solid rgba(0,0,0,0.15);
+			margin-top: 30px;
+			margin-left: 30px;
+			border-radius: 5px;
+		}
+		.pseudo-chervon:before,.pseudo-chervon:after{
+			content: "";
+		    width: 0;
+		    height: 0;
+		    position: absolute;
+		}
+		.pseudo-chervon:before{
+		    border: 10px solid transparent;
+		    border-bottom: 10px solid rgba(0,0,0,0.2);
+		    top: 11px;
+		    left: 50px;
+		}
+		.pseudo-chervon:after{
+			border: 9px solid transparent;
+		    top: 13px;
+		    left: 50.5px;
+		    border-bottom:9px solid #fff;
+		}
+		.relative{
+			position: relative;
+		}
+
+		.arrow{
+			position: absolute;
+		    width: 0;
+		    height: 0;
+		    border: 10px solid transparent;
+		    border-bottom-color: rgba(0,0,0,0.2);
+		    top: -19px;
+		    left: 50px;
+		    z-index: 1;
+		}
+
+		.arrow:after{
+			content: "";
+		    border: 9px solid transparent;
+		    width: 0;
+		    height: 0;
+		    position: absolute;
+		    top: -8px;
+		    left: -9px;
+		    border-bottom-color: #fff;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="box pseudo-chervon">
+		<p>Cherven box</p>
+	</div>
+	<div class="relative chervon-box">
+		<div class="arrow"></div>
+		<div class="box">
+			<p>Cherven box</p>
+			<p>Cherven box</p>
+			<p>Cherven box</p>
+			<p>Cherven box</p>
+			<p>Cherven box</p>
+		</div>
+
+	</div>
+	
+</body>
+</html>

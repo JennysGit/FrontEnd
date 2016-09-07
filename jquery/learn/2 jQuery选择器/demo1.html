@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery 实现导航栏效果</title>
+	<style type="text/css">
+		
+		body,ul,li{
+			margin: 0;
+			padding: 0;
+			font-size: 14px;
+		}
+
+		body{
+			text-align: center;
+		}
+		ul,li{
+			list-style: none;
+		}
+		a{
+			text-decoration: none;
+			display: block;
+		}
+		a:hover{
+			color:#f60;
+		}
+		
+		.menu{
+			width: 150px;
+			background-color: #fba;
+			margin: 20px auto;
+			border: 1px solid #ddd;
+			border-top: none;
+		}
+		.level1>a{
+			border-top: 1px solid #ddd;
+			height: 30px;
+			line-height: 30px;
+		}
+		.level2{
+			display: none;
+			background-color: #fff;
+		}
+		.level2 li{
+			height: 25px;
+			line-height: 25px;
+		}
+	</style>
+	<script type="text/javascript" src="../jquery.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.level1 > a').click(function(event) {
+				$(this).next('.level2').show().parent().siblings().find('.level2').hide();
+				//.parent('.level1').siblings().removeClass('.active').children('.level2').hide()			
+			});
+		})
+	</script>
+</head>
+<body>
+	<ul class="menu">
+		<li class="level1">
+			<a href="#">衬衫</a>
+			<ul class="level2">
+				<li><a href="#">高领衬衫</a></li>
+				<li><a href="#">男士衬衫</a></li>
+				<li><a href="#">打底衫</a></li>
+				<li><a href="#">圆领衬衫</a></li>
+				<li><a href="#">短袖衬衫</a></li>
+			</ul>
+		</li>
+		<li class="level1">
+			<a href="#">卫衣</a>
+			<ul class="level2">
+				<li><a href="#">高领卫衣</a></li>
+				<li><a href="#">男士卫衣</a></li>
+				<li><a href="#">打底卫衣</a></li>
+				<li><a href="#">圆领卫衣</a></li>
+			</ul>
+		</li>
+		<li class="level1">
+			<a href="#">鞋子</a>
+			<ul class="level2">
+				<li><a href="#">棉鞋</a></li>
+				<li><a href="#">皮鞋</a></li>
+				<li><a href="#">雪地靴</a></li>
+				<li><a href="#">高邦布鞋</a></li>
+				<li><a href="#">胶鞋</a></li>
+				<li><a href="#">圆头鞋（薄）</a></li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>

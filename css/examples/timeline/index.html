@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Time line</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.one{
+			margin-top: 30px
+		}
+		.timeline{
+			padding-top: 20px;
+			position: rel
+		}
+		.timeline::before{
+			content: "";
+			position: absolute;
+			left: 50%;
+			width: 4px;
+			height: 100%;
+			background: #655;
+		}
+		.circle{
+			width: 50px;
+			height: 50px;
+			background: tan;
+			border-radius: 25px;
+			position: absolute;
+			left: 50%;
+			margin-left: -23px;
+			box-shadow: 0  0 0 5px #655;
+		}
+		.circle img{
+			position: relative;
+		    left: 14px;
+		    top: 13px;
+		}
+		.time{
+
+		}
+		.description{
+			width: 45%;
+			background: #aaa;
+			padding: 30px;
+		}
+		/*.timeline .one:nth-child(2n){
+			float: left;
+		}
+		.timeline:nth-child(2n+1){
+			position: absolute;
+		}*/
+	</style>
+</head>
+<body>
+	<div class="timeline">
+		<div class="one">
+			<div class="circle">
+					<img src="img/cd-icon-location.svg" alt="location">
+			</div>
+			<div class="content">
+				<div class="time"></div>
+				<div class="description">
+					<h3>HTML5+CSS3实现的响应式垂直时间轴</h3>
+								<p>
+				网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
+				</div>
+				
+			</div>
+		</div>
+		<div class="one">
+			<div class="circle">			
+				<img src="img/cd-icon-movie.svg" alt="movie">
+			</div>
+			<div class="content">
+				<div class="time"></div>
+				<div class="description">
+					<h3>HTML5+CSS3实现的响应式垂直时间轴</h3>
+									<p>
+					网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
+				</div>
+			</div>
+		</div>
+		<div class="one">
+			<div class="circle">
+				<img src="img/cd-icon-picture.svg" alt="picture">
+			</div>
+			<div class="content">
+				<div class="time"></div>
+				<div class="description">
+					<h3>HTML5+CSS3实现的响应式垂直时间轴</h3>
+					<p>
+	网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

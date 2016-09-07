@@ -1,0 +1,30 @@
+动画：
+
+transition
+	transition: <名称> <时间> <过渡模式>； transition:height 3s linear;
+	transition-property: color;
+	transition-duration: 1s;
+	transition: color 1s, height 2s;
+	过渡模式：
+		ease 缓慢开始，缓慢结束
+		linear 匀速
+		ease-in 缓慢开始
+		ease-out 缓慢结束
+		ease-in-out 缓慢开始，缓慢结束
+
+transform:
+	transform-style: preserve-3d;
+	perspective
+	perspective-origin:
+
+	translate 位移操作
+		translateX
+		translateY
+		translateZ
+
+	rotate 旋转操作
+		rotateX
+		rotateY
+		rotateZ
+
+animation

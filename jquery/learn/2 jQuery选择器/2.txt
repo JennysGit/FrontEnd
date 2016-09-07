@@ -1,0 +1,28 @@
+第2章 jQuery选择器
+
+1.CSS选择器
+	标签选择器 p
+	ID选择器 #id
+	类选择器 .class
+	群组选择器 div,p
+	后代选择器 div p
+	通配符选择器 *
+	伪类选择器 a:hover
+	子选择器 div > .container
+	临近选择器 div + p, div~.one
+	属性选择器 a[checked=true]
+
+2.jQuery优势
+	1.能避免有些错误。
+	例如：
+		document.getElementById("T_T").style.color = "red";  //找不到ID会报错
+		$('#T_T').css('color',"red");  //不会报错,检查对象是否存在时，应该用$('#tt').length > 0来判断。
+
+
+3. 选择器
+	1.层次选择器 $(".one+div") $('#two~div')
+	2.过滤选择器 $("div:first"), $(":last"), $("input:not(.a)"), :even, :odd, :eq(0), :gt(0), :lt(), :header, :focus
+	3.内容过滤选择器 :contains(text),:empty,:has(selector),:parent
+	4.可见性过滤器 :hidden, :visible
+	5.属性过滤选择器 [attribute],[attr=value],[attr!=value],;[attr^=value],[attr$=value],[attr*=value],[attr|=value],[attr~=value],div[id=one][title=test]
+	6.基本过滤选择器 :first,:last,:not(selector),:even,:odd,:eq(),:gt(),:lt(),:header,:animated,:focus

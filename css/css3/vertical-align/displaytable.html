@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Display table-cell实现垂直居中</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style type="text/css">
+		.father{
+			display: table;
+			width: 100%;
+		}
+		.son{
+			display: table-cell;
+			vertical-align: middle;
+			height: 200px;
+		}
+	</style>
+</head>
+<body>
+	<div class="father">
+		<div class="son">
+			<p>我要垂直居中</p>
+			<p>我要垂直居中</p>
+		</div>
+		<div class="son">
+			<p>我要垂直居中</p>
+			<p>我要垂直居中</p>
+			<img src="hs-icon.png">
+		</div>
+	</div>
+</body>
+</html>

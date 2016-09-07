@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选择器权重</title>
+	<style>
+		body #redP{
+			/*1 + 100 = 101*/
+			background-color: red;
+		}
+		#redP{
+			/*100*/
+			background-color: #fba;
+		}		
+
+
+		#redP[id="redP"]{
+			/*100+10 = 110*/
+			background-color: white;
+		}
+
+		#redP.hello{
+			/*100+10 = 110*/
+			background-color: yellow;
+		}
+		/*100+10 = 110*/
+
+		#redP[class="hello"]{
+			background-color: #ddd;
+		}
+
+		p{
+			background-color: pink;
+		}
+		
+		p.red{
+			background-color: red;
+		}
+
+	</style>
+</head>
+<body>
+	 <div id="redP" class="hello">
+        <p class="red">red
+           <span><em>em red</em></span>
+        </p>
+        <p>red</p>
+     </div>
+</body>
+</html>
