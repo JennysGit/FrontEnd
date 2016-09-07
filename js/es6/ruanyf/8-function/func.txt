@@ -1,0 +1,14 @@
+1.箭头函数
+var sum = (a, b)=> a+b;
+
+var sum = function(a,b){
+	return a+b;
+}
+（1）.若参数只有一个，则不用写括号。但没有参数，还是需要一个空括号。并且仅仅支持单行切自动生成return的函数。
+（2）带有毁掉函数的arrows编译后不存在return
+（3）this 
+
+
+2.rest 参数
+...values 
+
