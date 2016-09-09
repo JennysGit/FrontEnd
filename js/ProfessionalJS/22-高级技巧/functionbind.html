@@ -5,8 +5,11 @@
 	<title>函数绑定</title>
 </head>
 <body>
-	<div><button id="btn">Click<div></div></button>
-	<button id="btn-l">Click<div></div></button></div>
+	<div><button id="btn">btn<div></div></button>
+	<button id="btn-l">btn1<div></div></button>
+	<button id="btn-2">btn2<div></div></button>
+	</div>
+
 	<script type="text/javascript">
 		var handler = {
 			message: "Event handled.",
@@ -16,15 +19,19 @@
 		}
 
 		var btn = document.getElementById("btn");
-		//undefined
+		//undefined.因为没有保存handleClick函数的环境
 		btn.addEventListener("click", handler.handleClick);
 
 		var btnl = document.getElementById("btn-l");
+		var btn2 = document.getElementById("btn-2");
 		//"Event handled".因为闭包函数
 		btnl.addEventListener("click", function(event){
 			handler.handleClick(event);
-		})
+		});
 
+
+		// btn2.addEventListener("click", handler.handleClick.bind(handler));
+		btn2.addEventListener("click", handler.handleClick.apply(handler))
 	</script>
 </body>
 </html>
