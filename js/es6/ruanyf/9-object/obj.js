@@ -74,3 +74,25 @@ var doSomething = function(){
 
 };
 console.log(doSomething.bind().name) // bound doSomething.
+
+
+// Symbol
+const key1 = Symbol('description');
+const key2 = Symbol();
+
+let sObj = {
+	[key1](){},
+	[key2](){}
+};
+
+console.log(sObj[key1].name);
+console.log(sObj[key2].name);
+
+// Object.is 解决 NaN === NaN +0 不等于-0
+// 比较两个值是否相等。 == 自动转化数据类型
+// === NaN != NaN
+console.log(0 === -0); // true
+console.log(NaN === NaN); //false
+
+Object.is(0, -0);
+Object.is(NaN, NaN);
