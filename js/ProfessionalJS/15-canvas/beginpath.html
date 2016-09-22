@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas beginpath</title>
+</head>
+<body>
+	<canvas id="canvas" width="500px" height="500px">
+		Your browser do not support canvas. please upgrade.
+	</canvas>
+	<script type="text/javascript">
+		var c = document.getElementById("canvas");
+		var ctx = c.getContext("2d");
+		// 使用beginPath开始一条路径，或重置当前的路径。
+
+		ctx.beginPath();
+		ctx.lineWidth = 5;
+		ctx.strokeStyle = "green";
+		ctx.moveTo(0,75);
+		ctx.lineTo(250, 75);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.strokeStyle = "purple";
+		ctx.moveTo(50,0);
+		ctx.lineTo(150,130);
+
+
+		ctx.stroke();
+	</script>
+</body>
+</html>
