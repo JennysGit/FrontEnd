@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+*{margin:0;padding:0;}
+body{background-color:#000;}
+canvas{display:block;border:1px solid #eee; margin:10px auto;}
+.btn-box{margin:10px auto;width:800px;text-align:center;}
+.btn-box a{ display: inline-block; width: 80px; height: 32px; line-height: 32px; text-decoration: none; color: #ddd; border: 1px solid #fff; }
+.btn-box a:hover{background-color: #333;color:#eee;}
+</style>
+<title>demo</title>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<!-- 按钮区 -->
+<div class="btn-box">
+    <a href="javascript:void(0);" id="bigBtn">点击放大</a>
+    <a href="javascript:void(0);" id="smallBtn">点击缩小</a>
+    <a href="javascript:void(0);" id="leftRotate">点击左旋</a>
+   	<a href="javascript:void(0);" id="rightRotate">点击右旋</a>
+</div>
+<script type="text/javascript" src="zoom.js"></script>
+</body>
+</html>

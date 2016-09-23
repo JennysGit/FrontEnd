@@ -95,4 +95,26 @@ console.log(0 === -0); // true
 console.log(NaN === NaN); //false
 
 Object.is(0, -0);
-Object.is(NaN, NaN);
+Object.is(NaN, NaN); 
+
+// Object.assign
+                                       
+
+// 浅拷贝和深拷贝
+var a =[1,2,3];
+var b = a;
+var test = {name: "Jenny"};
+var c = test;
+var b[0] = 5; // a和b都变成 [5,2,3]
+
+// 深拷贝 不改变原有对象，使得原有对象和复制对象独立。
+
+// 数组的深复制
+function deepCopy(arr1){
+	var arr2 = [];
+	for(var i = 0; i< arr1.length; i++){
+		arr2[i] = arr1[i];
+	}
+}
+
+//多维数组
