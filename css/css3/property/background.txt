@@ -1,0 +1,2 @@
+background-clip: content-box| padding-box| border-box
+	规定背景的绘制区域， 背景可以绘制到content部分，padding部分，border部分。

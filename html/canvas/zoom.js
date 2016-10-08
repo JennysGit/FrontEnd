@@ -119,10 +119,13 @@
         lastStatus.mouseX = x;
         lastStatus.mouseY = y;
     }
-    
+
     function drawImgByStatus(x, y) {
+    	console.log("Before drawing: ", lastStatus);
         var imgX = lastStatus.imgX - (x - lastStatus.translateX) / lastStatus.scale;
         var imgY = lastStatus.imgY - (y - lastStatus.translateY) / lastStatus.scale;
+        console.log(imgX, imgY);
+        console.log(x, y);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.save();
         ctx.translate(x, y);
@@ -139,6 +142,8 @@
             'scale' : imgStatus.scale,
             'rotate' : imgStatus.rotate
         };
+
+        console.log("After drawing: ", lastStatus);
     }
 
     /**
