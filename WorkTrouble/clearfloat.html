@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>不定高度清除浮动</title>
+	<style>
+		.container{
+			max-width: 900px;
+			margin: 30px  auto;
+			background-color: #ddd;
+			border: 1px solid blue;
+		}
+		.btn-area{
+			text-align: center;
+		}
+	
+		.btn-area button{
+			padding: 8px;
+			border-radius: 4px;
+			background: blue;
+			color: white;
+		}
+		.text{
+			/* 自动撑开父容器，但并未清除浮动。 */
+			overflow-y: hidden; 
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="text">
+			<!-- 这里是编辑器保存的HTML源码。 -->
+			<p>
+				这里是编辑器里的HTML代码样式。你无法控制
+			</p>
+			<p><img src="test.gif" alt="图片" style="float:right">
+			</p>
+			<p><img src="test.gif" alt="图片" style="float:right">
+			</p>
+		</div>
+		
+		<div class="btn-area"><button>下一步</button></div>
+	</div>
+</body>
+</html>

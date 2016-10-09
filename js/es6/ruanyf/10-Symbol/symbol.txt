@@ -3,3 +3,4 @@ Symbol 原始数据类型 表示独一无二的值 是js中的第七种数据类
 Undefined Null Boolean String Number Object
 
 Symbol 值 通过Symol 函数生成
+
