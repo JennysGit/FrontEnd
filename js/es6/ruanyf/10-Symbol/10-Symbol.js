@@ -38,3 +38,43 @@ obj[a] = 'Hello';
 obj[b] = "world";
 
 console.log(obj.a);
+
+// Object.getOwnPropertySymbols
+console.log("Object.getOwnPropertySymbols");
+console.log(Object.getOwnPropertySymbols(obj));
+console.log(Object.getOwnPropertyNames(obj)); // []
+
+
+// Reflect.ownKeys 返回所类型的键名，包括常规属性和Symbol键名
+// let obj = {
+// 	[Symbol('my_key')]: 1,
+// 	enum: 2,
+// 	noneEnum: 3
+// };
+console.log("Reflect.ownKeys");
+console.log(Reflect.ownKeys(obj));
+
+
+// 5.Symbol.for() 
+// Symbol.keyFor() 返回一个已经登记的Symbol类型值得key
+
+
+// 
+// Symbol.hasInstance()
+class MyClass{
+	[Symbol.hasInstance](foo){
+		return foo instanceof Array;
+	}
+}
+
+console.log([1,3,4] instanceof MyClass);
+
+
+// Symbol.isConcatSpreadable bool值， 表示该对象使用 Array.prototype.concat()是，是否可以展开。
+let arr1 = ['c','d'];
+['a','b'].concat(arr1, 'e'); // [a, b, c, d, e]
+console.log(arr1[Symbol.isConcatSpreadable]); // undefined
+
+let arr2 = ['c', 'd'];
+arr2[Symbol.isConcatSpreadable] = false;
+console.log(['a', 'b'].concat(arr2,'e')); // [a, b, [c, d], e]
