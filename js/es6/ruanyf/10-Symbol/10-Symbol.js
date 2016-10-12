@@ -78,3 +78,20 @@ console.log(arr1[Symbol.isConcatSpreadable]); // undefined
 let arr2 = ['c', 'd'];
 arr2[Symbol.isConcatSpreadable] = false;
 console.log(['a', 'b'].concat(arr2,'e')); // [a, b, [c, d], e]
+
+
+// Symbol.species 指向一个方法。？？？
+
+// Symbol.match 指向一个函数，当执行str.match(obj)时，如果属性存在，会调用他，返回该方法的返回值。
+
+//String.prototype.match(regexp);
+// 等价于 ->
+//regexp[Symbol.match](this);
+
+class MyMatcher{
+	[Symbol.match](string){
+		return 'hello world'.indexOf(string);
+	}
+}
+
+console.log('e'.match(new MyMatcher()));
