@@ -95,3 +95,21 @@ class MyMatcher{
 }
 
 console.log('e'.match(new MyMatcher()));
+
+// Symbol.replace
+var searchValue = "Hello",replaceValue = "hey";
+String.prototype.replace(searchValue, replaceValue);
+searchValue[Symbol.replace](this, replaceValue);
+
+// Symbol.search
+
+// Symbol.split
+
+// Symbol.iterator
+
+
+// Symbol.toPrimitive 
+
+// Symbol.toStringTag()
+
+

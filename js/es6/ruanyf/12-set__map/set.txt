@@ -1,0 +1,18 @@
+// Set
+
+Set本身是一个构造函数，类似于数组，用来生成Set数据结构。
+
+var s = new Set();
+
+不发生类型转化，并且两个对象的值是不等的。 NaN只能传一个
+
+// Set实例的属性和方法
+
+// Set.prototype.constructor
+// Set.prototype.size 返回 Set实例的成员总数。
+
+
+
+// WeakSet
+WeakSet与Set类似，但他的成员只能是对象，而不能是其他类型的值。
+// WeakSet中的对象都是弱引用，垃圾回收机制不考虑WeakSet对该对象的引用。
