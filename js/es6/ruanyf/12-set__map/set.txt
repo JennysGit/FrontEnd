@@ -16,3 +16,11 @@ var s = new Set();
 // WeakSet
 WeakSet与Set类似，但他的成员只能是对象，而不能是其他类型的值。
 // WeakSet中的对象都是弱引用，垃圾回收机制不考虑WeakSet对该对象的引用。
+
+
+// Map 键值对的集合，传统上只能用字符串当做键。
+// Map => Array
+
+let myMap = new Map();
+myMap.set(1,2);
+[...myMap];
