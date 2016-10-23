@@ -8,7 +8,7 @@ var app = express();
 //var CommentsData = path.join(__dirname);
 console.log(__dirname);
 
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 4000));
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
