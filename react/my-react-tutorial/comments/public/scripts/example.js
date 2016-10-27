@@ -4,12 +4,40 @@ var data = [
 ]
 
 var CommentBox = React.createClass({
+	getInitialState: function() {
+		return { "data": data}
+	},
+	// componentDidMount: function() {
+	// 	this.setState({data: this.state.data});
+	// 	console.log("componentDidMount",this.state.data);
+	// },	
+	onHandleSubmit: function(author, text){
+		
+		var comments = this.state.data;
+		console.log(comments);
+
+		if(!author || !author){
+			return;
+		}else{
+
+			var len = comments.length;
+			var comment = {
+				id: comments[len - 1].id + 1,
+				author: author,
+				text: text
+			};
+			var newComments = comments.concat([comment]);
+			
+			this.setState({data: newComments});
+		}
+		return;
+	},
 	render: function(){
 		return (
-			<div  className="comment-box">
+			<div className="comment-box">
 				<h1> Comments </h1>
-				<CommentForm />
-				<CommentList data={this.props.data}/>
+				<CommentForm onCommentSubmit={this.onHandleSubmit}/>
+				<CommentList data={this.state.data}/>
 			</div>
 		);
 	}
@@ -26,32 +54,16 @@ var CommentForm = React.createClass({
 		this.setState({text: e.target.value})
 	},
 	handleSubmit: function(e){
-		var comments = this.state.data;
-		console.log(comments);
 		e.preventDefault();
-		var author = this.state.author.trim();
-		var text = this.state.text.trim();
-		if(!author || !author){
-			return;
-		}else{
-
-			var len = data.length;
-			var comment = {
-				id: data[len - 1] + 1,
-				author: author,
-				text: text
-			};
-			data.push(comment);
-			this.setState({data: data});
-		}
-		return;
+		console.log(this.props);
+		this.props.onCommentSubmit(this.state.author, this.state.text);
 	},
 
 	render: function(){
 		return (
 			<form className="comment-form" onSubmit={this.handleSubmit}>
-				<input type="text" placeholder="comments here" value={this.state.text} onChange={this.handleCommentsChange}/>
-				<input type="text" placeholder = "your name"  value={this.state.author} onChange={this.handleAuthorChange}/>
+				<input type="text" placeholder="comments here" value={this.state.text} onChange = {this.handleCommentsChange} />
+				<input type="text" placeholder = "your name"  value={this.state.author} onChange={this.handleAuthorChange} />
 				<input type="submit" value="Submit" />
 			</form>
 		);
@@ -84,7 +96,8 @@ var Comment = React.createClass({
 		);
 	}
 });
+
 ReactDOM.render(
-	<CommentBox data= {data}/>,
+	<CommentBox />,
 	document.getElementById('content')
 );
