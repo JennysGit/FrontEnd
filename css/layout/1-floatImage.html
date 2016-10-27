@@ -1,0 +1,50 @@
+<!-- http://www.alloyteam.com/ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Float 实现自适应布局</title>
+	<style>
+	*{
+		box-sizing: border-box;
+	}
+		.float {
+			overflow: hidden;
+			background-color: #fba;
+			max-width: 1000px;
+			margin: 20px auto;
+			border: 1px solid #abc;
+
+		}
+
+		.item{
+			float: left;
+			padding-top:33.3%;
+			width: 33.3%;
+			border-right: 1px solid #fff;
+			border-top: 1px solid #fff;  
+
+		}
+		.item:nth-child(1){
+			padding-top: 66.6%;
+			width: 66.6%;
+		}
+		item:nth-child(2), item:nth-child(3),item:nth-child(6){
+			border:none;
+		}
+		item:nth-child(1), item:nth-child(2){
+			border-top: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="float">
+		<div class="item"></div>
+		<div class="item"></div>
+		<div class="item"></div>
+		<div class="item"></div>
+		<div class="item"></div>
+		<div class="item"></div>
+	</div>
+</body>
+</html>
