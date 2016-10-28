@@ -7,26 +7,54 @@
 		* {
 			padding: 0;
 			margin: 0;
+			line-height: 24px;
+		}
+		body{
+			background-color: #e9f0f5;
 		}
 		.timeline{
+			position: relative;
 			max-width: 1100px;
 			margin: 0 auto;
+			font-family:"Microsoft Yahei", Tahoma, Helvetica, Arial, Verdana, 宋体, sans-serif;
+			color:white;
 
+		}
+		.timeline:before{
+			width: 4px;
+			content: "";
+			background-color: #d7e4ed;
+			height: 100%;
+			position: absolute;
+			left: 50%;
 		}
 		
 		div.one{
-			background-color: #ddd;
-			width: 500px;
-			margin: 30px;
-			padding: 20px;
+			margin: 3em;
 			border-radius: 5px;
 		}
 
-		div.one:nth-child(2n){
-			float: left;
+		div.one .content{
+			width: 45%;
+			padding: 30px;
+			background-color: #655;
+			border-radius: 5px;
+
 		}
-		div.one:nth-child(2n +1){
+		div.one:after{
+			content: "";
+			display: table;
+			clear: both;
+		}
+
+		div.one:nth-child(even) .content{
 			float: right;
+		}
+		.content .button a{
+			display: inline-block;
+			padding: 5px;
+			background-color: tan;
+			border-radius:3px;
 		}
 
 	</style>
@@ -44,7 +72,7 @@
 								<p>
 				网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
 				</div>
-				
+				<div class="button"><a href="#">阅读全文</a></div>
 			</div>
 		</div>
 		<div class="one">
@@ -58,6 +86,7 @@
 									<p>
 					网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
 				</div>
+				<div class="button"><a href="#">阅读全文</a></div>
 			</div>
 		</div>
 		<div class="one">
@@ -71,8 +100,12 @@
 					<p>
 	网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
 				</div>
+				<div class="button"><a href="#">阅读全文</a></div>
 			</div>
 		</div>
+	</div>
+	<div class="footer">
+	 <a href="www.helloweba.com">参考自: www.helloweba.com</a>
 	</div>
 </body>
 </html>
