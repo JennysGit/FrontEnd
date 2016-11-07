@@ -54,7 +54,7 @@ function rubberbandEnd(){
 
 function moveRubberbandDiv(){
 	rubberbandDiv.style.top = rubberbandRectangle.top + "px";
-	rubberbandDiv.style.height = rubberbandRectangle.left + "px";
+	rubberbandDiv.style.left = rubberbandRectangle.left + "px";
 
 }
 
@@ -79,7 +79,7 @@ canvas.onmousedown = function(e){
 	var x = e.clientX,
 		y = e.clientY;
 		e.preventDefault();
-		rubberbandStart(x, y);
+		rubberbandStart(x, y);//绘制矩形的起点坐标和显示
 }
 
 canvas.onmousemove = function(e){
