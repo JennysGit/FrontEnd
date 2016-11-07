@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>格式化上下文 Formatting Context</title>
+	<style>
+		#one{
+			background-color: silver;
+			width: 500px;
+		}
+		#one span{
+			border: 1px solid blue;
+			font-size: 50px;
+		}
+		#one em{
+			font-size: 20px;
+			border: 1px solid green;
+			margin-left: 20px;
+		}
+		.box{
+			height: 30px;
+			
+			margin: 20px;
+		}
+		#box1{
+			
+			background-color: tan;
+		}
+		#box2{
+			position: absolute;
+			background-color: #fba;
+			float: right; /* 不起作用 */
+
+		}
+		#box3{
+			background-color: #ddd;
+		}
+	</style>
+</head>
+
+<body>
+	<p id="one"><span>Hello</span><em>World</em></p>
+	<a target="_blank" href="http://www.cnblogs.com/yexiaochai/articles/3678461.html">原文链接</a>
+
+	<div class="box" id="box1">box1</div>
+	<div class="box" id="box2">box2box2</div>
+	<div class="box" id="box3">box3</div>
+</body>
+</html>
