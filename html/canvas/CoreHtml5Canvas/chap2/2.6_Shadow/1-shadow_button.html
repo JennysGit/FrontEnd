@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Shadow Button</title>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="300"></canvas>
+	<script type="text/javascript">
+		var SHADOW_COLOR = 'rgba(0,0,0,0.7';
+		var canvas = document.getElementById('canvas'),
+			iconText = canvas.getContext('2d');
+
+		setIconShadow();
+		iconText.strokeRect(10,10,50,50);
+		
+		setSelectedIconShadow();
+		iconText.fillRect(100,100,50,50);
+		
+
+		function setIconShadow(){
+			iconText.shadowColor = SHADOW_COLOR;
+			iconText.shadowOffsetX = 1;
+			iconText.shadowOffsetY = 1;
+			iconText.shadowBlur = 2;
+		}
+
+		function setSelectedIconShadow(){
+			iconText.shadowColor = SHADOW_COLOR;
+			iconText.shadowOffsetX = 4;
+			iconText.shadowOffsetY = 4;
+			iconText.shadowBlur = 5;
+		}
+	</script>
+</body>
+</html>
