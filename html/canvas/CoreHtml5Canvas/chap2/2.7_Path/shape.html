@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>绘制形状</title>
+	<style>
+		body{
+			text-align: center;
+		}
+		canvas{
+			margin: 0 auto;
+			background-color: rgba(222,222,222,0.5);
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="1200" height="600" ></canvas>
+</body>
+<script type="text/javascript">
+	var ctx = document.getElementById('canvas').getContext('2d');
+
+	ctx.font = '60px Helevetica';
+	ctx.strokeStyle = 'blue';
+	ctx.fillStyle = 'blue';
+	ctx.lineWidth ='2';
+
+	// Text Area
+	ctx.strokeText("Stroke", 50,100);
+	ctx.fillText("Fill", 400, 100);
+	ctx.strokeText("Stroke & Fill", 750,100);
+	//ctx.fill();
+	ctx.fillText("Stroke & Fill", 750,100);
+
+
+	// Stroke Area
+	ctx.strokeRect(50,150,180, 50);
+	ctx.arc(100,300,50,0,Math.PI*3/2);
+	ctx.stroke();
+
+	//重新开启路径..
+	ctx.beginPath();
+	ctx.arc(100,450,50,0,Math.PI*3/2);
+	// 关闭路径，使、图形封闭
+	ctx.closePath();
+	ctx.stroke();
+
+
+	// Fill Area
+	ctx.beginPath();
+	ctx.fillRect(400,150,180, 50);
+
+
+	ctx.arc(450,300,50,0,Math.PI*3/2);
+	ctx.fill();
+
+	ctx.beginPath();
+	ctx.arc(450,450,50,0,Math.PI*3/2);
+	ctx.closePath();
+	ctx.fill();
+
+	// Stroke & Fill Area.
+	ctx.beginPath();
+	//ctx.lineWidth ='10';
+
+	ctx.rect(750,150,180,50);
+	ctx.stroke();
+	ctx.fill();
+
+
+	ctx.beginPath();
+	ctx.arc(800, 300, 50, 0, Math.PI*3/2);
+	ctx.stroke();
+	ctx.fill();
+
+	ctx.beginPath();
+	ctx.arc(800, 450, 50, 0, Math.PI*3/2);
+	ctx.closePath();
+	ctx.stroke();
+	ctx.fill();
+</script>
+</html>
