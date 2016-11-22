@@ -5,3 +5,7 @@
 
 
 2.6 阴影
+	shadowColor:
+	shadowOffsetX：
+	shadowOffsetY:
+	shadowBlur:

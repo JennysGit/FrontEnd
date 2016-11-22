@@ -3,10 +3,122 @@
 <head>
 	<meta charset="UTF-8">
 	<title>剪纸效果</title>
+	<style type="text/css">
+		body{
+			text-align: center;
+		}
+		canvas{
+			margin: 20px auto;
+			border: 0.5px lightgray solid;
+		}
+	</style>
 </head>
 <body>
 	<canvas id="canvas" width="800" height="600">
 		
 	</canvas>
+	<script type="text/javascript">
+		var ctx = document.getElementById('canvas').getContext('2d');
+
+		ctx.fillStyle = 'goldenrod';
+		draw();
+
+
+		
+		function draw(){
+			ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+			drawGrid("lightgray", 10, 10);
+			ctx.save();
+			ctx.shadowColor = 'rgba(200,200,0,0.5)';
+			ctx.shadowOffsetX = 2;
+			ctx.shadowOffsetY = 2;
+			ctx.shawdowBlur = 5;
+			drawCutouts();
+			strokeCutoutShapes();
+			ctx.restore();
+		}
+
+		function drawCutouts(){
+			ctx.beginPath();
+			addOuterRecanglePath();
+			addCirclePath();
+			addRectanglePath();
+			addTianglePath();
+			ctx.fill();
+		}
+
+		function strokeCutoutShapes(){
+			ctx.save();
+			ctx.strokeStyle = "rgba(0,0,0,0.7)";
+			ctx.beginPath();
+			addOuterRecanglePath();
+			ctx.stroke();
+			ctx.beginPath();
+			addCirclePath();
+			addRectanglePath();
+			addTianglePath();
+			ctx.stroke();
+			ctx.restore();
+		}
+
+		function addCirclePath(){
+			ctx.arc(300, 300, 40, 0, Math.PI*2, true);
+		}
+
+		function addOuterRecanglePath(){
+			ctx.rect(110, 25, 370, 335);
+		}
+		function addRectanglePath(){
+			rect(310, 55, 70, 35, true);
+		}
+
+		function addTianglePath(){
+			ctx.moveTo(400, 200);
+			ctx.lineTo(250,115);
+			ctx.lineTo(200, 200);
+			ctx.closePath();
+		}
+
+		// 绘制网格
+		function drawGrid(color, stepx, stepy){
+			ctx.strokeStyle = color;
+			ctx.lineWidth = 0.5;
+			//绘制竖线
+			for(var i = stepx + 0.5; i< ctx.canvas.width; i+=stepx){
+				ctx.beginPath();
+				ctx.moveTo(i, 0);
+				ctx.lineTo(i, ctx.canvas.height);
+				ctx.stroke();
+			}
+			// 绘制横线
+			for(var i = stepy+ 0.5; i< ctx.canvas.height;i+=stepy ){
+				ctx.beginPath();
+				ctx.moveTo(0, i);
+				ctx.lineTo(ctx.canvas.width, i);
+				ctx.stroke();
+			}
+		}
+
+		function rect(x, y, w, h, direction){
+			// ctx.rect(110, 25, 370, 335);
+			if(direction){
+				ctx.moveTo(x, y);
+				ctx.lineTo(x, y+h);
+				ctx.lineTo(x+w, y+h);
+				ctx.lineTo(x+w, y);
+				ctx.closePath();
+
+			}else{
+				ctx.moveTo(x, y);
+				ctx.lineTo(x+w,y);
+				ctx.lineTo(x+w, y+h);
+				ctx.lineTo(x, y+h);
+				ctx.closePath();
+			}
+		}
+
+
+		
+	</script>
 </body>
 </html>

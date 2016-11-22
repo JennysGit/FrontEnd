@@ -16,9 +16,17 @@
 <body>
 	<canvas id="canvas" width="800" height="600"></canvas>
 	<script type="text/javascript">
-		var ctx = document.getElementById('canvas').getContext('2d');
+		var ctx = document.getElementById('canvas'),
+			ctx = canvas.getContext('2d');
 
-	
+			ctx.fillStyle = "red";
+			ctx.arc(400, 300, 200, 0, Math.PI*2, true);
+			ctx.arc(400, 300, 120, 0, Math.PI*2, false);
+			ctx.shadowColor = "rgba(0,0,0,0.5)";
+			ctx.shadowOffsetX = 12;
+			ctx.shadowOffsetY = 12;
+			ctx.shadowBlur = 15;
+			ctx.fill();
 		
 	</script>
 </body>
