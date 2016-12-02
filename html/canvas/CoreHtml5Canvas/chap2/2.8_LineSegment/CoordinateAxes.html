@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Coordinate axes</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="800" height="500"></canvas>
+    <script type="text/javascript">
+    var canvas = document.getElementById('canvas'),
+        ctx = canvas.getContext('2d');
+
+    var AXIS_MARGIN = 40,
+        AXIS_ORIGIN = {
+            x: AXIS_MARGIN,
+            y: canvas.height - AXIS_MARGIN
+        },
+        AXIS_TOP = AXIS_MARGIN,
+        AXIS_RIGHT = canvas.width - AXIS_MARGIN,
+        HORIZONTAL_TICK_SPACING = 10,
+        VERTICAL_TICK_SPACING = 10,
+        AXIS_WIDTH = AXIS_RIGHT - AXIS_ORIGIN.x,
+        AXIS_HEIGHT = AXIS_ORIGIN.y - AXIS_TOP,
+
+        NUM_VERTICAL_TICKS = AXIS_HEIGHT / VERTICAL_TICK_SPACING,
+        NUM_HORIZONTAL_TICKS = AXIS_WIDTH / HORIZONTAL_TICK_SPACING,
+
+        TICK_WIDTH = 10,
+        TICK_LINEWIDTH = 0.5,
+        TICK_COLOR = 'navy',
+
+        AXIS_LINEWIDTH = 1.0,
+        AXIS_COLOR = 'blue';
+
+
+    drawGrid('lightgray', 10, 10);
+    drawAxes();
+
+    function drawAxes() {
+        ctx.save();
+        ctx.strokeStyle = AXIS_COLOR;
+        ctx.lineWidth = AXIS_LINEWIDTH;
+        drawHorizontalAxis();
+        drawVerticalAxis();
+
+        ctx.lineWidth = 0.5;
+        ctx.lineWidth = TICK_LINEWIDTH;
+        ctx.strokeStyle = TICK_COLOR;
+
+        drawHorizontalTicks();
+        drawVerticalTicks();
+
+
+    }
+
+    function drawHorizontalTicks() {
+        var deltaX;
+        for (var i = 0; i < NUM_HORIZONTAL_TICKS; i++) {
+            ctx.beginPath();
+            if (i % 5 === 0) {
+                deltaX = TICK_WIDTH;
+            } else {
+                deltaX = TICK_WIDTH / 2;
+            }
+
+            ctx.moveTo(AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING, AXIS_ORIGIN.y - deltaX);
+            ctx.lineTo(AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING, AXIS_ORIGIN.y + deltaX);
+            ctx.stroke();
+        }
+
+    }
+
+    function drawVerticalTicks() {
+        var deltaY;
+        for (var i = 0; i < NUM_VERTICAL_TICKS; i++) {
+            ctx.beginPath();
+            if (i % 5 === 0) {
+                deltaY = TICK_WIDTH;
+            } else {
+                deltaY = TICK_WIDTH / 2;
+            }
+
+            ctx.moveTo(AXIS_ORIGIN.x - deltaY, AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING);
+            ctx.lineTo(AXIS_ORIGIN.x + deltaY, AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING);
+            ctx.stroke();
+        }
+
+    }
+
+    // 画横轴
+    function drawHorizontalAxis() {
+        ctx.beginPath();
+        ctx.moveTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+        ctx.lineTo(AXIS_RIGHT, AXIS_ORIGIN.y);
+        ctx.stroke();
+    }
+
+
+    // 画纵轴
+    function drawVerticalAxis() {
+        ctx.beginPath();
+        ctx.moveTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+        ctx.lineTo(AXIS_ORIGIN.x, AXIS_TOP);
+        ctx.stroke();
+    }
+
+    // 绘制网格
+    function drawGrid(color, stepx, stepy) {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 0.5;
+        //绘制竖线
+        for (var i = stepx + 0.5; i < ctx.canvas.width; i += stepx) {
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, ctx.canvas.height);
+            ctx.stroke();
+        }
+        // 绘制横线
+        for (var i = stepy + 0.5; i < ctx.canvas.height; i += stepy) {
+            ctx.beginPath();
+            ctx.moveTo(0, i);
+            ctx.lineTo(ctx.canvas.width, i);
+            ctx.stroke();
+        }
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>display属性</title>
+	<style type="text/css">
+		body>div{
+			margin: 10px;
+			background-color: #eee;
+			height: 100px;
+		}
+		.inline-span{
+			background: #cdc;
+			height: 50px;
+			margin-top: 30px;
+			/*margin-left: 20px;*/
+			/*padding: 10px;*/
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div><span class="inline-span">内联span</span>不支持width, height,上下margin,不支持上下padding?其实是支持上下padding的吧，但是撑到父盒子外了 ..</div>
+	<div>
+		<span class="inline-block"></span>
+	</div>
+	<div></div>
+	<div></div>
+</body>
+</html>

@@ -1,8 +1,8 @@
 1.jQuery 选择器
 $.get(0); //ajax获取url。
 $('.classname').get(0); // 获取class="classname"的第一个dom对象。
-$('.classname').eq(0); // 获取class="classname"的第一个dom对象
-$('.classname')[0]; //获取class="classname"的第一个jQuery对象
+$('.classname').eq(0); // 获取class="classname"的第一个jQuery对象
+$('.classname')[0]; //获取class="classname"的dom对象
 
 2.简述JavaScript继承机制
 JS的继承通过原型链实现。基本思想是利用原型（prototype）让一个引用类型继承另一个引用类型的属性和方法。
