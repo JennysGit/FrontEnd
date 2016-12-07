@@ -50,7 +50,15 @@
 				}
 			})(i);
 		};
-				
+		
+		for(var i = 0 ; i < items.length; i++){
+
+			items[i].onclick = (function(i){
+				return function(){
+					alert(i);
+				}
+			})(i);
+		};	
 	</script>
 </body>
 </html>
