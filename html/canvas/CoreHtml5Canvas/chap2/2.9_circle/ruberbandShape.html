@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -39,7 +39,31 @@
     <canvas id="canvas" width="600" height="400">
         canvas do not support.
     </canvas>
-    <script type="text/javascript" src="example.js"></script>
+   <script type="text/javascript">
+        var context = document.getElementById('canvas').getContext('2d');
+
+       // 绘制网格
+       function drawGrid(color, stepx, stepy) {
+           context.strokeStyle = color;
+           context.lineWidth = 0.5;
+           //绘制竖线
+           for (var i = stepx + 0.5; i < context.canvas.width; i += stepx) {
+               context.beginPath();
+               context.moveTo(i, 0);
+               context.lineTo(i, context.canvas.height);
+               context.stroke();
+           }
+           // 绘制横线
+           for (var i = stepy + 0.5; i < context.canvas.height; i += stepy) {
+               context.beginPath();
+               context.moveTo(0, i);
+               context.lineTo(context.canvas.width, i);
+               context.stroke();
+           }
+       }
+
+       drawGrid('lightgray', 10, 10);
+   </script>
 </body>
 
 </html>

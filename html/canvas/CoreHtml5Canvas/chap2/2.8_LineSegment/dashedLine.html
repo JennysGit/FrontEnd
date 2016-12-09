@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>绘制虚线</title>
+</head>
+<body>
+	<canvas id="canvas" width="600" height="300">do not support canvas.</canvas>
+	<script type="text/javascript">
+		var context = document.getElementById('canvas').getContext('2d');
+		function drawDashedLine(context, x1, y1, x2, y2,dashLength){
+			var dashLength = dashLength === "undefined"? 5: dashLength;
+			var deltaX = x2 - x1;
+			var deltaY = y2 - y1;
+
+			var numDashes = Math.floor( Math.sqrt(deltaX * deltaX + deltaY *deltaY) / dashLength);
+
+			for( var i = 0; i< numDashes; i++){
+				if(i % 2 === 0){
+					context.moveTo(x1 + (deltaX / numDashes) * i, y1+ (deltaY/numDashes)  * i);
+				}else{
+					context.lineTo(x1 + (deltaX / numDashes) * i, y1+ (deltaY/numDashes)  * i);
+				}
+				
+			}
+			context.stroke();
+		}
+
+		drawDashedLine(context, 20, 20, context.canvas.width - 20, 100,10);
+
+		// test
+		function drawTest(){
+			var start = {x: 0, y: 0};
+			var end = {x: 400, y: 300};
+			var spaceWidth = 20; 
+
+			for(var i = 1; i<= 20; i++){
+				var dX = spaceWidth * i;
+				context.moveTo(dX, end.y);
+				context.lineTo(dX, end.y - (dX / end.x * end.y) );
+				
+			}
+			context.stroke();
+		}
+
+		function drawDashLineTest(){
+			var start = {x:0, y:0}, end = {x:500, y:0};
+			var spaceWidth = 10,dashWidth = 10;
+			
+			for(var i = 0; i< end.x / 10; i++){
+				if( i%2 == 0){
+					context.moveTo(dashWidth*i, 0);
+				}else{
+					context.lineTo(dashWidth*i, 0);
+				}
+				// context.moveTo(i*10, 0);
+				// context.lineTo()
+			}
+			context.stroke();
+
+		}
+		//drawTest();
+		//drawDashLineTest();
+	</script>
+</body>
+</html>

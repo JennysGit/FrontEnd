@@ -9,3 +9,11 @@
 	shadowOffsetX：
 	shadowOffsetY:
 	shadowBlur:
+
+2.8 线段
+	绘制橡皮筋， 虚线，坐标
+	线段终点的样式设置：lineCap, LineJoin, miterLimit
+
+2.9 圆弧与圆形的绘制
+	// false 默认值 顺时针， true瞬时值
+	arc(x, y, radius, startAngle, endAngle, counterClockWise);

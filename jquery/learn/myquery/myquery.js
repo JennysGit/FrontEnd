@@ -53,8 +53,16 @@ window, function(window, ngGlobal){
 
 	var support = {};
 
+	// DOM Eval. 加载Script脚本
 	function DOMEval(code, doc){
+		doc = doc || document;
+		var script = doc.createElement("script");
+
+		script.text = code;
+		doc.head.appendChild( script).parentNode.removeChild(script);
 		
 	}
+
+	var version = 
 
 });

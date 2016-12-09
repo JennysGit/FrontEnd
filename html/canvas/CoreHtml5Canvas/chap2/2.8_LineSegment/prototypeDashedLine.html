@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>扩展CanvasRenderingContext2D绘制虚线</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="600" height="400"></canvas>
+    
+    <script type="text/javascript">
+    var context = document.getElementById('canvas').getContext('2d'),
+        moveToFunction = CanvasRenderingContext2D.prototype.moveTo;
+    CanvasRenderingContext2D.prototype.lastMoveToLocation = {};
+
+    CanvasRenderingContext2D.prototype.moveTo = function(x, y) {
+        moveToFunction.apply(context, [x, y]);
+        this.lastMoveToLocation.x = x;
+        this.lastMoveToLocation.y = y;
+    }
+
+    CanvasRenderingContext2D.prototype.dashedLineTo = function(x, y, dashedLength) {
+        dashedLength = dashedLength === "undefined" ? 5 : dashedLength;
+
+        var startX = this.lastMoveToLocation.x;
+        var startY = this.lastMoveToLocation.y;
+
+        var deltaX = x - startX;
+        var deltaY = y - startY;
+
+        var numDashes = Math.floor(Math.sqrt(deltaX * deltaX + deltaY * deltaY) / dashedLength);
+
+        for (var i = 0; i < numDashes; i++) {
+        	//  i % 2 === 0 ？ moveTo : lineTo
+        	// compute x, y coodinates. 
+            this[i % 2 === 0 ? "moveTo" : "lineTo"](startX + (deltaX / numDashes) * i, startY + (deltaY / numDashes) * i);
+        }
+        context.stroke();
+
+    }
+
+    context.moveTo(10, 10)
+    context.dashedLineTo(500, 300,10);
+   
+    </script>
+</body>
+
+</html>

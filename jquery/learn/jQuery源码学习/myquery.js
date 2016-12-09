@@ -39,3 +39,6 @@ myQuery.prototype = {
 }
 
 myQuery(); //这样就只能访问一个age属性.
+
+
+
