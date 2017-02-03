@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>橡皮线条绘制</title>
+    <title>橡皮圆圈绘制</title>
     <style type="text/css">
     body {
         background-color: #eee;
@@ -40,7 +40,14 @@
         canvas do not support.
     </canvas>
    <script type="text/javascript">
-        var context = document.getElementById('canvas').getContext('2d');
+        var canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d');
+
+        var dragging = false,
+            mousedown = {
+                x: 0,
+                y: 0
+            };
 
        // 绘制网格
        function drawGrid(color, stepx, stepy) {
@@ -62,7 +69,29 @@
            }
        }
 
+
        drawGrid('lightgray', 10, 10);
+       canvas.mousedown = function(e){
+            mousedown = {
+                x: e.clientX,
+                y: e.clientY
+            }
+            dragging = true;
+       }
+       canvas.mousemove = function(e){
+       // var start = e.cli
+       }
+
+       canvas.mouseup = function(e){
+            //mousedown = 
+       }
+
+       // parameter x, y => clientX, clientY
+       function windowToCanvas(x, y){
+            var cvsBounding = canvas.getBoundingClientRect();
+       }
+
+
    </script>
 </body>
 

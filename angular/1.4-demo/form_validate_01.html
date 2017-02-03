@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Form validate</title>
+	<style type="text/css">
+		.error{
+			font-size: 12px;
+			color: red;
+		}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+	<div>
+		<form name="signup_form" novalidate ng-submit="signupForm()" ng-controller="loginController">
+			<fieldset>
+				<legend>Sign up</legend>
+				<p>
+					<label for="uname">Your name</label>
+					<input type="text" name="uname" placeholder="username" ng-model="uname" ng-minlength="3" ng-maxlength="20" required>
+					<span class="error" ng-show="signup_form.uname.$dirty && signup_form.uname.$invalid">
+						<i ng-show="signup_form.uname.$error.required">Name is required.</i>
+						<i ng-show="signup_form.uname.$error.minlength">Your name is required to be at least 2 characters.</i>
+						<i ng-show="signup_form.uname.$error.maxlength">Your name cannot be longer than 20 characters.</i>
+					</span>
+				</p>
+				<p>
+					<label for="email">Your email</label>
+					<input type="email" placeholder="email" name="email" ng-model="email">
+					<span class="error" ng-show="signup_form.email.$dirty && signup_form.email.$invalid">
+						<i ng-show="signup_form.email.$error.required">email is required.</i>
+						<i ng-show="signup_form.email.$error.email">your email is not valid.</i>
+					</span>
+				</p>
+				<p>
+					<label for="username">Username</label>
+					<input type="text"  ng-class="{ error: signup_form.name.$dirty && signup_form.name.$invalid }" placeholder="user name" name="username" ng-model="username" required ensure-unique="username" ng-focus>
+					<span class="error" ng-show="signup_form.username.$dirty && signup_form.username.$invalid && signup_form.submitted">
+						<i ng-show="signup_form.username.$error.required">username is not valid.</i>
+						<i ng-show="signup_form.username.$error.unique">username is taken, please try another.</i>
+					</span>
+				</p>
+				<button type="submit">Submit</button>
+			</fieldset>
+		</form>
+	</div>
+	<script type="text/javascript">
+		var module = angular.module('myApp',[]);
+		module.controller('loginController',function($scope){
+			$scope.submitted = false;
+			$scope.signupForm = function(){
+				if( $scope.signup_form.$valid ){
+
+				}else{
+					$scope.signup_form.submitted = true;
+				}
+			}
+		});
+		module.directive('ensureUnique', function(){
+			return {
+				require: 'ngModel',
+				link: function(scope, ele, attrs, ctrl){
+					scope.$watch(attrs.ngModel, function(n){
+						if(!n) return;
+						if(n == "jenny"){
+							ctrl.$setValidity('unique', false)
+						}else{
+							ctrl.$setValidity('unique', true)
+						}
+					});
+				}
+			}
+		});
+		module.directive('ngFocus', function(){
+			var FOUCUS_CLASS = 'ng-focused';
+			return {
+				restrict: 'A',
+				require: 'ngModel',
+				link: function( scope, element, attrs, ctrl){
+					ctrl.$focusd = false;
+					element.bind('focus', function( evt ){
+						element.addClass(FOUCUS_CLASS);
+						scope.$apply( function(){
+							ctrl.$focusd = true;
+						})
+					}).bind('blur', function(evt){
+						element.removeClass(FOUCUS_CLASS);
+						scope.$apply(function(){
+							ctrl.$focusd = false;
+						})
+					})
+				}
+			}
+		});
+	</script>
+</body>
+</html>
