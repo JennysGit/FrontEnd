@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>directive transclude</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+	<div slidebox title="Links">
+		<ul>
+			<li>First Link</li>
+			<li>Second Link</li>
+			<li>Third Link</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		angular.module('myApp',[])
+		.directive('slidebox', function(){
+			return {
+				restrict: 'A',
+				scope: {
+					title: '@'
+				},
+				transclude: true,
+				templateUrl: 'slideTemplate.html'
+			}
+		})
+	</script>
+</body>
+</html>

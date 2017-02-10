@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>directive 01</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+	<input type="text" name="url" ng-model="myUrl">
+	<div my-directive some-url="{{ myUrl }}" my-link-text="google"></div>
+</body>
+<script type="text/javascript">
+	angular.module('myApp',[])
+	.directive('myDirective', function(){
+		return {
+			restrict: 'A',
+			replace: true,
+			//template: '<a href="http://www.google.com">Google</a>'
+			scope: {
+				myUrl: '@someUrl',
+				myLinkText: '@'
+			},
+			template: '<a href="{{myUrl}}">{{myLinkText}}</a>'
+		}
+	});
+</script>
+</html>

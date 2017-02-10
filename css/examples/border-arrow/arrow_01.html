@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Border arrow</title>
+	<style>
+		/*body{
+			text-align: center;
+		}*/
+		.title{
+			width: 300px;
+			height: 40px;
+			margin: 30px auto;
+			background: #ddd;
+			position: relative;
+		}
+
+		.title:before{
+			content: "";
+		    position: absolute;
+		    left: -40px;
+		    top: 0;
+		    border: 20px solid #ddd;
+		    border-left: 20px solid transparent;
+		}
+
+		.title:after {
+		    content: "";
+		    position: absolute;
+		    right: -40px;
+		    top: 0;
+		    border: 20px solid #ddd;
+		    border-right: 20px solid transparent;
+		}
+	</style>
+</head>
+<body>
+	<div class="title">
+		<h2 id="hello" hello="hello" data-message="message">hello</h2>
+	</div>
+</body>
+</html>

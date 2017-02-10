@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Scope 01</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
+<body ng-app="myApp">
+   {{root}}
+	<div ng-controller="ParentController">
+		<p>We can access {{ root }}
+			and {{ parrent }}
+		</p>
+		<div ng-controller="ChildController">
+			<p>
+				We can access {{ root }}
+				and {{ parrent }}
+				and {{ child }}
+			</p>
+			<p>{{ fullFromChild }}</p>
+		</div>
+	</div>
+	<script type="text/javascript">
+		angular.module('myApp', [])
+		.run(function($rootScope){
+			$rootScope.root = "root";
+		})
+		.controller('ParentController', function($scope){
+			$scope.parrent = 'Parent';
+		})
+		.controller('ChildController', function($scope){
+			$scope.child = 'Child';
+
+			$scope.fullFromChild = "We can access: " + 
+				$scope.root + ' and ' +
+				$scope.parrent + ' and ' + 
+				$scope.child;
+		})
+	</script>
+</body>
+</html>

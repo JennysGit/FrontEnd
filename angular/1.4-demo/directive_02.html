@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Directive scope</title>
+</head>
+<body>
+	<label for="theirUrl">Their URL field: </label>
+	<input type="text" name="theirUrl" ng-model="myUrl" />
+	<div my-directive some-attr="theirUrl" my-link-text="click me"></div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>directive scope.</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body data-ng-app="myApp" data-ng-init="SomeProperty='Some data.'">
+	<div data-ng-init="siblingProperty='more data.'">
+		inside div two: {{aThirdProperty}}
+	</div>
+</body>
+<script type="text/javascript">
+	angular.module('myApp',[])
+	.controller('MyController', function($scope){
+
+	})
+</script>
+</html>
