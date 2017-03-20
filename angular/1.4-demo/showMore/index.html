@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body ng-controller="AppController">
+	<div show-more show-max-height="80">
+		Enjoy a luxurious full-day tour experience of Yosemite and Glacier Point. This tour is designed for a very small group, and chances are if you have 4 or more people in your group you mayÂ get a private tour. Highlights include all the iconic sites of Yosemite Valley, including waterfalls and famous rock formations. An experienced guide will pick you up from your hotel, airport, or train/bus station. This tour also includes lunch at The Historic Ahwahnee Hotel (except on Sundays).
+		<a href="#" ng-show="showMore">show More</a>
+	</div>
+	<script type="text/javascript">
+		angular.module('myApp',[])
+		.controller('AppController',function($scope){
+			$scope.showMore = false;
+		})
+		.directive('showMore', function(){
+			return {
+				restrict: 'A',
+				link: function(scope, element, attrs, controller){
+					//scope.watch()
+					scope.showMore = true;
+					var maxHeight = attrs.showMaxHeight;
+					element.ready(function(){
+						var ele = element[0];
+						if(ele.clientHeight > maxHeight){
+							scope.showMore = true;
+						}
+						else{
+							scope.showMore = false;
+						}
+					});
+				}
+			}
+		});
+	</script>
+</body>
+</html>

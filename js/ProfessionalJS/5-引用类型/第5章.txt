@@ -36,8 +36,9 @@
 
 	6.重排序
 		reverse(); //反序排列数组。
-		sort(); //排序，调用toString()比较Ascii码值. 返回数组
+		sort(); //排序，调用toString()比较Ascii码值. 返回数组（默认unicode排序）
 		sort(funCompare)	//funCompare接收两个参数，返回-1，则不交换。见array.js	
+							//***如果 funCompare(a, b) 小于 0 ，那么 a 会被排列到 b 之前；
 
 	7.操作方法
 		(1) concat() 		//基于当前数组中的所有项，创建一个新数组。原数组的值不变。也可以传多个参数
