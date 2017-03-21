@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tab pane</title>
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" type="text/css" href="global.css">
+
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="tab-container">
+		<ul class="feature-tab">
+			<li>Notes</li>
+			<li>Known issues</li>
+			<li>Resources</li>
+			<li>Feedback</li>
+		</ul>
+	</div>
+	<div class="panel-container">
+		<div>
+			<p>Support for :visited styling varies across browsers due to security concerns.</p>
+		</div>
+		<div>
+			<ol>
+				<li>In IE10 adjacent sibling selector doesn't work with pseudo-class in case of E:active F.</li>
+				<li>IE6 does not properly support combinations of pseudo classes like :link, :active and :visited</li>
+				<li>IE8-11 does not update an element's :hover status when scrolling without moving the pointer.</li>
+				<li>Safari 5.1 and Android browsers do not support the adjacent selector if the adjacent element is a "nav" element.</li>
+				<li>:first-child fails in IE7 if the first child is a comment.</li>
+				<li>IE7 doesn't support all pseudo classes (like :focus) or pseudo elements (like :before and :after)</li>
+			</ol>
+		</div>
+		<div>
+			<ol>
+				<li>Specification [w3.org] ref</li>
+				<li>WebPlatform Docs [docs.webplatform.org] ref</li>
+				<li>Selectivizr: Polyfill for IE6-8 [selectivizr.com] polyfill</li>
+				<li>Detailed support information [quirksmode.org] info</li>
+				<li>Examples of advanced selectors [yourhtmlsource.com] info</li>
+			</ol>
+		</div>
+		<div>
+			<form action="">
+				<p>Send your comments, corrections, etc. If you have a question you'd like answered, please include an email address. Or, edit this data on GitHub</p>
+				<textarea name="feedback" id="feedback"></textarea>
+				<input type="submit" value="Submit" role="button">
+			</form>
+		</div>
+	</div>
+</body>
+</html>

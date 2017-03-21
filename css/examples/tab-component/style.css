@@ -1,0 +1,7 @@
+.tab-container .feature-tab li {
+    background-color: rgb(236, 222, 195);
+    background-origin: padding-box;
+    display: inline-block;
+    font-size: 13px;
+    padding: 10px 4px 10px 4px;
+}
