@@ -1,0 +1,15 @@
+{
+  "name": "demo1",
+  "version": "1.0.0",
+  "description": "webpack first demo ",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "webpack",
+    "demo"
+  ],
+  "author": "jenny",
+  "license": "ISC"
+}

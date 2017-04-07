@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>盒子模型</title>
+</head>
+<style type="text/css">
+	.simple{
+		width: 500px;
+		margin: 20px auto;
+		border-width: 10px;
+		border-color: green;
+		border-style: solid;
+	}
+	.fancy{
+		width: 500px;
+		margin: 20px auto;
+		padding: 50px;
+		border-width: 10px;
+		border-color: green;
+		border-style: solid;
+	}
+	/**{
+		box-sizing: border-box;
+	}*/
+</style>
+<body>
+	<div class="simple"></div>
+	<div class="fancy"></div>
+	<div>
+		现象： width属性一样的两个盒子，看起来表现的宽度却不一致；
+<!-- 		加入doctype声明。
+ -->	</div>
+</body>
+</html>
