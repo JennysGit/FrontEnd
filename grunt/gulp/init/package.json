@@ -1,0 +1,27 @@
+{
+  "name": "init",
+  "version": "1.0.0",
+  "description": "gulp init test",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp default",
+    "test": "npm test"
+  },
+  "keywords": [
+    "gulp"
+  ],
+  "author": "Jenny",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.5.1",
+    "gulp-uglify": "^2.1.2",
+    "jshint": "^2.9.4"
+  }
+}
