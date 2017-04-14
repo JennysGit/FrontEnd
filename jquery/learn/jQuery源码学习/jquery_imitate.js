@@ -115,5 +115,13 @@
         	target = this;
         	i--;
         }
+
+        for(; i < length; i++){
+        	if((options = arguments[i]) != null){
+        		for(name in options){
+        			src = target
+        		}
+        	}
+        }
     }
 });

@@ -9,19 +9,20 @@
 <body>
     <div ng-app="app">
         <div ng-cloak ng-controller="MainController as product">
-
             {{product.productName}}
             <div ng-repeat="(key, value) in product.productDimesions as options">
-              	<p>{{key}}</p>
-				<span ng-repeat="option in value" class="option-data">
-					<input type="radio" name="{{key}}" class="option-data" ng-model="product.selectedProductOptions[key]" ng-change="product.resetOptions(key)" ng-value="option">{{option}}
-				</span>
+                <p>{{key}}</p>
+                <span ng-repeat="option in value" class="{{key}}">
+                    <input type="radio" name="{{key}}" id="{{option}}" class="option-data" ng-model="product.selectedProductOptions[key]" ng-change="product.resetOptions(key)" ng-value="option">{{option}}
+                </span>
             </div>
-           
-       
+            <div ng-if="product.quantity">
+                <select name="quantity" ng-model="product.quantity" ng-options="q for q in product.quantityArray" ng-disabled="product.disableQuantity"></select>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="productDetail/detail.js"></script>
 </body>
 
