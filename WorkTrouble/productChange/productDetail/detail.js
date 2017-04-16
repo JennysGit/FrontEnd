@@ -1,6 +1,7 @@
 var app = angular.module('app', []);
 
-app.controller('MainController', MainController);
+app.controller('MainController', MainController)
+    .directive('productDimensions', ProductDimensionsDirective);
 
 
 function MainController($http) {
@@ -29,7 +30,6 @@ function MainController($http) {
     $http.get('../mockdata/productDetail.json').then(function(res) {
         allProducts = res.data;
         initProductOptions();
-        console.log(allProducts);
     });
 
 
@@ -103,14 +103,14 @@ function MainController($http) {
         return products;
     }
 
-    // disable product options. 
+    // disable product optionsf. 
     function disableProductionOptions(optionName) {
         var index = productOptionNames.indexOf(optionName);
         var length = productOptionNames.length;
         var products = getProductsByOptions(vm.selectedProductOptions);
 
-        for(var i = 0; i < index; i++){
-            $('.'+ productOptionNames[i]).find('input').prop('disabled', false);
+        for (var i = 0; i <= index; i++) {
+            $('.' + productOptionNames[i]).find('input').prop('disabled', false);
         }
 
         // Reset the quantity and enable. compute the quantity.
@@ -124,20 +124,20 @@ function MainController($http) {
             }
 
         } else {
-            // disable product options.
 
-            if(optionName >= ){
-                
-            }
+            var disableOptionName = productOptionNames[index + 1];
 
+            var enableOptions = getProductOptionsName(products, disableOptionName);
+            var disableOptions = getDisableProductsOptions(enableOptions, disableOptionName);
+
+            $.each(disableOptions, function(index, item) {
+                $('.' + disableOptionName).find('#' + item).prop('disabled', true);
+            });
             // disable quantity.disableQuantity = true;
             vm.disableQuantity = true;
             vm.quantityArray = [1];
             vm.quantity = 1;
         }
-
-
-
     }
 
     function getQuantityArray(num) {
@@ -149,10 +149,34 @@ function MainController($http) {
         return arr;
     }
 
-    function getProductOptionsName(products){
-        angular.foreach(function(item){
-            
-        })
+    function getProductOptionsName(products, optionName) {
+        var options = [];
+
+        for (var i = 0; i < products.length; i++) {
+
+            var vOption = products[i].variationOptions;
+
+            options.push(products[i].variationOptions[optionName]);
+        }
+        // angular.foreach(products, function(item) {
+        //     options.push(item.variationOptions[optionName]);
+        // })
+
+        return options;
     }
 
+    function getDisableProductsOptions(enableOptions, optionName) {
+        var disableOptions = [];
+
+        var options = vm.productDimesions[optionName];
+        for (var i = 0; i < options.length; i++) {
+            var option = options[i];
+            if (enableOptions.indexOf(option) == -1) {
+                disableOptions.push(option);
+            }
+        }
+
+        return disableOptions;
+    }
 }
+
