@@ -13,7 +13,7 @@
             <div ng-repeat="(key, value) in product.productDimesions as options">
                 <p>{{key}}</p>
                 <span ng-repeat="option in value" class="{{key}}">
-                    <input type="radio" name="{{key}}" id="{{option}}" class="option-data" ng-model="product.selectedProductOptions[key]" ng-change="product.resetOptions(key)" ng-value="option">{{option}}
+                    <input type="radio" name="{{key}}" id="{{option}}" class="option-data" ng-model="selectedProductDimensions[key]" ng-change="product.resetOptions(key)" ng-value="option">{{option}}
                 </span>
             </div>
             <div ng-if="product.quantity">

@@ -1,0 +1,9 @@
+<div ng-repeat="(dimensionName, value) in productOptions">
+    <p>{{dimensionName}}</p>
+    <span ng-repeat="option in value" class="{{dimensionName}}">
+        <input type="radio" name="{{dimensionName}}" id="{{option}}"  ng-model="product.selectedProductOptions[dimensionName]" ng-change="product.resetOptions(dimensionName)" ng-value="option">{{option}}
+    </span>
+</div>
+<div ng-if="product.quantity">
+    <select name="quantity" ng-model="product.quantity" ng-options="q for q in product.quantityArray" ng-disabled="product.disableQuantity"></select>
+</div>

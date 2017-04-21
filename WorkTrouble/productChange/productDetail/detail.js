@@ -47,7 +47,7 @@ function MainController($http) {
     }
 
 
-    this.resetOptions = function(key) {
+    this.resetOptions = function(key, value) {
         var selectedOptions = {};
         var slectedOptionName = ""
         vm.disabledProducts = [];
