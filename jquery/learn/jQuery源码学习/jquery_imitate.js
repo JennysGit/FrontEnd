@@ -535,7 +535,137 @@
                 "CHILD": new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" + whitespace +
                     "*(even|odd|(([+-]|)(\\d*)n|)" + whitespace + "*(?:([+-]|)" + whitespace +
                     "*(\\d+)|))" + whitespace + "*\\)|)", "i"),
+                "bool": new RegExp("^(?:" + booleans + ")$", "i"),
+                "needsContext": new RegExp("^" + whitespace + "*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" +
+                    whitespace + "*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i")
+            },
+            rinputs = /^(?:input|select|textarea|button)$/i,
+            rheader = /^h\d$/i,
+
+            rnative = /^[^{]+\{\s*\[native \w/,
+
+            //
+            rquickRxpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
+
+            rsibling = /[+~]/,
+            rescape = /'|\\/g,
+
+            // CSS escapes.
+            //
+            runescape = new RegExp("\\\\([\\da-f]{1,6}" + whitespace + "?|(" + whitespace + ")|.)", "ig"),
+            funescape = function(_, escaped, escapedWhitespcae) {
+                var high = "0x" + excaped - 0x10000;
+                // NaN means non-codepoint
+
+                return high !== hight || escapedWhitespcae ?
+                    escaped :
+                    high < 0 ?
+                    String.fromCharCode(high + 0x10000) :
+                    String.fromCharCode(high >> 10 | 0xD800, high & 0x3FF | 0xDC00);
+            },
+
+            // Used for iframes.
+            // setDocument().
+            //
+            // remove the function wrapper casues a "Permision Denied" error in IE.
+            unloadHandler = function() {
+                setDocument();
+            };
+
+        //Optimize for push.apply(_, NodeList)
+
+        try {
+            push.apply(
+                (arr = slice.call(prefferdDoc.childNodes)),
+                prefferdDoc.childNodes
+            );
+            //
+            // 
+            arr[preferredDoc.childNodes.length].nodeType;
+        } catch (e) {
+            push = {
+                apply: arr.length ?
+                    // Leverage slice if possible
+                    function(target, els) {
+                        push_native.apply(target, slice.call(els));
+                    } :
+                    // Support < IE9
+                    // Append directly.
+                    function(target, els) {
+                        var j = target.length,
+                            i = 0;
+                        while ((target[j++] = els[i++])) {}
+                        target.length = j - 1;
+                    }
+            };
+        }
+
+        function Sizzle(selector, context, results, seed) {
+            var m, i, elem, nid, nidselect, match, groups, newSelector, newContext = context && context.ownerDocument,
+                // default to 9. document node type.
+                nodeType = context ? context.nodeType : 9;
+            results = results || [];
+
+            // Return early from calls with invalid selector or context.
+            if (typeof selector !== "string" || !selecor ||
+                nodeType !== 1 && nodeType !== 9 && nodeType !== 11) {
+
+                return results;
             }
+
+            // Try to shortcut find operations.
+            if (!seed) {
+
+                if ((context ? context.ownerDocument || context : prefferdDoc) !== document) {
+                    setDocument(context);
+                }
+                context = context || document;
+
+                if (documentIsHTML) {
+                    // If the selector is sufficiently simple, try using get*By* dom method.)
+                    // excepting DocumentFragment context.
+                    if (nodeType !== 11 && (match = rquickRxpr.exec(selector))) {
+
+                        // ID selector.
+                        if ((m = match[1])) {
+
+                            // Document context
+                            if (nodeType === 9) {
+                                if ((elem = context.getElementById(m))) {
+
+                                    // Support IE, Opera, Webkit
+                                    // TODO: identify versions.
+                                    //
+                                    if (elem.id === m) {
+                                        results.push(elem);
+                                        return results;
+                                    } else {
+                                        return results;
+                                    }
+                                }
+
+                                // Element Context.
+                            } else {
+                                // Support IE, Opera, Webkit.
+                                // TODO:
+                                // 
+                                if (newContext && (elem = newContext.getElementById(m)) && contains(context, elem) && elem.id === m) {
+
+                                    results.push(elem);
+                                    return results;
+                                }
+                            }
+                        } else if (match[2]) {
+                            push.apply(results, context.getElementByTagName(selector));
+                            return results;
+                        } else if (m = match) {
+
+                        }
+                    }
+                }
+
+            }
+        }
 
     })
 });
