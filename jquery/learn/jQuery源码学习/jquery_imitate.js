@@ -35,7 +35,7 @@
     }
 
 
-})(typeof window !== "undifeind" ? window : this, function(window, noGlobal) {
+})(typeof window !== "undifined" ? window : this, function(window, noGlobal) {
 
     // jQuery main function.
 
@@ -201,7 +201,7 @@
 
                         // never move originak clone object
                         target[name] = jQuery.extend(deep, clone, copy);
-                    } else if (copy !== undifeind) {
+                    } else if (copy !== undifined) {
                         target[name] = copy;
                     }
                 }
@@ -250,7 +250,7 @@
             }
 
             for (key in obj) {}
-            return key === undifeind || hasOwn.call(obj, key);
+            return key === undifined || hasOwn.call(obj, key);
         },
 
         globalEval: function(code) {
@@ -386,7 +386,7 @@
             }
 
             if (!jQuery.isFunction(fn)) {
-                return undifeind;
+                return undifined;
             }
 
             args = slice.call(arguments, 2);
@@ -622,6 +622,7 @@
                 context = context || document;
 
                 if (documentIsHTML) {
+
                     // If the selector is sufficiently simple, try using get*By* dom method.)
                     // excepting DocumentFragment context.
                     if (nodeType !== 11 && (match = rquickRxpr.exec(selector))) {
@@ -655,14 +656,356 @@
                                     return results;
                                 }
                             }
+                            // Type selector.
                         } else if (match[2]) {
-                            push.apply(results, context.getElementByTagName(selector));
+                            push.apply(results, context.getElementsByTagName(selector));
                             return results;
-                        } else if (m = match) {
 
+                            // Class selector.
+                        } else if (m = match[3] && support.getElementsByClassName && context.getElementsByClassName) {
+
+                            push.apply(results, context.getElementsByClassName(m));
+                            return results;
+                        }
+                    }
+
+                    // Take advatage of querySelectorAll
+                    if (support.qsa &&
+                        !compilerCache[selector + " "] &&
+                        (!rbuggyQSA || !rbuggyQSA.test(selector))) {
+
+                        if (nodeType !== 1) {
+                            newContext = context;
+                            newSelector = selector;
+
+                            // qSA looks outside Element context.
+                            //
+                            // IE <= 8
+                            // Exclude object elements.
+                        } else if (context.nodeName.toLowerCase !== "object") {
+
+                            // Capture the context ID, setting it first if necessary.
+                            if ((nid = context.getAttribute('id'))) {
+                                nid = nid.replace(rescape, "\\$&");
+                            } else {
+                                context.setAttribute("id", (nid = expando));
+                            }
+
+                            // Prefix every selector in the list.
+                            groups = tokenize(selector);
+                            i = groups.length;
+                            nidselect = ridentifier.test(nid) ? "#" + nid : "[id='" + nid + "']";
+                            while (i--) {
+                                groups[i] = nidselect + " " + toSelector(groups[i]);
+                            }
+                            newSelector = groups.join(",");
+
+                            // Expand context for sibling selectors.
+                            newContext = rsibling.test(selector) && testContext(context.parentNode) || context;
+                        }
+
+                        if (newSelector) {
+                            try {
+                                push.apply(results, newContext.querySelectorAll(newSelector));
+                                return results;
+                            } catch (qsaError) {
+
+                            } finally {
+                                if (nid === expando) {
+                                    context.removeAttribute("id");
+
+                                }
+                            }
                         }
                     }
                 }
+
+            }
+
+            // All others
+            return select(selector.replace(rtrim, "$1"), context, results, seed);
+        }
+
+
+        /**
+         * Create key-value caches of limited size.
+         *
+         */
+        function createCache() {
+            var keys = [];
+
+            function cache(key, value) {
+                // Use (key + " ")
+                if (keys.push(key + " ") > Expr.cacheLength) {
+                    // Only keep the most recent entries.
+                    delete cache[keys.shift()];
+                }
+                return (cache[key + " "] = value);
+            }
+            return cache;
+        }
+
+        /**
+         * Mark a function for special use by Sizzle.
+         * @param {Function} fn the function to mark.
+         */
+        function markFunction(fn) {
+            fn[expando] = true;
+            return fn;
+        }
+
+        /**
+         * Support testing using an element.
+         * @param {Function} fn 
+         */
+        function assert(fn) {
+            var div = document.createElement("div");
+
+            try {
+                return !!fn(div);
+            } catch (e) {
+                return false;
+            } finally {
+                // Remove from its parent by default.
+                if (div.parentNode) {
+                    div.parentNode.removeChild(div);
+                }
+                // release memory in IE.
+                div = null;
+            }
+        }
+
+        /**
+         * Adds the same handler for all of the specified attrs
+         * @param {String} attrs Pipe-separated list of attributes
+         * @param {Function} handler The method that will be applied
+         */
+        function addHandle(attrs, handler) {
+            var arr = attrs.split("|"),
+                i = arr.length;
+
+            while (i--) {
+                Expr.attrHandle(arr[i]) = handler;
+            }
+        }
+
+        /**
+         * Checks document order of two siblings
+         * @param {Element} a
+         * @param {Element} b
+         * @returns {Number} Returns less than 0 if a precedes b, greater than 0 if a follows b
+         */
+        function siblingCheck(a, b) {
+            var cur = b && a,
+                diff = cur && a.nodeType === 1 &&
+                (~b.sourceIndex || MAX_NEGATIVE) -
+                (~a.sourceIndex || MAX_NEGATIVE);
+
+            // Use IE sourceIndex if available on both nodes.
+            if (diff) {
+                return diff;
+            }
+
+            // Check if b follows a
+            if (cur) {
+                while ((cur = cur.nextSibling)) {
+                    if (cur === b) {
+                        return -1;
+                    }
+                }
+            }
+
+            return a ? 1 : -1;
+        }
+
+
+        /**
+         * Returns a function to use in pseudos for input types
+         * @param {String} type
+         */
+        function createInputPseudo(type) {
+            return function(elem) {
+                var name = elem.nodeName.toLowerCase();
+                return name === "input" && elem.type === type;
+            }
+        }
+
+
+        /**
+         * Returns a function to use in pseudos for positionals
+         * @param {Function} fn
+         */
+        function createPositionalPseudo(fn) {
+            return markFunction(function(argument) {
+                argument = +argument;
+                return markFunction(function(seed, matches) {
+                    var j,
+                        matchIndexes = fn([], seed.length, argument),
+                        i = matchIndexes.length;
+
+                    // Match elements found at the specified indexes
+                    while (i--) {
+                        if (seed[(j = matchIndexes[i])]) {
+                            seed[j] = !(matches[j] = seed[j]);
+                        }
+                    }
+                });
+            });
+        }
+
+        /**
+         * Checks a node for validity as a Sizzle context
+         * @param {Element|Object=} context
+         * @returns {Element|Object|Boolean} The input node if acceptable, otherwise a falsy value
+         */
+        function testContext(context) {
+            return context && typeof context.getElementsByTagName !== "undifined" && context;
+        }
+
+        // Expose support vars for convenience.
+        support = Sizzle.support = {};
+
+
+        /**
+         * Detects XML nodes
+         * @param {Element|Object} elem An element or a document
+         * @returns {Boolean} True iff elem is a non-HTML XML node
+         */
+        isXML = Sizzle.isXML = function(elem) {
+            // documentElement is verified for cases where it doesn't yet exist.
+            // such as loading iframes in IE.
+            var documentElement = elem && (elem.ownerDocument || elem).documentElement;
+            return documentElement ? documentElement.nodeName !== "HTML" : false;
+        };
+
+        /**
+         * Sets document-related variables once based on the current document
+         * @param {Element|Object} [doc] An element or document object to use to set the document
+         * @returns {Object} Returns the current document
+         */
+        setDocument = Sizzle.setDocument = function(node) {
+            var hasCompare, parent,
+                doc = node ? node.ownerDocument || node : preferredDoc;
+
+            // Return early if doc is invalid or already selected.
+            if (doc === document || doc.nodeType !== 9 || !doc.documentElement) {
+                return document;
+            }
+
+            // update global variables.
+            document = doc;
+            docElem = document.documentElement;
+            documentIsHTML = !isXML(document);
+
+            // Support: IE 9-11, Edge.
+            // Accessing iframe documents after unload throws "permission denied" errors.
+            if ((parent = document.defaultView) && parent.top !== parent) {
+                // Support IE 11, Edge
+                if (parent.addEventListener) {
+                    parent.addEventListener("unload", unloadHandler, false);
+
+                    // Support IE 9 - 10 only.
+                } else if (parent.attachEvent) {
+                    parent.attachEvent("onunload", unloadHandler);
+                }
+            }
+
+            /* Attributes
+            ---------------------------------------------------------------------- */
+
+            // Support: IE < 8.
+            // Verify that getAttribute really returns attributes and not properties.
+            // Excepting IE8 booleans.
+            support.attributes = assert(function(div) {
+                div.className = "i";
+                return !div.getAttribute("className");
+            });
+
+            /*getElement(s)
+            ------------------------------------------------------------------------*/
+
+            // Check if getElementsByTagName("*") return only elements.
+            support.getElementsByTagName = assert(function(div) {
+                div.appendChild(document.createElement(""));
+                return !div.getElementsByTagName("*").length;
+            });
+
+            // Support: IE < 9
+            support.getElementsByClassName = rnative.test(document.getElementsByClassName);
+
+            // Support: IE < 10
+            // Check if getElementById returns elements by name.
+            // The broken getElementById methods don't pickup programatically-set names.
+            // so use a roundabout getElementsByName test.
+            support.getById = assert(function(div) {
+                docElem.appendChild(div).id = expando;
+                return !document.getElementsByName || !document.getElementsByName(expando).length;
+            });
+
+            // ID find and filter.
+            if (support.getById) {
+                Expr.find["ID"] = function(id, context) {
+                    if (typeof context.getElementById !== "undifined" && documentIsHTML) {
+                        var m = context.getElementById(id);
+                        return m ? [m] : [];
+                    }
+                }
+
+                Expr.filter["ID"] = function(id) {
+                    var attrId = id.replace(runescape, funescape);
+                    return function(elem) {
+                        return elem.getAttribute("id") === attrId;
+                    }
+                }
+            } else {
+                // Support: IE6/7
+                // getElementById is not reliable as a find shortcut,
+                delete Expr.find["ID"];
+
+                Expr.filter["ID"] = function(id) {
+                    var attrId = id.replace(runescape, funescape);
+                    return function(elem) {
+                        var node = typeof elem.getAttributeNode !== "undefined" &&
+                            elem.getAttributeNode("id");
+                        return node && node.value === attrId;
+                    }
+                }
+            }
+
+
+            // Tag
+            Expr.find["TAG"] = support.getElementsByTagName ?
+                function(tag, context) {
+                    if (typeof context.getElementsByTagName !== "undefined") {
+                        return context.getElementsByTagName(tag);
+
+                        // DocumentFragment nodes dont have gEBTN.
+                    } else if (support.qsa) {
+                        return context.querySelectorAll(tag);
+                    }
+                } :
+                function(tag, context) {
+                    var elem,
+                        tmp = [],
+                        i = 0,
+                        //
+                        results = context.getElementsByTagName(tag);
+
+                    // Filter out possible comments.
+                    if (tag === "*") {
+                        while ((elem = results[i++])) {
+                            if (elem.nodeType === 1) {
+                                tmp.push(elem);
+                            }
+                        }
+
+                        return tmp;
+                    }
+                    return results;
+                }
+
+            // Class
+            Expr.find["CLASS"] = support.getElementsByClassName && function(className, context) {
 
             }
         }
