@@ -1006,8 +1006,58 @@
 
             // Class
             Expr.find["CLASS"] = support.getElementsByClassName && function(className, context) {
+                if (typeof context.getElementsByClassName !== "undefined" && documentIsHTML) {
+                    return context.getElementsByClassName(className);
+                }
+            };
 
+            /* QSA/matchesSelector
+            ----------------------------------------------------------------*/
+
+            // QSA and matchesSelector support.
+
+            // matchesSelecor (:active) reports false when true. (IE9/oprea 11.5)
+            rbuggyMatches = [];
+
+            // qSa(:focus) reports false when true (chrome 21)
+            // We allow this because of a bug in IE8/9 that throws an error.
+            // whenever 'document.activeElement' is accessed on an iframe.
+            // So, we allow :focus to pass through QSA all the time to avoid the IE error.
+            // See http://bugs.jquery.com/ticket/13378
+            rbuggyQSA = [];
+
+            if ((support.qsa = rnative.test(document.querySelectorAll))) {
+                // build qsa regex.
+                // Regex strategy adopted from Diego Perini.
+                assert(function(div) {
+                    // Select is set to empty string on purpose
+                    // This is to test IE's treatment of not explicitly
+                    // setting a boolean content attribute,
+                    // since its presence should be enough
+                    // http://bugs.jquery.com/ticket/12359 
+
+                    docElem.appendChild(div).innerHTML = "<a id='" + expando + "'></a>" +
+                        "<select id='" + expando + "-\r\\' msallowcapture=''>" +
+                        "<option selected=''></option></select>";
+
+                    // Support: IE8, Opera 11-12.16
+                    // Nothing should be selected when empty strings follow ^= or $= or *=
+                    // The test attribute must be unknown in Opera but "safe" for WinRT
+                    // http://msdn.microsoft.com/en-us/library/ie/hh465388.aspx#attribute_section
+                    if (div.querySelectorAll("[msallowcapture^='']").length) {
+                        rbuggyQSA.push("[*^$]=" + whitespace + "*(?:''|\"\")");
+                    }
+
+                    // Support: IE8
+                    // Boolean attributes and "value" not readted correctly
+                    if (!div.querySelectorAll("[selected]".length)) {
+                        rbuggyQSA.push("\\[" + whitespace + "*?:value|" + booleans + ")");
+                    }
+
+                    // Support: Chrome < 29
+                })
             }
+
         }
 
     })
