@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .image-zoom-container {
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 30px;
+
+        }
+    </style>
+    <script src="jquery.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body ng-app="app">
+
+<div class="image-zoom-container" ng-controller="MyController">
+    <img src="Pevensey_castle-09.jpg" alt="zoom image" image-zoom/>
+    <form name="form" novalidate><input type="number" name="age" ng-model="age" ng-min="minAge" ng-max="maxAge"
+                                        required>
+
+        <div ng-repeat="activity in activites">
+            <p ng-repeat="person in activity.travelers">
+                <input type="text" ng-model="person.name"/>
+                <input type="text" ng-model="person.age"/>
+            </p>
+            <hr>
+            <!--{{activity[0].name}}-->
+        </div>
+        <input type="button" value="submit" ng-click="submit()"/>
+
+    </form>
+    {{form.age.$valid}}
+
+
+    <p>required error: {{form.age.$error.required}}</p>
+    <p>min error: {{form.age.$error.min}}</p>
+    <p>max error: {{form.age.$error.max}}</p>
+
+</div>
+</body>
+<script>
+    var app = angular.module("app", []);
+    app.controller('MyController', function ($scope) {
+        $scope.minAge = 12;
+        $scope.maxAge = 20;
+
+        $scope.activites = [
+            {
+                travelers: [
+                    {
+                        name: "Jenny",
+                        age: 22
+                    }, {
+                        name: "Tom",
+                        age: 22
+                    }, {
+                        name: "Google"
+                    }
+                ]
+            }, {
+                travelers: [
+                    {
+                        name: "1",
+                        age: 22
+                    }, {}, {}
+                ]
+            }
+        ];
+
+        $scope.persons = [{
+            name: "Jenny",
+            age: 22
+        }, {
+            name: "Tom",
+            age: 22
+        }, {
+            name: "Google"
+        }];
+
+        $scope.submit = function () {
+            console.log($scope.activites);
+            debugger;
+            return false;
+        }
+
+    });
+    app.directive('imageZoom', function () {
+        return {
+            restrict: 'A',
+            link: function (scope, elements, attrs) {
+                var $element = $(elements[0]);
+                var imageInfo = {
+                    imageWidth: 0,
+                    imageHeight: 0,
+                    currentScale: 1,
+                    mouseX: 0,
+                    mouseY: 0
+                }
+
+                var zoomOption = {
+                    maxScale: typeof scope.maxScale === "undefined" ? 2 : scope.maxScale,
+                    increment: typeof scope.increment === "undefined" ? 2 : scope.increment
+                }
+
+                $element.bind('load', function (e) {
+                    imageInfo.imageWidth = this.naturalWidth;
+                    imageInfo.imageHeight= this.naturalHeight;
+                })
+
+                $element.bind('dblclick', function () {
+                    if(imageInfo.currentScale != zoomOption.maxScale){
+                        imageInfo.currentScale *= zoomOption.increment
+                        $element.css("transform", "scale(2,2)");
+                        $element.css('transition', "transform 1s ease-in-out");
+                        imageInfo.currentScale = 2;
+                    }else{
+                        $element.css("transform", "scale(1,1)");
+                        $element.css('transition', "transform 1s ease-in-out");
+                        imageInfo.currentScale = 1;
+                    }
+                });
+
+                var isMoving = false;
+                $element.bind('mousedown', function (e) {
+                    isMoving = true;
+                    imageInfo.mouseX = e.clientX;
+                    imageInfo.mouseY = e.clientY;
+                })
+                $element.bind('')
+
+
+            }
+        }
+    })
+</script>
+</html>
