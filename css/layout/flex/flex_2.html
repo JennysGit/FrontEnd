@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Flex layout.</title>
+	<style type="text/css">
+		
+		body{
+			font: 24px Helvetica;
+			background: #999;
+		}
+
+		#main{
+			min-height: 800px;
+			margin:0;
+			padding: 0;
+			display: flex;
+			flex-flow: row;
+		}
+
+		#main > article{
+			margin: 4px;
+			padding: 5px;
+			border: 1px solid #cccc33;
+			border-radius: 7pt;
+			background: #dddd88;
+			flex: 
+		}
+	</style>
+</head>
+<body>
+	<header>header</header>
+
+	<div id="main">
+		<article>article</article>
+		<nav>nav</nav>
+		<aside>aside</aside>
+	</div>
+
+	<footer>
+		footer
+	</footer>
+</body>
+</html>

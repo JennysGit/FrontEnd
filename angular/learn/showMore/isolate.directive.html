@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+	<div ng-contrller="myController">
+	<p><button ng-click="mode=!mode">toggleMode</button>current mode: {{$scope.mode}}</p>
+		<button ng-click="shippingEditValidated=!shippingEditValidated">ToggleSubmit</button>
+		{{shippingEditValidated}}
+
+		<br/>
+		<my-directive shipping-edit-validated="shippingEditValidated" ng-show="mode"></my-directive>
+	</div>
+<script type="text/javascript">
+	var module = angular.module('myApp',[]);
+		module.controller('myController',function($scope){
+			$scope.shippingEditValidated = false;
+
+			$scope.toggleMode = function(){
+				$scope.mode == 'eidt' ? 'eidt' : 'view';
+			}
+		});
+
+		module.directive('myDirective', function(){
+			return {
+				restrict:'E',
+				scope:{
+					shippingEditValidated:'='
+				},
+				template:`<span><button ng-click="shippingEditValidated=!shippingEditValidated">Child ToggleSubmit</button >{{shippingEditValidated}} <br/><button ng-click="reset()">reset</button></span>`,
+				controller:function($scope){
+					$scope.reset= function(){
+						$scope.shippingEditValidated = true;
+					}
+				}
+				// controller:function($scope){
+
+				// }
+			}
+		})
+</script>
+</body>
+</html>

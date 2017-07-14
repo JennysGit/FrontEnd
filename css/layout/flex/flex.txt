@@ -1,0 +1,39 @@
+弹性布局概念
+	弹性布局是指通过调整其内元素的宽高，从而在任何显示设备上实现对可用显示空间最佳填充的能力。
+
+	弹性容器扩展其内元素来填充可用空间，或将其收缩来避免溢出。
+
+
+弹性容器(Flex container)
+	包含着弹性项目的父元素，通过设置display属性的值为flex或inline-flex来定义弹性容器。
+
+弹性项目(Flex item)
+	贪心容器的每个子元素称为弹性项目。弹性容器直接包含的文本被包覆成匿名弹性单元。
+
+轴（Axis）
+	每个弹性框布局包含两个轴，弹性项目沿其一次排列的那根轴称为主轴。垂直于主轴的那根轴称为侧轴。
+	flex-direction: 确立主轴
+	justify-content: 定义了在当前行上，弹性项目沿主轴默认如何排布。
+	align-items: 定义了在当前行上，弹性项目沿侧轴如何排布。
+	align-self: 定义了单个弹性项目在侧轴上应当如何对齐。会覆盖有align-items所确立的默认值。
+
+
+方向（Direction）
+	弹性容器的主轴起点(main start)/ 主轴终点(main end) / 侧轴起点(cross start) / 侧轴终点(cross end)
+	描述了弹性项目排布的起点与终点。
+	order:  将元素与序号关联起来，决定哪些元素先出现
+	flex-flow: flex-direction和flex-wrap属性的简写，决定弹性项目如何排布。
+
+行（Line）
+	根据flex-wrap属性，弹性项目可以排布单个行或者多各行中，此属性控制侧轴的方向和新行排列的方向。
+
+尺寸(Dimension)
+	根据弹性容器的主轴与侧轴，弹性项目的宽和高中，对应主轴的称为主轴尺寸。对应侧轴的称为侧轴尺寸。
+	min-height与min-width属性的初始值为0
+	flex属性是flex-grow, flex-shrink, flex-basis属性的简写。描述弹性项目的整体和伸缩性。
+
+
+display: flex 使盒子称为块级元素。
+display: inline-flex 使容器成为单个不可分的行内级元素。
+
+

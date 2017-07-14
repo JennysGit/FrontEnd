@@ -1,0 +1,160 @@
+body {
+    background: #fff;
+}
+
+#stage {
+    -webkit-perspective: 500;
+    perspective-origin: 0% 0%;
+}
+
+#doraemon {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    width: 400px;
+    transform-style: preserve-3d;
+}
+
+#head_light {
+    width: 50px;
+    height: 50px;
+    transform: rotate(20deg);
+    box-shadow: 80px 20px 50px #fff;
+    border-radius: 45px;
+    position: absolute;
+    top: -20px;
+    left: 170px;
+    opacity: 0.5
+}
+
+#face {
+    position: relative;
+    width: 310px;
+    height: 300px;
+    border-radius: 146px;
+    background: #07beea;
+    background: -webkit-gradient(linear, right top, left bottom, from(#fff), color-stop(0.20, #07beea), color-stop(0.73, #10a6ce), color-stop(0.95, #000), to(#444));
+    background: -moz-linear-gradient(right top, #fff, #07beea 20%, #10a6ce 73%, #000 95%, #000 155%);
+    background-image: linear-gradient(to left bottom, #fff 0%, #07beea 20%, #10a6ce 73%, #000 95%, #000 155%);
+    border: #333 2px solid;
+    top: -15px;
+    box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.45);
+}
+
+#base {
+    position: relative;
+    top: -5px;
+}
+
+#base_white {
+    position: absolute;
+    border: #000 2px solid;
+    width: 264px;
+    height: 196px;
+    border-radius: 150px 150px;
+    background: #fff;
+    background: -webkit-gradient(linear, right top, left bottom, from(#fff), color-stop(0.75, #fff), color-stop(0.83, #eee), color-stop(0.90, #999), color-stop(0.95, #444), to(#000));
+    background: -moz-linear-gradient(right top, #fff, #fff 75%, #eee 83%, #999 90%, #444 95%, #000);
+    z-index: 1;
+    top: 85px;
+    left: 22px;
+}
+
+#eyes {
+    position: relative;
+    top: -5px;
+}
+
+div.eye {
+    position: absolute;
+    border-radius: 35px 35px;
+    border: 2px solid #000;
+    width: 72px;
+    height: 83px;
+    z-index: 20;
+    background: #fff;
+}
+
+div.black_eye {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    background: #333;
+    z-index: 21;
+}
+
+div.eye_left {
+    top: 45px;
+    left: 82px;
+}
+
+div.eye_right {
+    top: 45px;
+    left: 156px;
+}
+
+div.black_left {
+    top: 100px;
+    left: 130px;
+}
+
+div.black_right {
+    top: 100px;
+    left: 170px;
+}
+
+#nose {
+    width: 32px;
+    height: 32px;
+    border: 2px solid #000;
+    border-radius: 50px;
+    background: #c93e00;
+    position: absolute;
+    top: 31px;
+    left: 115px;
+    z-index: 30;
+}
+
+#nose_light {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    box-shadow: 19px 8px 5px #fff;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+#nose_line {
+    background: #000;
+    width: 4px;
+    height: 100px;
+    top: 63px;
+    left: 131px;
+    position: absolute;
+    z-index: 13;
+}
+
+#mouth {
+    width: 240px;
+    height: 500px;
+    border-bottom: 3px solid #333;
+    border-radius: 120px;
+    position: absolute;
+    top: -337px;
+    left: 12px;
+    z-index: 10;
+}
+
+#mouth_rewrite {
+    background: white;
+    width: 250px;
+    height: 90px;
+    position: relative;
+    top: 32px;
+    left: 7px;
+    z-index: 12;
+    border-radius: 45px;
+}
+

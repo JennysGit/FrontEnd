@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Flex</title>
+	<style>
+		.flex{
+			width: 350px;
+			height: 200px;
+			border: 1px solid #555;
+			font: 14px Aarial;
+
+			display: flex;
+			flex-direction: row;
+		}
+
+		.flex > div{
+			flex: 1 1 auto;
+			width: 30px;
+			transition: width 0.7s ease-out;
+		}
+
+		.flex >div:nth-child(1){
+			background-color: #009246;
+		}
+		.flex >div:nth-child(2){
+			background-color: #f1f2f1;
+		}
+		.flex >div:nth-child(3){
+			background-color: #ce2b37;
+		}
+		
+		.flex > div:hover{
+			width: 200px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<p>Flexbox layout demo.</p>
+	<div class="flex">
+		<div>uno</div>
+		<div>due</div>
+		<div>tre</div>
+	</div>
+</body>
+</html>
