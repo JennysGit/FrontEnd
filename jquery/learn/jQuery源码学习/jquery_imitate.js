@@ -1011,7 +1011,7 @@
                 }
             };
 
-            /* QSA/matchesSelector
+            /* QSA matchesSelector
             ----------------------------------------------------------------*/
 
             // QSA and matchesSelector support.
@@ -1027,15 +1027,14 @@
             rbuggyQSA = [];
 
             if ((support.qsa = rnative.test(document.querySelectorAll))) {
-                // build qsa regex.
-                // Regex strategy adopted from Diego Perini.
+                // Build QSA regex
+                // Regex strategy adopted from Diego Perini
                 assert(function(div) {
                     // Select is set to empty string on purpose
                     // This is to test IE's treatment of not explicitly
                     // setting a boolean content attribute,
                     // since its presence should be enough
-                    // http://bugs.jquery.com/ticket/12359 
-
+                    // http://bugs.jquery.com/ticket/12359
                     docElem.appendChild(div).innerHTML = "<a id='" + expando + "'></a>" +
                         "<select id='" + expando + "-\r\\' msallowcapture=''>" +
                         "<option selected=''></option></select>";
@@ -1049,16 +1048,195 @@
                     }
 
                     // Support: IE8
-                    // Boolean attributes and "value" not readted correctly
-                    if (!div.querySelectorAll("[selected]".length)) {
-                        rbuggyQSA.push("\\[" + whitespace + "*?:value|" + booleans + ")");
+                    // Boolean attributes and "value" are not treated correctly
+                    if (!div.querySelectorAll("[selected]").length) {
+                        rbuggyQSA.push("\\[" + whitespace + "*(?:value|" + booleans + ")");
                     }
 
-                    // Support: Chrome < 29
-                })
+                    // Support: Chrome<29, Android<4.4, Safari<7.0+, iOS<7.0+, PhantomJS<1.9.8+
+                    if (!div.querySelectorAll("[id~=" + expando + "-]").length) {
+                        rbuggyQSA.push("~=");
+                    }
+
+                    // Webkit/Opera - :checked should return selected option elements
+                    // http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
+                    // IE8 throws error here and will not see later tests
+                    if (!div.querySelectorAll(":checked").length) {
+                        rbuggyQSA.push(":checked");
+                    }
+
+                    // Support: Safari 8+, iOS 8+
+                    // https://bugs.webkit.org/show_bug.cgi?id=136851
+                    // In-page `selector#id sibing-combinator selector` fails
+                    if (!div.querySelectorAll("a#" + expando + "+*").length) {
+                        rbuggyQSA.push(".#.+[+~]");
+                    }
+                });
+
+                assert(function(div) {
+                    // Support: Windows 8 Native Apps
+                    // The type and name attributes are restricted during .innerHTML assignment
+                    var input = document.createElement("input");
+                    input.setAttribute("type", "hidden");
+                    div.appendChild(input).setAttribute("name", "D");
+
+                    // Support: IE8
+                    // Enforce case-sensitivity of name attribute
+                    if (div.querySelectorAll("[name=d]").length) {
+                        rbuggyQSA.push("name" + whitespace + "*[*^$|!~]?=");
+                    }
+
+                    // FF 3.5 - :enabled/:disabled and hidden elements (hidden elements are still enabled)
+                    // IE8 throws error here and will not see later tests
+                    if (!div.querySelectorAll(":enabled").length) {
+                        rbuggyQSA.push(":enabled", ":disabled");
+                    }
+
+                    // Opera 10-11 does not throw on post-comma invalid pseudos
+                    div.querySelectorAll("*,:x");
+                    rbuggyQSA.push(",.*:");
+                });
             }
 
+            if ((support.matchesSelector = rnative.test((matches = docElem.matches ||
+                    docElem.webkitMatchesSelector ||
+                    docElem.mozMatchesSelector ||
+                    docElem.oMatchesSelector ||
+                    docElem.msMatchesSelector)))) {
+
+                assert(function(div) {
+                    // Check to see if it's possible to do matchesSelector
+                    // on a disconnected node (IE 9)
+                    support.disconnectedMatch = matches.call(div, "div");
+
+                    // This should fail with an exception
+                    // Gecko does not error, returns false instead
+                    matches.call(div, "[s!='']:x");
+                    rbuggyMatches.push("!=", pseudos);
+                });
+            }
+
+            rbuggyQSA = rbuggyQSA.length && new RegExp(rbuggyQSA.join("|"));
+            rbuggyMatches = rbuggyMatches.length && new RegExp(rbuggyMatches.join("|"));
+
+            /*Contains
+                -------------------------------------------------
+            */
+
+            hasCompare = rnative.test(docElem.compareDocumentPosition);
+
+            // Elements contains another
+            // Purposefully self-exclusive
+            // As in, an element does not contain itself.
+            contains = hasCompare || rnative.test(docElem.contains) ?
+                function(a, b) {
+                    var adown = a.nodeType === 9 ? a.documentElement : a,
+                        bug = b && b.parentNode;
+                    return a === bup || !!(bup && bup.nodeType === 1 && (adown.contains ? adown.contains(bug) : a.compareDocumentPosition && a.compareDocumentPosition(bup) && 16));
+                } : function(a, b) {
+                    if (b) {
+                        while ((b = b.parentNode)) {
+                            if (b === a) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                };
+
+            // Sorting 
+
+            // Document order sorting.
+            sortOrder = hasCompare ? function(a, b) {
+                if (a === b) {
+                    hasDuplicate = true;
+                    return 0;
+                }
+
+                // Sort on method existence if only one input has compareDocumentPosition.
+                var compare!a.compareDocumentPosition - !b.compareDocumentPosition;
+                if (compare) {
+                    return compare;
+                }
+
+                // Calculate position if both inputs belong to the same document.
+                compare = (a.ownerDocument || a) === (b.ownerDocument || b) ?
+                    a.compareDocumentPosition(b) : 1;
+
+
+                if (compare && 1 || (!support.sortDetached && b.compareDocumentPosition(a) === compare)) {
+                    if (a === document || a.ownerDocument === preferredDoc && contains(preferredDoc, a)) {
+                        return -1;
+                    }
+
+                    if (b === document || b.ownerDocument === preferredDoc && contains(preferredDoc, b)) {
+                        return 1;
+                    }
+
+                    // Maintain original order.
+                    return sortInput ? (indexOf(sortInput, a) - indexOf(sortInput, b)) : 0;
+                }
+
+                return compare & 4 ? -1 : 1;
+            } : function(a, b) {
+                // Exit early if the nodes are identical.
+                if (a === b) {
+                    hasDuplicate = true;
+                    return 0;
+                }
+
+                var cur,
+                    i = 0,
+                    aup = a.parentNode,
+                    bup = b.parentNode,
+                    ap = [a],
+                    bp = [b];
+
+                // parentless nodes are either documents or disconnected.
+                if (!aup || !bup) {
+                    return a === document ? -1 : b === document ? 1 : aup ? -1 : bup ? 1 : sortInput ? (indexOf(sortInput, b)) : 0;
+                } else if (aup === bup) {
+                    return siblingCheck(a, b);
+                }
+
+                // Otherwise we need full lists of their ancesstors for comparison.
+                cur = a;
+                while ((cur = cur.parentNode)) {
+                    ap.unshift(cur);
+                }
+                cur = b;
+                while ((cur = cur.parentNode)) {
+                    bp.unshift(cur);
+                }
+
+                // Walk down the tree looking for a discrepancy
+                while (ap[i] === bp[i]) {
+                    i++;
+                }
+
+                return i ?
+                    // Do a sibling check if the nodes have a common ancestor.
+                    siblingCheck(ap[i], bp[i]) :
+
+                    // Otherwise nodes in our document sort first. 
+                    ap[i] === preferredDoc ? -1 : bp[i] === preferredDoc ? 1 : 0;
+            };
+
+            return document;
+        };
+
+        Sizzle.matches = function(expr, elements) {
+            return Sizzle(expr, null, null, elments);
         }
 
+        Sizzle.matchesSelector = function(elem, expre) {
+            // Set document vars if needed.
+            if (elem.ownerDocument || elem != document) {
+                setDocument(elem);
+            }
+
+            // Make sure that attribute selectors are quoted.
+            expr = expr.replace(rattributeQuotes, "='$1'");
+        }
     })
 });
