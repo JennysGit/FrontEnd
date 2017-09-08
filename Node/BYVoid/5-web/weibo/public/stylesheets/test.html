@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<style>
+		.container{
+			background: #ddd;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+    <div class="row">
+        <div class="col-md-3 col">Shopping Cart</div>
+        <div class="col-md-3 col-md-offset-6 col">Price</div>
+    </div>
+    <activity-item>
+    	<div class="row cart-item-section cart-items ng-scope price-changed-warning" data-ng-class="{'price-changed-warning': activityDetails.isPriceChanged}" data-ng-repeat="activityDetails in activities" style="">
+    <div class="col-md-2 col-sm-12 col-xs-12 padding-left-0">
+        <div class="activity-image-section">
+            <img class="img-responsive thumbnail thumbnail2" data-ng-src="assets/images/activity/b2s_activities_generic_cart.svg" src="assets/images/activity/b2s_activities_generic_cart.svg">
+        </div>
+    </div>
+    <div class="col-md-2 col-sm-12 col-xs-12">
+        <div class="col-md-4 col-sm-4 col-xs-6 activity-feature-heading">
+            <span class="activity-feature-heading ng-binding">Activities</span>
+        </div>
+        <div class="col-xs-12 cart-items-feature-delete">
+            <a data-ng-click="delete({index:activityDetails.index})" class="ng-binding">Delete</a>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <p class="activity-feature-heading activity-feature-wrap ng-binding">Marrakech Highlights: Guided Day Tour From Agadir</p>
+        <div class="activity-size ng-binding">by Agharass Tours</div>
+    </div>
+
+    <div class="col-md-3 col-sm-12 col-xs-12 col-md-offset-2">
+        <div class="row ">
+            <div class="col-md-12 ">
+                <h1 class="activity-points-value activity-points-cart ng-binding">4,300.00</h1>
+                <div class="activity-points-redeemable-points cart-points-label ng-binding" points-label="">BankCodePoints</div>
+            </div>
+        </div>
+    </div>
+</div>
+    </activity-item>
+</div>
+</body>
+</html>

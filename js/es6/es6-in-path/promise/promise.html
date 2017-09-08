@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var myFirstPromise = new Promise(function(resolve, reject) {
+        // 当异步代码执行成功时，我们才会调用resolve(...)， 当异步代码失败时就会调用reject(...)
+        // setTimeout(...)模拟异步代码
+        setTimeout(function() {
+            resolve("成功");
+        }, 1000);
+    });
+
+    myFirstPromise.then(function(successMessage) {
+        console.log("Yay" + successMessage);
+    });
+
+
+
+    'use strict';
+    var promiseCount = 0;
+    function testPromise(){
+    	var thisPromiseCount = ++promiseCount;
+
+    	var log = document.getElementById('log');
+    	log.insertAdjacent
+    }
+    </script>
+</body>
+
+</html>

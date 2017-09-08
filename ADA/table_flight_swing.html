@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<table class="seat-map-table ng-scope" data-ng-if="seatMap != null &amp;&amp; !isGettingSeatMap" style="margin: 30px auto;">
+                <!-- row labels -->
+
+                <tbody><tr class="seat-grid-row">
+                    <!-- ngIf: seatMap.columns.length < 8 --><th class="left-wing-cell ng-scope" rowspan="22" data-ng-if="seatMap.columns.length < 8">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 268.7 254" style="enable-background:new 0 0 268.7 254; width: 180px; padding-right: 3px;" xml:space="preserve">
+                        <style type="text/css">
+                            .st0{fill:#F6F7F8;stroke:#E2E2E2;stroke-miterlimit:10;}
+                        </style>
+                        <path class="st0" d="M164,69.2C159.6,53,144.7,41,127,41c-21.2,0-38.3,17.2-38.3,38.3v39.2L9,170.7c-4.4,2.9-7,7.8-7,13v56
+                            c0,8.3,8.2,14.1,16,11.4l248.7-85.8V2L164,69.2z"></path>
+                        </svg>
+                    </th><!-- end ngIf: seatMap.columns.length < 8 -->
+                    <th></th>
+                    <!-- ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">A</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">B</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">C</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">H</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">J</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">K</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index -->
+                    <th></th>
+                    <!-- ngIf: seatMap.columns.length < 8 --><th class="right-wing-cell ng-scope" rowspan="22" data-ng-if="seatMap.columns.length < 8">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 268.7 254" style="enable-background:new 0 0 268.7 254; width: 180px; padding-left: 3px;" xml:space="preserve">
+                        <style type="text/css">
+                            .st0{fill:#F6F7F8;stroke:#E2E2E2;stroke-miterlimit:10;}
+                        </style>
+                        <path class="st0" d="M104.7,69.2C109.1,53,124,41,141.7,41c21.2,0,38.3,17.2,38.3,38.3v39.2l79.6,52.1c4.4,2.9,7,7.8,7,13v56
+                            c0,8.3-8.2,14.1-16,11.4L2,165.3V2L104.7,69.2z"></path>
+                        </svg>
+                    </th><!-- end ngIf: seatMap.columns.length < 8 -->
+                </tr>
+
+                <!-- loop through seat rows -->
+                <!-- ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="35A" aria-label="35A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="35B" aria-label="35B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="35C" aria-label="35C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">35</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="35H" aria-label="35H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="35J" aria-label="35J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="35K" aria-label="35K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="36A" aria-label="36A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="36B" aria-label="36B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="36C" aria-label="36C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">36</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="36H" aria-label="36H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="36J" aria-label="36J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="36K" aria-label="36K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="37A" aria-label="37A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="37B" aria-label="37B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="37C" aria-label="37C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">37</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="37H" aria-label="37H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="37J" aria-label="37J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="37K" aria-label="37K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="38A" aria-label="38A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="38B" aria-label="38B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="38C" aria-label="38C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">38</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="38H" aria-label="38H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="38J" aria-label="38J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="38K" aria-label="38K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="39A" aria-label="39A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="39B" aria-label="39B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="39C" aria-label="39C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">39</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="39H" aria-label="39H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="39J" aria-label="39J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="39K" aria-label="39K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="40A" aria-label="40A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="40B" aria-label="40B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="40C" aria-label="40C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">40</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="40H" aria-label="40H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="40J" aria-label="40J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="40K" aria-label="40K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="41A" aria-label="41A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="41B" aria-label="41B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="41C" aria-label="41C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">41</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="41H" aria-label="41H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="41J" aria-label="41J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="41K" aria-label="41K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="42A" aria-label="42A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="42B" aria-label="42B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="42C" aria-label="42C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">42</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="42H" aria-label="42H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="42J" aria-label="42J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="42K" aria-label="42K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="43A" aria-label="43A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="43B" aria-label="43B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="43C" aria-label="43C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">43</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="43H" aria-label="43H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="43J" aria-label="43J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="43K" aria-label="43K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="44A" aria-label="44A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="44B" aria-label="44B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="44C" aria-label="44C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">44</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="44H" aria-label="44H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="44J" aria-label="44J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="44K" aria-label="44K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="45A" aria-label="45A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="45B" aria-label="45B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="45C" aria-label="45C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">45</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="45H" aria-label="45H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="45J" aria-label="45J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="45K" aria-label="45K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="46A" aria-label="46A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="46B" aria-label="46B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="46C" aria-label="46C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">46</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="46H" aria-label="46H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="46J" aria-label="46J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="46K" aria-label="46K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="47A" aria-label="47A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="47B" aria-label="47B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="47C" aria-label="47C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">47</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="47H" aria-label="47H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="47J" aria-label="47J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="47K" aria-label="47K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="48A" aria-label="48A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="48B" aria-label="48B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="48C" aria-label="48C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">48</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="48H" aria-label="48H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="48J" aria-label="48J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="48K" aria-label="48K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="49A" aria-label="49A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="49B" aria-label="49B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="49C" aria-label="49C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">49</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="49H" aria-label="49H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="49J" aria-label="49J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="49K" aria-label="49K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="50A" aria-label="50A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="50B" aria-label="50B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="50C" aria-label="50C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">50</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="50H" aria-label="50H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="50J" aria-label="50J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="50K" aria-label="50K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="51A" aria-label="51A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="51B" aria-label="51B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="51C" aria-label="51C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">51</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="51H" aria-label="51H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="51J" aria-label="51J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="51K" aria-label="51K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="52A" aria-label="52A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="52B" aria-label="52B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="52C" aria-label="52C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">52</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="52H" aria-label="52H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="52J" aria-label="52J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="52K" aria-label="52K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false">
+                            <!-- ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="53A" aria-label="53A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="53B" aria-label="53B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="53C" aria-label="53C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">53</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="53H" aria-label="53H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="53J" aria-label="53J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="53K" aria-label="53K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index --><tr class="seat-grid-row ng-scope" data-ng-repeat="seatRow in seatMap.rows track by $index">
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,1)"></td>
+                    <!-- ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="54A" aria-label="54A}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="54B" aria-label="54B}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="54C" aria-label="54C}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope flight-aisle">
+                        <!-- ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) --><div class="seatrow-number ng-binding ng-scope" data-ng-if="isFlightAisle($index)">54</div><!-- end ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="54H" aria-label="54H}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="54J" aria-label="54J}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index --><td data-ng-repeat="seat in seatRow.seats track by $index" data-ng-class="{'flight-aisle': seat.number === '#' &amp;&amp; isFlightAisle($index)}" class="ng-scope">
+                        <!-- ngIf: seat.number !== '#' --><button id="54K" aria-label="54K}" type="button" data-ng-click="selectSeat(seat);" class="btn btn-default btn-block seat-button ng-scope pointer-events-none" data-ng-class="{'pointer-events-none': !isSelectionAllowed}" data-ng-if="seat.number !== '#'" data-ng-disabled="seat.available === false" disabled="disabled">
+                            <!-- ngIf: seat.available === false --><span data-ng-if="seat.available === false" class="ng-scope"><i class="icon-seatbelt"></i></span><!-- end ngIf: seat.available === false -->
+                        </button><!-- end ngIf: seat.number !== '#' -->
+                        <!-- ngIf: isFlightAisle($index) -->
+                    </td><!-- end ngRepeat: seat in seatRow.seats track by $index -->
+                    <td class="exit-row-container" data-ng-class="findExitRow(seatRow,seatRow.seats.length)"></td>
+                </tr><!-- end ngRepeat: seatRow in seatMap.rows track by $index -->
+                <!-- row labels again -->
+                <tr class="seat-grid-row">
+                    <th></th>
+                    <!-- ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">A</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">B</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">C</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">H</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">J</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index --><th data-ng-repeat="seatColumn in seatMap.columns track by $index" class="ng-scope"><!-- ngIf: seatColumn != '#' --><span data-ng-if="seatColumn != '#'" class="ng-binding ng-scope">K</span><!-- end ngIf: seatColumn != '#' --></th><!-- end ngRepeat: seatColumn in seatMap.columns track by $index -->
+                    <th></th>
+                </tr>
+            </tbody></table>
+</body>
+</html>

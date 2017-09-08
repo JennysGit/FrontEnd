@@ -1636,7 +1636,8 @@
                         var nodeName = nodeNameSelector.replace(runescape, funescape).toLowerCase();
                         return nodeNameSelector === "*" ?
                             function() {
-                                return true; } :
+                                return true;
+                            } :
                             function(elem) {
                                 return elem.nodeName && elem.nodeName.toLowerCase() === nodeName;
                             };
@@ -1649,8 +1650,7 @@
                             (pattern = new RegExp("(^|" + whitespace + ")" + className + "(" + whitespace + "|$)")) &&
                             classCache(className, function(elem) {
                                 return pattern.test(typeof elem.className === "string" && elem.className || typeof elem.getAttribute !== "undefined" && elem.getAttribute("class") || "");
-                            });
-                    },
+                            }); },
 
                     "ATTR": function(name, operator, check) {
                         return function(elem) {
@@ -4187,9 +4187,11 @@
             maxIterations = 20,
             currentValue = tween ?
             function() {
-                return tween.cur(); } :
+                return tween.cur();
+            } :
             function() {
-                return jQuery.css(elem, prop, ""); },
+                return jQuery.css(elem, prop, "");
+            },
             initial = currentValue(),
             unit = valueParts && valueParts[3] || (jQuery.cssNumber[prop] ? "" : "px"),
 

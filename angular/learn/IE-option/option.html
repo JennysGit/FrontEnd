@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<body ng-controller="carSearchResults as carResults">
+    <div class="col-xs-5 col-md-5 less-grid-padding" ng-if="carResults.showPickupTime">
+        <label class="quick-search-label" for="pickupTime">time </label>
+        <div class="form-element time">
+            <i class="icon-arrow-down select-caret-cars link-fg hidden-md"></i>
+            <select class="form-control" data-ng-model="carResults.pickupTime" name="pickupTime" id="pickupTime">
+                <option data-ng-repeat="time in carResults.dropTimes" value="{{time.code}}" class="link-fg">
+                    {{time.value}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-xs-5 col-md-5 less-grid-padding" >
+        <label class="quick-search-label" for="returnTime">time</label>
+        <div class="form-element time">
+            <i class="icon-arrow-down select-caret-cars link-fg hidden-md"></i>
+            <select class="form-control" data-ng-model="carResults.returnTime" name="returnTime" id="returnTime">
+                <option data-ng-repeat="time in carResults.dropTimes" value="{{time.code}}" class="link-fg">
+                    {{time.value}}
+                </option>
+            </select>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+angular.module('myApp', [])
+    .controller('carSearchResults', function($scope) {
+
+        var vm = this;
+
+       
+        vm.pickupTime = '12:00';
+        vm.returnTime = '12:00';
+        vm.dropTimes = [
+            { code: '00:00', value: '12:00am' }, { code: '00:30', value: '12:30am' },
+            { code: '01:00', value: '01:00am' }, { code: '01:30', value: '01:30am' },
+            { code: '02:00', value: '02:00am' }, { code: '02:30', value: '02:30am' },
+            { code: '03:00', value: '03:00am' }, { code: '03:30', value: '03:30am' },
+            { code: '04:00', value: '04:00am' }, { code: '04:30', value: '04:30am' },
+            { code: '05:00', value: '05:00am' }, { code: '05:30', value: '05:30am' },
+            { code: '06:00', value: '06:00am' }, { code: '06:30', value: '06:30am' },
+            { code: '07:00', value: '07:00am' }, { code: '07:30', value: '07:30am' },
+            { code: '08:00', value: '08:00am' }, { code: '08:30', value: '08:30am' },
+            { code: '09:00', value: '09:00am' }, { code: '09:30', value: '09:30am' },
+            { code: '10:00', value: '10:00am' }, { code: '10:30', value: '10:30am' },
+            { code: '11:00', value: '11:00am' }, { code: '11:30', value: '11:30am' },
+            { code: '12:00', value: '12:00pm' }, { code: '12:30', value: '12:30pm' },
+            { code: '13:00', value: '01:00pm' }, { code: '13:30', value: '01:30pm' },
+            { code: '14:00', value: '02:00pm' }, { code: '14:30', value: '02:30pm' },
+            { code: '15:00', value: '03:00pm' }, { code: '15:30', value: '03:30pm' },
+            { code: '16:00', value: '04:00pm' }, { code: '16:30', value: '04:30pm' },
+            { code: '17:00', value: '05:00pm' }, { code: '17:30', value: '05:30pm' },
+            { code: '18:00', value: '06:00pm' }, { code: '18:30', value: '06:30pm' },
+            { code: '19:00', value: '07:00pm' }, { code: '19:30', value: '07:30pm' },
+            { code: '20:00', value: '08:00pm' }, { code: '20:30', value: '08:30pm' },
+            { code: '21:00', value: '09:00pm' }, { code: '21:30', value: '09:30pm' },
+            { code: '22:00', value: '10:00pm' }, { code: '22:30', value: '10:30pm' },
+            { code: '23:00', value: '11:00pm' }, { code: '23:30', value: '11:30pm' }
+        ];
+    })
+</script>
+
+</html>

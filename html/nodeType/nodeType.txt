@@ -1,0 +1,12 @@
+1	Element 	元素节点 
+2	Attr 	属性节点
+3 	Text 	文本节点
+4	CDATASection 	CDATA部分 
+5	EntityReference 	实体引用
+6 	Entity 	实体
+7 	ProcessingInstruction 	指令处理
+8 	Comment 	注释
+9 	Document	文档
+10 	DocumentType 向为文档定义的实体提供接口
+11 	DocumentFragment 	轻量级的Document对象，能够容纳文档的某个部分
+12 	Notation 	DTD中声明的符号

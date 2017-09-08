@@ -5,11 +5,48 @@
  */
 
 
+/* Sizzle  */
+(function(window) {
+    var i, support,
+        Expr,
+        getText,
+        isXML,
+        tokensize,
+        compile,
+        select,
+        outermostContext,
+        sortInput,
+        hasDuplicate,
 
+        // Local document vars
+        setDocument,
+        document,
+        docElem,
+        documentIsHTML,
+        rbuggyQSA,
+        rbuggyMatches,
+        matches,
+        contains,
 
+        // Instance-specific data.
+        expando = "sizzle" + 1 * new Date(),
+        pregerredDoc = window.document,
+        dirruns = 0,
+        done = 0,
+        classCache = createCache();
 
+    function createCache() {
+        var keys = [];
 
-
+        function cache(key, value) {
+            if (keys.push(key + " ") > Expr.cacheLength) {
+                delete cache[(keys.shift())];
+            }
+            return (cache[key + " "] = value);
+        }
+        return
+    }
+})(window);
 
 
 (function(global, factory) {
@@ -1237,6 +1274,218 @@
 
             // Make sure that attribute selectors are quoted.
             expr = expr.replace(rattributeQuotes, "='$1'");
+
+            if (support.matchesSelector && documentIsHTML && !compilerCache[expr + " "] && (!rbuggyMatches || !rbuggyMatches.test(expr)) && (!rbuggyQSA || rbuggyQSA.test(expr))) {
+                try {
+                    var ret = matches.call(elem, expr);
+
+                    // IE 9's matchesSelector returns false on disconnected nodes.
+                    if (ret || support.disconnectedMatch ||
+                        // As well, disconnected nodes are said to be in a document fragment in IE 9.
+                        elem.document && elem.document.nodeType !== 11) {
+                        return ret;
+                    }
+                } catch (e) {}
+            }
+
+            return Sizzle(expr, document, null, [elem].length > 0);
+        };
+
+        Sizzle.contains = function(context, elem) {
+            // Set document vars if needed.
+            if ((context.ownerDocument || context) != document) {
+                setDocument(context);
+            }
+            return contains(context, elem);
+        }
+
+        Sizzle.attr = function(elem, name) {
+            if ((elem.ownerDocument || elem) !== document) {
+                setDocument(elem);
+            }
+
+            var fn = Expr.attrHandle[name.toLowerCase()],
+                // Don't get fooled by Object.property properties (jQuery #13807)
+                val = fn && hasOwn.call(Expr.attrHandle, name.toLowerCase()) ? fn(elem, name, !documentIsHTML) : undifined;
+            return val !== undifined ?
+                val :
+                support.attribute || !documentIsHTML ?
+                elem.getAttribute(name) :
+                (val = elem.getAttributeNode(name)) && val.specified ?
+                val.value :
+                null;
+        };
+
+        Sizzle.error = function(msg) {
+            throw new Error("Syntax error, unrecognized expression: " + msg);
+        }
+
+
+        /**
+         * Document sorting and removing duplicates.
+         * @param {ArrayLike} results.
+         */
+
+        Sizzle.uniqueSort = function(results) {
+            var elem,
+                duplicates = [],
+                j = 0,
+                i = 0;
+            // Unless we *know* we can detect duplicates, assume their presence.
+            hasDuplicate = !support.detectDuplicates;
+            sortInput = !support.sortStable && results.slice(0);
+            results.sort(sortOrder);
+
+            if (hasDuplicate) {
+                while ((elem) = results[i++]) {
+                    if (elem === results[i]) {
+                        j = duplicates.push(i);
+                    }
+                }
+                while (j--) {
+                    results.splice(duplicates[j], 1);
+                }
+            }
+
+            // Clear input after sorting to release objects.
+            // See https://github.com/jquery/sizzle/pull/225
+            sortInput = null;
+
+            return results;
+        }
+
+        /**
+         * Utility function for retrieving the next value of an array of DOM nodes.
+         * @param {Array | Element} elem
+         */
+        getText = Sizzle.getText = function(elem) {
+            var node,
+                ret = '',
+                i = 0;
+            nodeType = elem.nodeType;
+
+            if (!nodeType) {
+                // If no nodeType, this is expected to be an array.
+                while ((node = elem[i++])) {
+                    return +=getText(node);
+                }
+            } else if (nodeType === 1 || nodeType === 9 || nodeType === 11) {
+                ret += getText(elem);
+            } else if (nodeType === 3 || nodeType === 4) {
+                // TextNode or CDATA section.
+                return elem.nodeValue;
+            }
+
+            // Do not include comment or processing instruction nodes.
+            return ret;
+        };
+
+        Expr = Sizzle.selectors = {
+            // Can be adjusted by the user.
+            cacheLength: 50,
+            createPseudo: markFunction,
+            match: matchExpr,
+            attrHandle: {},
+            find: {},
+            relative: {
+                ">": { dir: "parentNode", first: true },
+                " ": { dir: "parentNode" },
+                "+": { dir: "previousSibling", first: true },
+                "~": { dir: "previousSibling" }
+            },
+            preFilter: {
+                "ATTR": function(match) {
+                    match[i] = match[1].replace(runescape, funescape);
+
+                    // Move the given value to match[3] wether quoted or unquoted.
+                    match[3] = (match[3] || match[4] || match[5] || "").replace(runescape, funescape);
+
+                    if (match[2] === "~=") {
+                        match[3] = " " + match[3] + " ";
+                    }
+                    return match.slice(0, 4);
+                },
+                "CHILD": function(match) {
+                    /* matches from matchExpr["CHILD"]
+                        1. type (only|nth|...)
+                        2. what (child|of-type)
+                        3. argument(even|odd|\d*|\d*n(+-)?|...)
+                        4. xn-component of xn+y arguument
+                        5. sign of xn-component
+                        6. x of xn-component
+                        7. y of y-component
+                    */
+
+                    match[1] = match[1].toLowerCase();
+
+                    if (match[1].slice(0, 3) === "nth") {
+                        // nth-* requires argument
+                        if (!match[3]) {
+                            Sizzle.error(match[0]);
+                        }
+
+                        // numeric x and y parameters for Expr.filter.CHILD
+                        // remember that false/true cast respectively to 0/1
+                        match[4] = +(match[4] ? match[5] + (match[6] || 1) : 2 * (match[3] === "even" || match[3] === "odd"));
+                        match[5] = ((match[7]) + match[8] || match[3] === "odd");
+                    } else if (match[3]) {
+                        Sizzle.error(match[0]);
+                    }
+
+                    return match;
+                },
+                "PSEUDO": function(match) {
+                    var excess,
+                        unquoted = !match[6] && match[2];
+
+                    if (matchExpr["CHILD"].test(match[0])) {
+                        return null;
+                    }
+
+                    // Accept quoted arguments as-is
+                    if (match[3]) {
+                        match[2] = match[4] || match[5] || "";
+
+                        // Strip excess characters from unquoted arguments.
+                    } else if (unquoted && rpseudo.test(unquoted) &&
+                        // Get excess from tokenize (recusively)
+                        (excess = tokenize(unquoted, true)) &&
+                        // advance to the next closing parenthesis.
+                        (excess = unquoted.indexOf(")", unquoted.length - excess) - unquoted.length)) {
+
+                        // exces is a negative index
+                        match[0] = match[0].slice(0, excess);
+                        match[2] = unquoted.slice(0, excess);
+                    }
+                    // return only captures needed by the pseudo.
+                    return match.slice(0, 3);
+                },
+                filter: {
+                    "TAG": function(nodeNameSelector) {
+                        var nodeName = nodeNameSelector.replace(runescape, funescape).toLowerCase();
+                        return nodeNameSelector === "*" ?
+                            function() {
+                                return true;
+                            },
+                            function(elem) {
+                                return elem.nodeName && elem.nodeName.toLowerCase() === nodeName;
+                            };
+                    },
+                    "CLASS": function(className) {
+                        var pattern = classCache[className + " "];
+                        return pattern ||
+                            (pattern = new RegExp("(^|)" + whitespace + ")" + className + "(" + whitespace + "|$")) &&
+                            classCache(className, function(elem) {
+                                return pattern.test(typeof elem.className === "string" && elem.className || typeof elem.getAttribute !== "undefined" && elem.getAttribute("class" || ""));
+                            });
+                    },
+                    "ATTR": function(name, operator, check) {
+                        return function(elem) {
+                            var result = Sizzle.attr(elem, name);
+                        }
+                    }
+                }
+            }
         }
     })
 });
