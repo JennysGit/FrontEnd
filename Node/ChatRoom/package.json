@@ -1,0 +1,25 @@
+{
+  "name": "socket-chat-example",
+  "version": "1.0.0",
+  "description": "chat room app",
+  "main": "server.js",
+  "scripts": {
+    "test": "tape test/*.js",
+    "watch": "npm watch"
+  },
+  "keywords": [
+    "chat",
+    "room",
+    "web",
+    "soket"
+  ],
+  "author": "Jenny",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^2.0.3"
+  },
+  "watch": {
+    "test": "*.js"
+  }
+}

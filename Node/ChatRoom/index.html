@@ -1,100 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>欢迎来到泡泡聊天室</title>
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<style type="text/css">
-		.room{
-			background-color: rgba(136,136,136,0.5);
-			width: 100%;
-			min-height: 500px;
-			max-width: 800px;
-			border-radius: 10px;
-			margin:  auto;
-			position: relative;
-		}
-		.title{
-			text-align: center;
-		}
-		.message{
-			position: absolute;
-			left: 20px;
-			top:20px;
-			min-height: 460px;
-			width: 500px;
-			background-color: white;
-			border-radius: 8px;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>欢迎来到泡泡聊天室</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style type="text/css">
+    .room {
+        background-color: rgba(136, 136, 136, 0.5);
+        width: 100%;
+        min-height: 500px;
+        max-width: 800px;
+        border-radius: 10px;
+        margin: auto;
+        position: relative;
+    }
 
-		}
-		.user{
-			position: absolute;
-			right:20px;
-			top: 20px;
-			min-height: 460px;
-			background-color: white;
-			border-radius: 8px;
-			width: 240px;
-		}
-		.send-msg-box{
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-		}
-		textarea{
-			border:none;
-		}
-		textarea.input-msg{
-			border-radius: 0;
-			border:none;
-			border-top: 1px solid #ccc;
-		}
-		textarea.input-msg:focus{
-			box-shadow: none;
-			border-color: #ccc;
-		}
-		.row-offset-1{
-			margin-top: 15px;
-		}
-		p.user-info{
-			border-bottom: 1px solid #ccc;
-			padding:5px;
-			padding-left: 20px;
-		}
-	</style>
-	<script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
-	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	
+    .title {
+        text-align: center;
+    }
+
+    .message {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        min-height: 460px;
+        width: 500px;
+        background-color: white;
+        border-radius: 8px;
+    }
+
+    .user {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        min-height: 460px;
+        background-color: white;
+        border-radius: 8px;
+        width: 240px;
+    }
+
+    .send-msg-box {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    textarea {
+        border: none;
+    }
+
+    textarea.input-msg {
+        border-radius: 0;
+        border: none;
+        border-top: 1px solid #ccc;
+    }
+
+    textarea.input-msg:focus {
+        box-shadow: none;
+        border-color: #ccc;
+    }
+
+    .row-offset-1 {
+        margin-top: 15px;
+    }
+
+    p.user-info {
+        border-bottom: 1px solid #ccc;
+        padding: 5px;
+        padding-left: 20px;
+    }
+    </style>
+    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-	<div class="container">
-		<h3 class="title">Welcome to papi chat room, enjoy your time.</h3>
-		<div class="room">
-			<div class="message">
-				<p class="user-info">Jenny</p>
-				<div class="msg-info col-xs-12" id="user-msg">
-				</div>
-				<div class="send-msg-box">
-					<div>
-						<textarea name="message" id="message" rows="3" class="form-control input-msg"></textarea>
-					</div>
-					<a class="btn btn-default pull-right" href="#" role="button" id="sendMsg">Send</a>
-				</div>
-			</div>
-			<div class="user">
-				<!-- <div class="row-offset-1">
-					<input type="text" class="form-control" id="user" placeholder="搜索">
-				</div> -->
+    <div class="container">
+        <h3 class="title">Welcome to papi chat room, enjoy your time.</h3>
+        <div class="room">
+            <div class="message">
+                <p class="user-info">Jenny</p>
+                <div class="msg-info col-xs-12" id="user-msg">
+                </div>
+                <form class="send-msg-box">
+                    <div>
+                        <textarea name="message" id="message" rows="3" class="form-control input-msg"></textarea>
+                    </div>
+                    <button  class="btn btn-default pull-right"  id="sendMsg">Send</button>
+                </form>
+            </div>
+            <div class="user">
+                <div class="user-list col-xs-12">
+                    <p class="row-offset-1">User List</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script type="text/javascript">
+    var socket = io();
 
-				<div class="user-list col-xs-12">
-					<p class="row-offset-1">User List</p>
-				</div>
-			</div>
-		</div>
-	</div>
+    $(function() {
+        var user = "Jenny";
 
-	<script type="text/javascript" src="chat.js"></script>
+        $('#sendMsg').click(function(event) {
+            var msg = $('#message').val();
+            if (msg) {
+                socket.emit('message', msg);
+                var htmlMsg = getMessageHtml(msg);
+               //$('#user-msg').append(htmlMsg);
+                $('#message').val('');
+                return false;
+            }
+
+        });
+
+
+        socket.on('message', function(msg) {
+            $('#user-msg').append(getMessageHtml(msg));
+        });
+
+    });
+
+    function getMessageHtml(msg) {
+        var html = '<div class="user-message">' + msg + '</div>';
+        return html;
+    }
+    </script>
 </body>
+
 </html>

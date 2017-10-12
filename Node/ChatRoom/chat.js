@@ -1,3 +1,6 @@
+
+var socket = io();
+
 $(function(){
 	var user = "Jenny";
 	$('#sendMsg').click(function(event) {
@@ -13,6 +16,6 @@ $(function(){
 });
 
 function getMessageHtml(msg){
-	var html = '<div class="user-message">' + msg+ '</div>';
+	var html = '<div class="user-message">' + msg + '</div>';
 	return html;
 }
