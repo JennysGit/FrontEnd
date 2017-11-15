@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Continuous image borders</title>
+    <style>
+    .someting-meaningful {
+        background: url(stone)
+    }
+    </style>
+</head>
+
+<body>
+    <div class="something-meaningful">
+        I have a nice stone art border, dont't I look pretty?
+    </div>
+    <script type="text/javascript">
+    // for (var i = 0; i < 5; i++) {
+    //     return function(i) {
+    //         window.setTimeout(function() {
+    //             console.log(i);
+    //         }, 1000)
+    //     }(i);
+    // }
+
+
+
+    function f1(){
+    	var n = 999;
+    	nAdd = function(){
+    		n+=1;
+    	}
+    	function f2(){
+    		console.log(n);
+    	}
+    	return f2;
+    }
+
+    var result = f1();
+    result(); // 999
+    nAdd();
+    result();
+    nAdd();
+    result();
+
+
+    var name = "the window";
+
+    var object = {
+    	name: 'my object',
+    	getNameFunc: function(){
+    		return function(){
+    			return this.name;
+    		}
+    	}
+    }
+
+    console.log(object.getNameFunc()());
+
+
+    var object1 = {
+    	name:'My Object',
+    	getNameFunc: function(){
+    		var that = this;
+    		return function(){
+    			return that.name;
+    		}
+    	}
+    }
+
+    console.log(object1.getNameFunc()());
+    </script>
+</body>
+
+</html>

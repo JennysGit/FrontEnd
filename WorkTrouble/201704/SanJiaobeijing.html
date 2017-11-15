@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>三角背景制作</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: url(timg.jpg);
+        background-size: cover;
+    }
+
+    .header {
+        height: 100px;
+        background: white;
+        position: relative;
+    }
+
+    .angle {
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        border-bottom: 10px solid red;
+        position: absolute;
+        bottom: 0;
+        left: 100px;
+    }
+
+    .left,
+    .right {
+        height: 20px;
+        float: left;
+    }
+
+    .left {
+        width: 20%;
+        background: linear-gradient(-45deg, transparent 14px, white 0);
+    }
+
+    .right {
+        width: 80%;
+        background: linear-gradient(45deg, transparent 14px, white 0);
+    }
+
+    .angle-container {
+        overflow: hidden;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <!--  <div class="angle">
+        </div> -->
+    </div>
+    <div class="angle-container">
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</body>
+
+</html>

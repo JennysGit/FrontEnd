@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>checkbox html</title>
+    <style type="text/css">
+    .activity-item {
+        background: #fba;
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+    }
+
+    h6 {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+</head>
+
+<body ng-app="myApp">
+    <div ng-controller="filterController">
+        <ul>
+            <li ng-repeat="rating in filter.ratings">
+                <input type="checkbox" aria-label="ratings {{rating}}" ng-click="filterContent()"> ratings {{rating}}
+            </li>
+        </ul>
+        <div class="activity-item" ng-repeat="activity in activities">
+            <h6>{{activity.name}}</h6> {{activity.ratings}}
+        </div>
+    </div>
+    <script type="text/javascript">
+    var app = angular.module('myApp', []);
+
+    app.controller('filterController', ['$scope', function($scope) {
+        $scope.filter = {};
+        $scope.filter.ratings = [1, 2, 3, 4, 5];
+        $scope.activities = [
+            { name: 'test1', ratings: 1 },
+            { name: 'test2', ratings: 2 },
+            { name: 'test3', ratings: 3 },
+            { name: 'test4', ratings: 4 },
+            { name: 'test5', ratings: 5 },
+            { name: 'test6', ratings: 1 },
+            { name: 'test7', ratings: 5 },
+            { name: 'test8', ratings: 5 },
+            { name: 'test9', ratings: 4 },
+            { name: 'test10', ratings: 3 },
+        ];
+        $scope.filterContent = function() {
+
+        }
+
+    }]);
+    </script>
+</body>
+
+</html>

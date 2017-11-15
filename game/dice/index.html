@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>骰子游戏</title>
+    <style>
+    	.detail span{
+    		margin-right: 25px;
+    	}
+    </style>
+</head>
+
+<body>
+    <div class="game-rule">
+        <h3>游戏规则</h3>
+        <p class="detail">
+            <span>总点数：<b id="dice_total_num"></b></span>
+            <span>骰子1： <b id="dice_1_num"></b></span>
+            <span>骰子2： <b id="dice_2_num"></b></span>
+        </p>
+        <p>
+            上一次点数：<span id="lastTotalNumber"></span>
+        </p>
+        <button id="startGame" onclick="startGame()">开始</button>
+        <p id="gameResults"></p>
+    </div>
+    <script type="text/javascript">
+    var totalTimes = 0;
+    var lastTotalNumber = 0;
+    var currentTotalNumber = 0;
+    var gameResultsMessage = {
+        win: "你赢了!",
+        lose: '你输了!',
+        continue: '继续加油!'
+    }
+
+    function startGame(argument) {
+        totalTimes++;
+
+        var dice_1_num = generateDiceNumber();
+        var dice_2_num = generateDiceNumber();
+        var dice_total_num = dice_1_num + dice_2_num;
+        currentTotalNumber = dice_total_num;
+
+        if(totalTimes === 1){
+
+        }else{
+        	lastTotalNumber == 
+        }
+
+        var gameResults = getGameResults(dice_total_num);
+        var msg = '';
+        if (gameResults === 1) {
+            msg = gameResultsMessage.win;
+        } else if (gameResults === -1) {
+            msg = gameResultsMessage.lose;
+        } else {
+            msg = gameResultsMessage.continue;
+        }
+
+        document.getElementById('dice_1_num').innerText = dice_1_num;
+        document.getElementById('dice_2_num').innerText = dice_2_num;
+        document.getElementById('dice_total_num').innerText = dice_total_num;
+        document.getElementById('gameResults').innerText = msg;
+        document.getElementById('lastTotalNumber').innerText = lastTotalNumber;
+
+    }
+
+    function generateDiceNumber() {
+        return Math.ceil(Math.random() * 6);
+    }
+
+    function getGameResults(totalNumber) {
+        var numWinArray = [7, 11];
+        var numLoseArray = [2, 3, 12];
+        var gameResults = -1;
+        if (numWinArray.indexOf(totalNumber) > -1) {
+            // win
+            gameResults = 1;
+        } else if (numLoseArray.indexOf(totalNumber) > -1) {
+            gameResults = 0;
+        }
+
+        return gameResults;
+
+    }
+    </script>
+</body>
+
+</html>
