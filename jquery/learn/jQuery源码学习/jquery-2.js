@@ -1987,7 +1987,7 @@
                         var name = elem.nodeName.toLowerCase();
                         return name === "input" && elem.type === "button" || name === "button";
                     },
-
+ 
                     "text": function(elem) {
                         var attr;
                         return elem.nodeName.toLowerCase() === "input" &&

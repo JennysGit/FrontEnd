@@ -1,0 +1,10 @@
+1. css实现水平垂直居中
+
+ (1) 通过position：absolute 和 margin设置
+	 position:absolute; vertical-align: middle;
+
+ (2) 通过position: absolute 和 transform: translate(50%, 50%)
+
+ (3) 通过display: flex; align-items: center; 
+
+ (4) 通过display: table; table-cell

@@ -1,70 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Scope 01</title>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
+    <meta charset="UTF-8">
+    <title>Scope 01</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 </head>
+
 <body ng-app="myApp">
-   {{root}}
-	<div ng-controller="ParentController">
-		<p>We can access {{ root }}
-			and {{ parrent }}
-		</p>
-		<div ng-controller="ChildController as checkout">
-			<p>
-				We can access {{ root }}
-				and {{ parrent }}
-				and {{ child }}
-			</p>
-			<p>{{ fullFromChild }}</p>
-			<strong ng-repeat="num in array track by $index">
+    {{root}}
+    <div ng-controller="ParentController">
+        <p>We can access {{ root }} and {{ parrent }}
+        </p>
+        <div ng-controller="ChildController as checkout">
+            <p>
+                We can access {{ root }} and {{ parrent }} and {{ child }}
+            </p>
+            <p>{{ fullFromChild }}</p>
+            <strong ng-repeat="num in array track by $index">
 				{{num}},
-			</strong>
-			{{age}}
+			</strong> {{age}}
+            <select name="age" id="age" ng-model="age">
+                <option ng-repeat="arr in array" ng-value="arr">{{arr}}</option>
+            </select>
+            <select name="age1" id="age1" ng-model="age" ng-options="a for a in array">
+            </select>
+            <input type="checkbox" ng-model="condition" ng-change="condition=!condition" />
+        </div>
+        <div class="cabin" ng-repeat="(key, value) in avaiableCabins | groupBy: 'deckName'">
+        	Deck Name{{key}}
+        	<ul ng-repeat="deck in value">
+        		<li>{{deck.cabinNumber}} : deckName</li>
+        	</ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+    angular.module('myApp', [])
+        .run(function($rootScope) {
+            $rootScope.root = "root";
+        })
+        .controller('ParentController', function($scope) {
+            $scope.parrent = 'Parent';
 
-			<select name="age" id="age" ng-model="age">
-				<option ng-repeat="arr in array" ng-value="arr" >{{arr}}</option>
-			</select>
+            $scope.condition = true;
 
-			<select name="age1" id="age1" ng-model="age" ng-options="a for a in array">
-				
-			</select>
+            $scope.changeCondition = function() {
+                alert("change");
+            }
 
-			<input type="checkbox"  ng-model="condition" ng-change="condition=!condition" />
-		</div>
-	</div>
-	<script type="text/javascript">
-		angular.module('myApp', [])
-		.run(function($rootScope){
-			$rootScope.root = "root";
-		})
-		.controller('ParentController', function($scope){
-			$scope.parrent = 'Parent';
-
-			$scope.condition = true;
-
-			$scope.changeCondition = function(){
-				alert("change");
-			}
-		})
-		.controller('ChildController', function($scope){
-			$scope.child = 'Child';
-
-			$scope.fullFromChild = "We can access: " + 
-				$scope.root + ' and ' +
-				$scope.parrent + ' and ' + 
-				$scope.child;
-
-				
-
-				$scope.array = [1,2,3];
-				//$scope.age = $scope.array[0].toString();
-				$scope.age = 1;
+            $scope.avaiableCabins = [{ guaranteed: false, cabinNumber: "6227", cabinCategoryIcon: "", deckName: "Upper", deckNumber: "6" },
+                { guaranteed: false, cabinNumber: "2201", cabinCategoryIcon: "", deckName: "Main", deckNumber: "2" },
+                { guaranteed: false, cabinNumber: "2202", cabinCategoryIcon: "", deckName: "Main", deckNumber: "2" },
+                { guaranteed: false, cabinNumber: "2207", cabinCategoryIcon: "", deckName: "Main", deckNumber: "2" },
+                { guaranteed: false, cabinNumber: "2208", cabinCategoryIcon: "", deckName: "Main", deckNumber: "2" },
+                { guaranteed: false, cabinNumber: "2212", cabinCategoryIcon: "", deckName: "Main", deckNumber: "2" },
+                { guaranteed: false, cabinNumber: "1201", cabinCategoryIcon: "", deckName: "Riviera", deckNumber: "1" },
+                { guaranteed: false, cabinNumber: "1202", cabinCategoryIcon: "", deckName: "Riviera", deckNumber: "1" },
+                { guaranteed: false, cabinNumber: "1205", cabinCategoryIcon: "", deckName: "Riviera", deckNumber: "1" },
+                { guaranteed: false, cabinNumber: "1206", cabinCategoryIcon: "", deckName: "Riviera", deckNumber: "1" }
+            ];
 
 
-		})
-	</script>
+        })
+        .controller('ChildController', function($scope) {
+            $scope.child = 'Child';
+
+            $scope.fullFromChild = "We can access: " +
+                $scope.root + ' and ' +
+                $scope.parrent + ' and ' +
+                $scope.child;
+
+
+
+            $scope.array = [1, 2, 3];
+            //$scope.age = $scope.array[0].toString();
+            $scope.age = 1;
+
+
+        })
+    </script>
 </body>
+
 </html>

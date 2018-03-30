@@ -1,0 +1,20 @@
+.component-header {
+    box-sizing: border-box;
+    padding: 15px 25px;
+    border-bottom: 1px solid #ccc;
+    background: white;
+    padding-left: 60px;
+
+    img {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: 5px;
+        left: 20px;
+    }
+    
+    .caption {
+        font-size: 20px;
+        text-indent: 20px;
+    }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Volume</title>
+    <style>
+    .volume {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+    }
+
+    .circle3 {
+        width: 200px;
+        height: 320px;
+        box-sizing: border-box;
+        border: 5px solid black;
+        border-radius: 0 100% 100% 0/50%;
+        border-left: none;
+        position: relative;
+    }
+
+    .circle3:before {
+        content: '';
+    }
+
+    .right {
+        position: relative;
+        width: 200px;
+        height: 250px;
+        overflow: hidden;
+    }
+
+    .rightcircle {
+        width: 200px;
+        height: 200px;
+        border: 8px solid transparent;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-top: 8px solid #38B99B;
+        border-right: 8px solid #38B99B;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        /* 旋转45度 */
+    }
+
+    .rightcircle:before {
+        content: '';
+        width: 70px;
+        height: 200px;
+        background: red;
+        position: absolute;
+        top: -79px;
+        left: 12px;
+    }
+
+    .rightcircle:after {
+        content: '';
+        width: 70px;
+        height: 200px;
+        background: blue;
+        position: absolute;
+        transform: rotate(270deg);
+        /* top: -45px; */
+        bottom: -57px;
+        right: 0;
+        /* left: 24px; */
+    }
+    </style>
+</head>
+
+<body>
+    <div class="volume">
+    </div>
+    <div class="circle circle3">
+    </div>
+    <div class="right">
+        <div class="rightcircle"></div>
+    </div>
+</body>
+
+</html>

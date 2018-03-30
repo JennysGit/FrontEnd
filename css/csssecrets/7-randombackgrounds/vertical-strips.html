@@ -29,8 +29,77 @@
         background-size: 41px 100%, 61px 100%, 83px 100%;
     }
 
-    .bg-image-box{
-    	
+    .random {
+        background: blue;
+        background-image: linear-gradient(90deg, white 1px, transparent 0);
+        background-size: 10px 5px;
+        position: relative;
+    }
+
+    .random:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 50%;
+        width: 100%;
+        background: blue;
+        background-image: linear-gradient(90deg, white 1px, transparent 0), linear-gradient(90deg, white 1px, transparent 0);
+        background-size: 20px 20px, 10px 10px,
+    }
+
+    .bg-image-box {}
+
+    .wave {
+
+        background-image: -o-linear-gradient(left, rgb(255, 255, 255) 50%, rgb(209, 209, 209) 50%, rgb(255, 255, 255) 50.5%);
+        background-image: -moz-linear-gradient(left, rgb(255, 255, 255) 50%, rgb(209, 209, 209) 50%, rgb(255, 255, 255) 50.5%);
+        background-image: -webkit-linear-gradient(left, rgb(255, 255, 255) 50%, rgb(209, 209, 209) 0%, rgb(255, 255, 255) 50.5%);
+        background-image: linear-gradient(left, rgb(255, 255, 255) 50%, rgb(209, 209, 209) 50%, rgb(255, 255, 255) 50.5%);
+    }
+
+    .wave-bg {
+        background: url(wave-final.png);
+    }
+
+    .wave-bg-white {
+        background: url(wave-final-white.png);
+    }
+
+    .wave-3 {
+        background: url(3.png);
+    }
+
+    .wave-4 {
+        width: 100px;
+        height: 40px;
+        background: url(wave-5.png);
+    }
+
+    .volume {
+        background-image: url(volume.png);
+        width: 30px;
+        height: 30px;
+        animation: volume 1s infinite step-start;
+    }
+
+    .volume.volume-your {
+        background: #ddd;
+        background-image: url(volume-other.png);
+    }
+
+    @keyframes volume {
+        0% {
+            background-position: 30px 0;
+        }
+        33% {
+            background-position: 60px 0;
+        }
+        66% {
+            background-position: 0 0;
+        }
+        100% {
+            background-position: 30px 0;
+        }
     }
     </style>
 </head>
@@ -39,12 +108,18 @@
     <div class="box box1"></div>
     <div class="box box2"></div>
     <div class="box box3"></div>
-
-
     <div class="bg-image-box">
-    	
+    </div>
+    <div class="box wave"></div>
+    <div class="box random">
+    </div>
+    <div class="box wave-3">
+    </div>
+    <div class="box wave-4">
     </div>
     <img src="bg_flower.gif" alt="bg_flower">
+    <div class="volume my"></div>
+    <div class="volume volume-your"></div>
 </body>
 
 </html>

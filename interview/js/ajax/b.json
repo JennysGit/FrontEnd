@@ -1,0 +1,13 @@
+[
+{
+    "name": "cat",
+    "like": "sleep"
+},
+{
+    "name": "dog",
+    "like": "eat"
+},
+{
+    "name": "mail",
+    "like": "talk"
+}]

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>面试</title>
+    <style>
+    .box {
+        width: 100px;
+        padding: 10px;
+        background: red;
+        float: left;
+        margin-right: 20px;
+    }
+
+    .inner {
+        width: 20px;
+        height: 20px;
+        background: blue;
+    }
+
+    .box1 {
+        position: relative;
+    }
+
+    .box1 .inner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -10px;
+        margin-top: -10px;
+    }
+
+    .box2 {
+        display: table;
+        min-height: 200px;
+    }
+
+    .box2>div {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .box2 .inner {
+        margin: 0 auto;
+    }
+    .box3 {
+    	display: flex;
+    	align-items: center;
+    	text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="box box1">
+        12334444 12334444 12334444 12334444 12334444 12334444 12334444
+        <div class="inner"></div>
+    </div>
+    <div class="box box2">
+        <div>
+            <div class="inner">
+            </div>
+        </div>
+    </div>
+    <div class="box box3">
+    	12334444 12334444 12334444 12334444 12334444 12334444 12334444
+    	<div class="inner"></div>
+    </div>
+</body>
+
+</html>

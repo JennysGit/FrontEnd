@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,maximun-scale=1,user-scalable=false">
-	<title>递归算法查找DOM元素最后的子节点</title>
-	<style type="text/css">
-	ul{
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximun-scale=1,user-scalable=false">
+    <title>递归算法查找DOM元素最后的子节点</title>
+    <style type="text/css">
+    /*	ul{
 		width: 1000px;
 		margin: 0 auto;
 		position: absolute;
@@ -13,52 +14,79 @@
 		top: 0;
 		bottom:0;
 		right: 0;
-		background-color: red;
+		/*background-color: red;
 	}
-	li{
-		margin-bottom: 10px;
-	}
-	</style>
-	
+	*/
+
+    li {
+        margin-bottom: 10px;
+    }
+    </style>
 </head>
+
 <body>
-	<div class="containner">
-		<ul class="list">
-			<li>我是第一个元素</li>
-			<li>我是第二个元素</li>
-			<li>我是第三个元素</li>
-			<li>我是第四个元素</li>
-			<li>我是第五个元素</li>
-		</ul>
-	</div>
-	<script type="text/javascript">
-		var items = document.getElementsByTagName("li");
-		// for(var i = 0 ; i < items.length; i++){
-		// 	(function(i){
-		// 		items[i].onclick = function(){
-		// 			alert(i);
-		// 		}
-		// 	})(i)
-			
-		// }
+    <div class="containner">
+        <p>不使用闭包</p>
+        <ul class="list" id="list1">
+            <li>我是第一个元素</li>
+            <li>我是第二个元素</li>
+            <li>我是第三个元素</li>
+            <li>我是第四个元素</li>
+            <li>我是第五个元素</li>
+        </ul>
+        <p>ES5使用闭包</p>
+        <ul class="list" id="list2">
+            <li>我是第一个元素</li>
+            <li>我是第二个元素</li>
+            <li>我是第三个元素</li>
+            <li>我是第四个元素</li>
+            <li>我是第五个元素</li>
+        </ul>
+        <p>ES6使用let</p>
+        <ul class="list" id="list3">
+            <li>我是第一个元素</li>
+            <li>我是第二个元素</li>
+            <li>我是第三个元素</li>
+            <li>我是第四个元素</li>
+            <li>我是第五个元素</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+    var list1 = document.getElementById('list1').children;
+    var list2 = document.getElementById('list2').children;
+    var list3 = document.getElementById('list3').children;
 
-		for(var i = 0 ; i < items.length; i++){
+    for (var i = 0; i < list1.length; i++) {
+        list1[i].onclick = function() {
+            console.log(i);
+        }
+    }
 
-			items[i].onclick = (function(i){
-				return function(){
-					alert(i);
-				}
-			})(i);
-		};
-		
-		for(var i = 0 ; i < items.length; i++){
+    for (var i = 0; i < list2.length; i++) {
+        list2[i].onclick = (function(i) {
+            return function() {
+                console.log(i);
+            }
+        })(i);
+    };
 
-			items[i].onclick = (function(i){
-				return function(){
-					alert(i);
-				}
-			})(i);
-		};	
-	</script>
+    // for (var i = 0; i < list2.length; i++) {
+    //     (function(i) {
+    //         list2[i].onclick = function() {
+    //             console.log(i);
+    //         }
+    //     })(i);
+
+    // }
+
+
+
+    for (let i = 0; i < list3.length; i++) {
+        list3[i].onclick = function() {
+            console.log(i);
+        }
+    }
+    </script>
 </body>
+
 </html>

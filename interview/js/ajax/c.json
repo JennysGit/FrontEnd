@@ -1,0 +1,17 @@
+[
+{
+    "name": "jquery",
+    "type": "Dom"
+},
+{
+    "name": "angular",
+    "type": "mvvm"
+},
+{
+    "name": "react",
+    "type": "view"
+},
+{
+    "name": "vuew",
+    "type": "mvvm"
+}]

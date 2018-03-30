@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Html</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular.js"></script>
+</head>
+
+<body ng-app="myApp">
+    <div ng-controller="MyCtrl">
+    	<button ng-click="showSelect = !showSelect">showSelect</button>
+    	<div>
+	        <select ng-model='selectMonth' required ng-options='option as option for option in months'>
+	           <option value="" ng-bind="yearLabel"></option>
+	        </select>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var myApp = angular.module('myApp', []).controller('MyCtrl', MyCtrl);
+
+
+    function MyCtrl($scope) {
+    	$scope.showSelect = false;
+
+        $scope.yearLabel = "Year";
+
+        $scope.selectMonth = 999;
+
+        $scope.months = [2018, 2019, 2020]
+    }
+    </script>
+</body>
+
+</html>

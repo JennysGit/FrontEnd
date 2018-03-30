@@ -238,7 +238,7 @@
 
                         // never move originak clone object
                         target[name] = jQuery.extend(deep, clone, copy);
-                    } else if (copy !== undifined) {
+                    } else if (copy !== undefined) {
                         target[name] = copy;
                     }
                 }
@@ -288,6 +288,24 @@
 
             for (key in obj) {}
             return key === undifined || hasOwn.call(obj, key);
+        },
+
+        isEmptyObject: function(obj) {
+            var name;
+            for (name in obj) {
+                return false;
+            }
+
+            return true;
+        },
+
+        type: function(obj) {
+            if (obj == null) {
+                return obj + "";
+            }
+
+            return typeof obj === "object" || typeof obj === "function" ?
+                class2type[toString.call(obj)] || "object" : typeof obj;
         },
 
         globalEval: function(code) {
@@ -644,7 +662,7 @@
             results = results || [];
 
             // Return early from calls with invalid selector or context.
-            if (typeof selector !== "string" || !selecor ||
+            if (typeof selector !== "string" || !selector ||
                 nodeType !== 1 && nodeType !== 9 && nodeType !== 11) {
 
                 return results;
@@ -1191,7 +1209,7 @@
                 }
 
                 // Sort on method existence if only one input has compareDocumentPosition.
-                var compare!a.compareDocumentPosition - !b.compareDocumentPosition;
+                var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
                 if (compare) {
                     return compare;
                 }
@@ -1367,7 +1385,7 @@
             if (!nodeType) {
                 // If no nodeType, this is expected to be an array.
                 while ((node = elem[i++])) {
-                    return +=getText(node);
+                    ret += getText(node);
                 }
             } else if (nodeType === 1 || nodeType === 9 || nodeType === 11) {
                 ret += getText(elem);
@@ -1466,7 +1484,7 @@
                         return nodeNameSelector === "*" ?
                             function() {
                                 return true;
-                            },
+                            } :
                             function(elem) {
                                 return elem.nodeName && elem.nodeName.toLowerCase() === nodeName;
                             };
@@ -1482,10 +1500,1345 @@
                     "ATTR": function(name, operator, check) {
                         return function(elem) {
                             var result = Sizzle.attr(elem, name);
+
+                            if (result == null) {
+                                return operator === "!=";
+                            }
+
+                            if (!operator) {
+                                return true;
+                            }
+                            result += "";
+
+                            return operator === "=" ? result === check :
+                                operator === "!=" ? result !== check :
+                                operator === "^=" ? check && result.indexOf(check) === 0 :
+                                operator === "*=" ? check && result.indexOf(check) > -1 :
+                                operator === "$=" ? check && result.slice(-check.length) === check :
+                                operator === "~=" ? (" " + result.replace(rwhitespace, " ") + " ").indexOf(check) > -1 :
+                                operator === "|=" ? result === check || result.slice(0, check.length + 1) === check + "-" :
+                                false;
+                        }
+                    },
+                    "CHILD": function(type, what, argument, first, last) {
+                        var simple = type.slice(0, 3) !== "nth",
+                            forward = type.slice(-4) !== "last",
+                            ofType = what === "of-type";
+
+                        return first === 1 && last === 0 ?
+                            function(elem) {
+                                return !!elem.parentNode;
+                            } :
+
+                            function(elem, context, xml) {
+                                var cache, uniqueCache, outerCache, node, nodeIndex, start,
+                                    dir = simple !== forward ? "nextSibling" : "previousSibling",
+                                    parent = elem.parentNode,
+                                    name = ofType && elem.nodeName.toLowerCase(),
+                                    useCache = !xml && !ofType,
+                                    diff = false;
+
+                                if (parent) {
+
+                                    if (simple) {
+                                        while (dir) {
+                                            node = elem;
+                                            while ((node = node[dir])) {
+                                                if (ofType ?
+                                                    node.nodeName.toLowerCase() === name :
+                                                    node.nodeType === 1) {
+                                                    return false;
+                                                }
+                                            }
+
+                                            start = dir = type === "only" && !start && "nextSibling";
+                                        }
+                                        return true;
+                                    }
+
+                                    start = [forward ? parent.firstChild : parent.lastChild];
+
+                                    if (forward && useCache) {
+                                        node = parent;
+                                        outerCache = node[expando] || (node[expando] = {});
+
+                                        uniqueCache = outerCache[node.uniqueID] || (outerCache[node.uniqueID] = {})
+
+                                        cache = uniqueCache[type] || [];
+
+                                        nodeIndex = cache[0] === dirruns && cache[1];
+
+                                        diff = nodeIndex && cache[2];
+
+                                        node = nodeIndex && parent.childNodes[nodeIndex];
+
+                                        while ((node = ++nodeIndex && node && node[dir] ||
+                                                (diff = nodeIndex = 0) || start.pop())) {
+
+                                            if (node.nodeType === 1 && ++diff && node === elem) {
+                                                uniqueCache[type] = [dirruns, nodeIndex, diff];
+                                                break;
+                                            }
+
+                                        }
+                                    } else {
+                                        if (userCache) {
+                                            node = elem;
+                                            outerCache = node[expando] || (node[expando] = {});
+                                            uniqueCache = outerCache[node.uniqueID] ||
+                                                (outerCache[node.uniqueID] = {});
+
+                                            cache = uniqueCache[type] || [];
+                                            nodeIndex = cache[0] === dirruns && cache[1];
+                                            diff = nodeIndex;
+                                        }
+
+                                        if (diff === false) {
+                                            while ((node = ++nodeIndex && node && node[dir] || (diff = nodeIndex = 0) || start.pop())) {
+                                                if ((ofType ?
+                                                        node.nodeName.toLowerCase() === name : node.nodeType === 1) && ++diff) {
+                                                    if (userCache) {
+                                                        outerCache = node[expando] || (node[expando] = {});
+                                                        uniqueCache = outerCache[node.uniqueID] || (outerCache[node.uniqueID] = {});
+                                                        uniqueCache[type] = [dirruns, diff];
+                                                    }
+
+                                                    if (node === elem) {
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    diff -= last;
+                                    return diff === first || (diff % first === 0 && diff / first >= 0);
+                                }
+                            }
+                    },
+                    "PSEUDO": function(pseudo, argument) {
+                        var args,
+                            fn = Expr.pseudos[pseudo] || Expr.setFilters[pseudo.toLowerCase()] ||
+                            Sizzle.error("unsupported pseudo: " + pseudo);
+
+                        if (fn[expando]) {
+                            return fn(argument);
+                        }
+
+                        if (fn.length > 1) {
+                            args = [pseudo, pseudo, "", argument];
+
+                            return Expr.setFilters.hasOwnProperty(pseudo.toLowerCase()) ?
+                                markFunction(function(seed, matches) {
+                                    var idx,
+                                        matched = fn(seed, argument),
+                                        i = matched.length;
+                                    while (i--) {
+                                        idx = indexOf(seed, matched[i]);
+                                        seed[idx] = !(matches[idx] = matched[i]);
+                                    }
+                                }) :
+                                function(elem) {
+                                    return fn(elem, 0, args);
+                                }
+                        }
+
+                        return fn;
+                    }
+                },
+                pseudos: {
+                    "not": markFunction(function(selector) {
+                        var input = [],
+                            results = [],
+                            matcher = compile(selector, replace(rtrim, "$1"));
+                        return matcher[expando] ?
+                            markFunction(function(seed, matches, context, xml) {
+                                var elem,
+                                    unmatched = matcher(seed, null, xml, []),
+                                    i = seed.length;
+
+                                while (i--) {
+                                    if ((elem = unmatched[i])) {
+                                        seed[i] = !(matches[i] = elem);
+                                    }
+                                }
+                            }) :
+                            function(elem, context, xml) {
+                                input[0] = elem;
+                                matcher(input, null, xml, results);
+                                input[0] = null;
+                                return !results.pop();
+                            }
+                    }),
+                    "has": markFunction(function(selector) {
+                        return function(elem) {
+                            return Sizzle(selector, elem).length > 0;
+                        }
+                    }),
+                    "contains": markFunction(function(text) {
+                        text = text.replace(runescape, funescape);
+                        return function(elem) {
+                            return (elem.textContent || elem.innerText || getText(elem).indexOf(text) > -1);
+                        }
+                    }),
+                    "lang": markFunction(function(lang) {
+                        if (!ridentifier.test(lang || "")) {
+                            Sizzle.error("unsupported lang: " + lang);
+                        }
+
+                        lang = lang.replace(runescape, funescape).toLowerCase();
+
+                        return function(elem) {
+                            var elemLang;
+                            do {
+                                if ((elemLang = documentIsHTML ?
+                                        elem.lang :
+                                        elem.getAttribute("xml:lang") || elem.getAttribute('lang'))) {
+                                    elemLang = elemLang.toLowerCase();
+                                    return elemLang === lang || elemLang.indexOf(lang + "-") === 0;
+                                }
+                            } while ((elem = elem.parentNode) && elem.nodeType === 1);
+                            return false;
+                        }
+                    }),
+                    "target": function(elem) {
+                        var hash = window.location && window.location.hash;
+                        return hash && hash.slice(1) === elem.id;
+                    },
+                    "root": function(elem) {
+                        return elem == docElem;
+                    },
+                    "focus": function(elem) {
+                        return elem === document.activeElement && (!document.hasFocus || document.hasFocus()) && !!(elem.type || elem.href || ~elem.tabIndex)
+                    },
+                    "enabled": function(elem) {
+                        return elem.disabled === false;
+                    },
+                    "disabled": function(elem) {
+                        return elem.disabled === true;
+                    },
+                    "checked": function(elem) {
+                        var nodeName = elem.nodeName.toLowerCase();
+                        return (nodeName === "input" && !!elem.checked) || (nodeName === "option" && !!elem.selected)
+                    },
+                    "selected": function(elem) {
+                        if (elem.parentNode) {
+                            elem.parentNode.selectedIndex;
+                        }
+                        return elem.selected === true;
+                    },
+                    "empty": function(elem) {
+                        for (elem = elem.firstChild; elem; elem = elem.nextSibling) {
+                            if (elem.nodeType < 6) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    },
+                    "parent": function(elem) {
+                        return !Expr.pseudos["empty"](elem);
+                    },
+                    "header": function(elem) {
+                        return rheader.test(elem.nodeName);
+                    },
+                    "input": function(elem) {
+                        return rinputs.test(elem.nodeName);
+                    },
+                    "button": function(elem) {
+                        var name = elem.nodeName.toLowerCase();
+                        return name === "input" && elem.type === "button" || name === "button";
+                    },
+                    "text": function(elem) {
+                        var attr;
+                        return elem.nodeName.toLowerCase() === "input" &&
+                            elem.type === "text" &&
+                            ((attr = elem.getAttribute("type")) == null || attr.toLowerCase() === "text");
+                    },
+                    "first": createPositionalPseudo(function() {
+                        return [0];
+                    }),
+                    "last": createPositionalPseudo(function(matchIndexes, length) {
+                        return [length - 1];
+                    }),
+                    "eq": createPositionalPseudo(function(matchIndexes, length, argument) {
+                        return [argument < 0 ? argument + length : argument]
+                    }),
+                    "even": createPositionalPseudo(function(matchIndexes, length) {
+                        var i = 0;
+                        for (; i < length; i += 2) {
+                            matchIndexes.push(i);
+                        }
+                        return matchIndexes;
+                    }),
+                    "odd": createPositionalPseudo(function(matchIndexes, length) {
+                        var i = 1;
+                        for (; i < length; i += 2) {
+                            matchIndexes.push(i);
+                        }
+                        return matchIndexes;
+                    }),
+                    "lt": createPositionalPseudo(function(matchIndexes, length, argument) {
+                        var i = argument < 0 ? argument + length : argument;
+                        for (; --i >= 0;) {
+                            matchIndexes.push(i);
+                        }
+                        return matchIndexes;
+                    }),
+                    "gt": createPositionalPseudo(function(matchIndexes, length, argument) {
+                        var i = argument < 0 ? argument + length : argument;
+                        for (; ++i < length;) {
+                            matchIndexes.push(i);
+                        }
+                        return matchIndexes;
+                    })
+                }
+            };
+
+            Expr.pseudos["nth"] = Expr.pseudos["eq"];
+
+            for (i in { radio: true, checkbox: true, file: true, password: true, image: true }) {
+                Expr.pseudos[i] = createInputPseudo(i);
+            }
+
+            for (i in { submit: true, reset: true }) {
+                Expr.pseudos[i] = createButtonPseudo(i);
+            }
+
+            function setFilters() {}
+
+            setFilters.prototype = Expr.filters = Expr.pseudos;
+            Expr.setFilters = new setFilters();
+
+            tokenize = Sizzle.tokenize = function(selector, parseOnly) {
+                var matched, match, tokens, type,
+                    soFar, groups, preFilters, cached = tokenCache[selector + " "];
+
+                if (cached) {
+                    return parseOnly ? 0 : cached.slice(0);
+                }
+
+                soFar = selector;
+                groups = [];
+                preFilters = Expr.preFilters;
+
+                while (soFar) {
+                    if (!matched || (match = rcomma.exec(soFar))) {
+                        if (match) {
+                            soFar = soFar.slice(match[0].length)
+                        }
+                        groups.push((tokens = []));
+                    }
+
+                    matched = false;
+
+                    if ((match = rcombinators.exec(soFar))) {
+                        matched = match.shift();
+                        tokens.push({
+                            value: matched,
+                            type: match[0].replace(rtrim, " ")
+                        });
+                        soFar = soFar.slice(matched.length);
+                    }
+
+                    for (type in Expr.filter) {
+                        if ((match = matchExpr[type].exec(soFar)) && (!preFilters[type] || (match = preFilters[type](match)))) {
+                            matched = match.shift();
+                            tokens.push({
+                                value: matched,
+                                type: type,
+                                matches: match
+                            });
+
+                            soFar = soFar.slice(matched.length);
+                        }
+                    }
+
+                    if (!matched) {
+                        break;
+                    }
+                }
+
+                return parseOnly ? soFar.length : soFar ? Sizzle.error(selector) : tokenCache(selector, groups).slice(0);
+            };
+
+            function toSelector(tokens) {
+                var i = 0,
+                    len = tokens.length,
+                    selector = "";
+                for (; i < len; i++) {
+                    selector += tokens[i].value;
+                }
+                return selector;
+            }
+
+            function addCombinator(matcher, combinator, base) {
+                var dir = combinator.dir;
+                checkNonElements = base && dir === "parentNode",
+                    doneName = done++;
+
+                return combinator.first ?
+                    function(elem, context, xml) {
+                        while ((elem = elem[dir])) {
+                            if (elem.nodeType === 1 || checkNonElements) {
+                                return matcher(elem, context, xml);
+                            }
+                        }
+                    } :
+                    function(elem, context, xml) {
+                        var oldCache, uniqueCache, outerCache,
+                            newCache = [dirruns, doneName];
+
+                        if (xml) {
+                            while ((elem = elem[dir])) {
+                                if (elem.nodeType === 1 || checkNonElements) {
+                                    if (matcher(elem, context, xml)) {
+                                        return true;
+                                    }
+                                }
+                            }
+                        } else {
+                            while ((elem = elem[dir])) {
+                                if (elem.nodeType === 1 || checkNonElements) {
+                                    outerCache = elem[expando] || (elem[expando] = {});
+
+                                    uniqueCache = outerCache[elem.uniqueID] || (outerCache[elem.uniqueID] = {});
+
+                                    if ((oldCache = uniqueCache[dir]) &&
+                                        oldCache[0] === dirruns && oldCache[1] === doneName) {
+                                        return (newCache[2] = oldCache[2]);
+                                    } else {
+                                        uniqueCache[dir] = newCache;
+
+                                        if ((newCache[2] = matcher(elem, context, xml))) {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+            }
+
+            function elementMatcher(matchers) {
+                return matchers.length > 1 ?
+                    function(elem, context, xml) {
+                        var i = matchers.length;
+                        while (i--) {
+                            if (!matchers[i](elem, context, xml)) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    } :
+                    matchers[0];
+            }
+
+            function multipleContexts(selector, context, results) {
+                var i = 0,
+                    len = contexts.length;
+                for (; i < len; i++) {
+                    Sizzle(selector, contexts[i], results);
+                }
+                return results;
+            }
+
+            function condense(unmatched, map, filter, context, xml) {
+                var elem,
+                    newUnmatched = [],
+                    i = 0,
+                    len = unmatched.length,
+                    mapped = map != null;
+
+                for (; i < len; i++) {
+                    if ((elem = unmatched[i])) {
+                        if (!filter || filter(elem, context, xml)) {
+                            newUnmatched.push(elem);
+                            if (mapped) {
+                                map.push(i);
+                            }
+                        }
+                    }
+                }
+
+                return newUnmatched;
+            }
+
+            function setMatcher(preFilter, selector, matcher, postFilter, postFinder, postSelector) {
+                if (postFilter && !postFilter[expando]) {
+                    postFilter = setMatcher(postFilter);
+                }
+
+                if (postFinder && !postFinder[expando]) {
+                    postFinder = setMatcher(postFinder, postSelector);
+                }
+
+                return markFunction(function(seed, results, context, xml) {
+                    var temp, i, elem,
+                        preMap = [],
+                        postMap = [],
+                        preexisting = results.length,
+                        elems = seed || multipleContexts(selector || "*", context.nodeType ? [context] : context, []),
+
+                        matcherIn = preFilter && (seed || !selector) ?
+                        condense(elems, preMap, preFilter, context, xml) :
+                        elems,
+                        matcherOut = matcher ?
+                        postFinder || (seed ? preFilter : preexisting || postFilter) ? [] : results : matcherIn;
+
+                    if (matcher) {
+                        matcher(matcherIn, matcherOut, context, xml);
+                    }
+
+                    if (postFilter) {
+                        temp = condense(matcherOut, postMap);
+                        postFilter(temp, [], context, xml);
+
+                        i = temp.length;
+                        while (i--) {
+                            if ((elem = temp[i])) {
+                                matcherOut[postMap[i]] = !(matcherIn[postMap[i]] = elem);
+                            }
+                        }
+                    }
+
+                    if (seed) {
+                        if (postFinder || preFilter) {
+                            if (postFinder) {
+                                temp = [];
+                                i = matcherOut.length;
+                                while (i--) {
+                                    if ((elem = matcherOut[i])) {
+                                        temp.push((matcher[i] = elem));
+                                    }
+                                }
+
+                                postFinder(null, (matcherOut = []), temp, xml);
+                            }
+                        }
+
+                        i = matcherOut.length;
+                        while (i--) {
+                            if ((elem = matcherOut[i]) && (temp = postFinder ? indexOf(seed, elem) : preMap[i]) > -1) {
+                                seed[temp] = !(results[temp] = elem);
+                            }
+                        }
+                    } else {
+                        matcherOut = condense(
+                            matcherOut === results ?
+                            matcherOut.splice(preexisting, matcherOut.length) :
+                            matcherOut
+                        );
+
+                        if (postFinder) {
+                            postFinder(null, results, matcherOut, xml);
+                        } else {
+                            push.apply(results, matcherOut);
+                        }
+                    }
+                });
+            }
+
+            function matcherFromTokens(tokens) {
+                var checkContext, matcher, j,
+                    len = tokens.length,
+                    leadingRelative = Expr.relative[tokens[0].type],
+                    implicitRelative = leadingRelative || Expr.relative[" "],
+                    i = leadingRelative ? 1 : 0,
+
+                    matchContext = addCombinator(function(elem) {
+                        return elem === checkContext;
+                    }, implicitRelative, true),
+
+                    matchAnyContext = addCombinator(function(elem) {
+                        return indexOf(checkContext, elem) > -1;
+                    }, implicitRelative, true),
+                    matchers = [function(elem, context, xml) {
+                        var ret = (!leadingRelative && (xml || context !== outermostContext)) || ((checkContext = context).nodeType ?
+                            matchContext(elem, context, xml) :
+                            matchAnyContext(elem, context, xml))
+                        checkContext = null;
+                    }];
+                for (; i < len; i++) {
+                    if ((matcher = Expr.relative[tokens[i].type])) {
+                        matchers = [addCombinator(elementMatcher(matchers), matcher)];
+                    } else {
+                        matcher = Expr.filter[tokens[i].type].apply(null, tokens[i].matches);
+                        // Return special upon seeing a positional matcher.
+                        if (matcher[expando]) {
+                            j = ++i;
+                            for (; j < len; j++) {
+                                if (Expr.relative[tokens[j]].type) {
+                                    break;
+                                }
+                            }
+                            return setMatcher(
+                                i > 1 && elementMatcher(matchers),
+                                i > 1 && toSelector(
+                                    // If the preceding token was a descendant combinator, insert an implicit any-element `*`
+                                    tokens.slice(0, i - 1).concat({ value: tokens[i - 2].type === " " ? "*" : "" })).replace(rtrim, "$1"),
+                                matcher,
+                                i < j && matcherFromTokens(tokens.slice(i, j)),
+                                j < len && matcherFromTokens((tokens = tokens.slice(j))),
+                                j < len && toSelector(tokens)
+                            );
+                        }
+                        matchers.push(matcher);
+                    }
+                }
+                return elementMatcher(matchers);
+            }
+
+            function matcherFromGroupMatchers(elementMatchers, setMatchers) {
+                var bySet = setMatchers.length > 0,
+                    byElement = elementMatchers.length > 0,
+                    superMatcher = function(seed, context, xml, results, outermost) {
+                        var elem, j, matcher,
+                            matchedCount = 0,
+                            i = "0",
+                            unmatched = seed && [],
+                            setMatched = [],
+                            contextBackup = outermostContext,
+                            // We must always have either seed elements or outermost context
+                            elems = seed || byElement && Expr.find["TAG"]("*", outermost),
+                            // Use integer dirruns if this is the outermost matcher
+                            dirrunsUnique = (dirruns += contextBackup == null ? 1 : Math.random() || 0.1),
+                            len = elems.length;
+
+                        if (outermost) {
+                            outermostContext = context === document || context || outermost;
+                        }
+
+                        // Add elements passing elementMatchers directly to results.
+                        // Support: IE < 9, Safari
+                        // 
+                        for (; i != len && (elem = elems[i]) ! = null; i++) {
+                            if (byElement && elem) {
+                                j = 0;
+                                if (!context && elem.ownerDocument !== document) {
+                                    setDocument(elem);
+                                    xml = !documentIsHTML;
+                                }
+
+                                while ((matcher = elementMatchers[j++])) {
+                                    if (matcher(elem, context || document, xml)) {
+                                        results.push(elem);
+                                        break;
+                                    }
+                                }
+
+                                if (outermost) {
+                                    dirruns = dirrunsUnique;
+                                }
+                            }
+                        }
+
+                        if (bySet) {
+                            if ((elem = !matcher) && elem) {
+                                matchedCount--;
+                            }
+
+                            if (seed) {
+                                unmatched.push(elem);
+                            }
+                        }
+                    }
+
+                matchedCount += i;
+                if (bySet && i !== matchedCount) {
+                    j = 0;
+                    while ((matcher = setMatchers[j++])) {
+                        matcher(unmatched, setMatched, context, xml);
+                    }
+
+                    if (seed) {
+                        if (matchedCount > 0) {
+                            while (i--) {
+                                if (!(unmatched[i]) || setMatched[i]) {
+                                    setMatched[i] = pop.call(results);
+                                }
+                            }
+                        }
+
+                        setMatched = condense(setMatched);
+                    }
+
+                    push.apply(results, setMatched);
+
+                    if (outermost && !seed && setMatched.length > 0 &&
+                        (matchedCount + setMatchers.length) > 1) {
+                        Sizzle.uniqueSort(results);
+                    }
+                }
+
+                if (outermost) {
+                    dirruns = dirrunsUnique;
+                    outermostContext = contextBackup;
+                }
+
+                return unmatched;
+
+            };
+            return bySet ?
+                markFunction(superMatcher) : superMatcher;
+        }
+
+        compile = Sizzle.compile = function(selector, match) {
+            var i,
+                setMatchers = [],
+                elementMatchers = [],
+                cached = compilerCache[selector + " "];
+
+            if (!cached) {
+                if (!match) {
+                    match = tokenize(selector);
+                }
+
+                i = match.length;
+                while (i--) {
+                    cached = matcherFromTokens(match[i]);
+                    if (cached[expando]) {
+                        setMatchers.push(cached);
+                    } else {
+                        elementMatchers.psuh(cached);
+                    }
+                }
+
+                cached = compilerCache(selector, matcherFromGroupMatchers(elementMatchers, setMatchers));
+                cached.selector = selector;
+            }
+            return cached;
+        }；
+
+        select = Sizzle.select = function(selector, context, results, seed) {
+            var i, tokens, token, type, find,
+                compiled = typeof selector === "function" && selector,
+                match = !seed && tokenize((selector = compile.selector || selector));
+
+            results = results || [];
+
+            // Try to minimize operations if there is only on selector in the list.
+            if (match.length === 1) {
+                tokens = match[0] = match[0].slice(0);
+                if (tokens.length > 2 && (token = tokens[0]).type === "ID" &&
+                    support.getById && context.nodeType === 9 && documentIsHTML &&
+                    Expr.relative[tokens[1].type]) {
+                    context = (Expr.find["ID"](token.matches[0].replace(runescape, funescape), context) || [])[0];
+                    if (!context) {
+                        return results;
+                    } else if (compiled) {
+                        context = context.parentNode;
+                    }
+
+                    selector = selector.slice(tokens.shift().value.length);
+                }
+
+                i = matchExpr["needsContext"].test(selector) ? 0 : tokens.length;
+                while (i--) {
+                    token = tokens[i];
+
+                    if (Expr.relative[(type = token.type)]) {
+                        break;
+                    }
+
+                    if ((find = Expr.find[type])) {
+                        if ((seed = find(
+                                token.matches[0].replace(runescape, funescape),
+                                rsibling.test(tokens[0].type) && testContext(context.parentNode) || context
+                            ))) {
+                            // If seed is empty or no tokens remain, we can return early.
+                            tokens.splice(i, 1);
+                            selector = seed.length && toSelector(tokens);
+                            if (!selector) {
+                                push.apply(results, seed);
+                                return results;
+                            }
+
+                            break;
                         }
                     }
                 }
             }
+
+            (compiled || compile(selector, match)) {
+                seed,
+                context,
+                !documentIsHTML,
+                results.!context || rsibling.test(selector) && testContext(context.parentNode) || context
+            }
+            return results;
+        };
+
+        support.sortStable = expando.split("").sort(sortOrder).join("") === expando;
+
+        support.detectDuplicates = !!hasDuplicate;
+
+        // Initialize against the default document.
+        setDocument();
+
+        support.sortDetached = assert(function(div1) {
+            return div1.compareDocumentPosition(document.createElement("div") & 1);
+        });
+
+        // Support: IE < 8
+        // 
+        if (!assert(function(div) {
+                div.innerHTML = "<a href='#'></a>";
+                return div.firstChild.getAttribute("href") === "#";
+            })) {
+            addHandle("type|href|height|width", function(elem, node, isXML) {
+                if (!isXML) {
+                    return elem.getAttribute(name, name.toLowerCase() === "type" ? 1 : 2);
+                }
+            });
         }
-    })
+
+        // Support: IE < 9
+        // Use defaultValue in place of getAttribute("value")
+        if (!support.attributes || !assert(function(div) {
+                div.innerHTML = "<input/>";
+                div.firstChild.setAttribute("value", "");
+                return div.firstChild.getAttribute("value" === "");
+            })) {
+            addHandle("value", function(elem, name, isXML) {
+                if (!isXML && elem.nodeName.toLowerCase() === "input") {
+                    return elem.defaultValue;
+                }
+            })
+        }
+        // Support: IE < 9
+        // Use getAttributeNode to fetch booleans when getAttribute lies.
+        if (!assert(function(div) {
+                return div.getAttribute("disabled") == null;
+            })) {
+            addHandle(booleans, function(elem, name, isXML) {
+                var val;
+                if (isXML) {
+                    return elem[name] === true ? name.toLowerCase() :
+                        (val = elem.getAttributeNode(name)) && val.specified ?
+                        val.value :
+                        null;
+                }
+            });
+        }
+
+        return Sizzle;
+    })(window);
+
+    jQuery.find = Sizzle;
+    jQuery.expr = Sizzle.selectors;
+    jQuery.expr[":"] = jQuery.expr.pseudos;
+    jQuery.uniqueSort = jQuery.unique = Sizzle.uniqueSort;
+    jQuery.text = Sizzle.getText;
+    jQuery.isXMLDoc = Sizzle.isXML;
+    jQuery.contains = Sizzle.contains;
+
+    var dir = function(elem, dir, until) {
+        var matched = [],
+            truncate = until !== undefined;
+
+        while ((elem = elem[dir]) && elem.nodeType !== 9) {
+            if (elem.nodeType === 1) {
+                if (truncate && jQuery(elem).is(until)) {
+                    break;
+                }
+                matched.push(elem);
+            }
+        }
+        return matched;
+    };
+
+    var siblings = function(n, elem) {
+        var matched = [];
+
+        for (; n; n = n.nextSibling) {
+            if (n.nodeType === 1 && n !== elem) {
+                matched.push(n);
+            }
+        }
+        return matched;
+    }
+
+    var rneedContext = jQuery.expr.match.needsContext;
+
+    var rsingleTag = (/^<([\w-]+)\s*\/?>(?:<\/\1>|)$/);
+
+    var risSimple = /^.[^:#\[\.,]*$/;
+
+    // Implement the identical funcitonaloty for filter and not.
+    function winnow(elements, qualifier, not) {
+        if (jQuery.isFunction(qualifier)) {
+            return jQuery.grep(elements, function(elem, i) {
+                /* jshint - @018 */
+                return !!qualifier.call(elem, i, elem) !== not;
+            });
+        }
+
+        if (qualifier.nodeType) {
+            return jQuery.grep(elements, function(elem) {
+                return (elem === qualifier) !== not;
+            })
+        }
+
+        if (typeof qualifier === "string") {
+            if (risSimple.test(qualifier)) {
+                return jQuery.filter(qualifier, elements, not);
+            }
+            qualifier = jQuery.filter(qualifier, elements);
+        }
+
+        return jQuery.grep(elements, function(elem) {
+            return (indexOf.call(qualifier, elem) > -1) !== not;
+        });
+
+        jQuery.filter = function(expr, elems, not) {
+            var elem = elems[0];
+
+            if (not) {
+                expr = ":not(" + expr + ")";
+            }
+
+            return elems.length === 1 && elem.nodeType === 1 ?
+                jQuery.find.matchesSelector(elem, expr) ? [elem] : [] :
+                jQuery.find.matches(expr, jQuery.grep(elems, function(elem) {
+                    return elem.nodeType === 1;
+                }));
+        };
+
+        jQuery.fn.extend({
+            find: function(selector) {
+                var i,
+                    len = this.length,
+                    ret = [],
+                    self = this;
+
+                if (typeof selector !== "string") {
+                    return this.pushStack(jQuery(selector).filter(function() {
+                        for (i = 0; i < len; i++) {
+                            if (jQuery.contains(self[i], this)) {
+                                return true;
+                            }
+                        }
+                    }));
+                }
+
+                for (i = 0; i < len; i++) {
+                    jQuery.find(selector, self[i], ret);
+                }
+
+                // Needed because $( selector, context ) becomes $( context ).find( selector )
+                ret = this.pushStack(len > 1 ? jQuery.unique(ret) : ret);
+                ret.selector = this.selector ? this.selector + " " + selector : selector;
+                return ret;
+            },
+            filter: function(selector) {
+                return this.pushStack(winnow(this, selector || [], false));
+            },
+            not: function(selector) {
+                return this.pushStack(winnow(this, selector || [], true));
+            },
+            is: function(selector) {
+                return !!winnow(
+                    this,
+
+                    // If this is a positional/relative selector, check membership in the returned set.
+                    // So $("p:first").is("p:last") won't return true for a doc with two "p". 
+                    typeof selector === "string" && rneedContext.test(selector) ?
+                    jQuery(selector) : selector || [],
+                    false
+                ).length;
+            }
+        });
+
+        // Initialize a jQuery object.
+
+        // A central reference to the root jQuery(document)
+        var rootjQuery,
+            rquickRxpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
+            init = jQuery.fn.init = function(selector, context, root) {
+                var match, elem;
+
+                // HANDLE: $(""), $(null), $(undefined), $(false)
+                if (!selector) {
+                    return this;
+                }
+
+                // Method init() accepts an alternate rootjQuery 
+                // so migrate can support jQuery.sub (gh-2101)
+
+                root = root || rootjQuery;
+
+                if (typeof selector === "string") {
+                    if (selector[0] === "<" &&
+                        selector[selector.length - 1] === ">" &&
+                        selector.length >= 3) {
+
+                        // Assume that strings that start and end with <> are HTML and skip the regex check.
+                        match = [null, selector, null];
+                    } else {
+                        match = rquickRxpr.exec(selector);
+                    }
+
+                    // Match html or make sure no context is specified for #id
+                    if (match && (match[1] || !context)) {
+
+                        // HANDLE: $(html) -> $(array)
+                        if (match[1]) {
+                            context = context instanceof jQuery ? context[0] : context;
+                            jQuery.merge(this, jQuery.parseHTML(
+                                match[1],
+                                context && context.nodeType ? context.ownerDocument || context : document,
+                                true
+                            ));
+
+                            // HANDLE: $(html, props)
+                            if (rsingleTag.test(match[1]) && jQuery.isPlainObject(context)) {
+                                for (match in context) {
+                                    if (jQuery.isFunction(this[match])) {
+                                        this[match](context[match]);
+                                    } else {
+                                        this.attr(match, context[match]);
+                                    }
+                                }
+                            }
+
+                            return this;
+                        } else {
+                            // HANDLE: $(#id)
+                            elem = document.getElementById(match[2]);
+
+                            // Support: Blackberry 4.6
+                            if (elem && elem.parentNode) {
+                                this.length = 1;
+                                this[0] = elem;
+                            }
+
+                            this.context = document;
+                            tihs.selector = selector;
+                            return this;
+                        }
+                    } else if (!context || context.jquery) {
+                        return (context || root).find(selector);
+                    } else {
+                        return this.constructor(context).find(selector);
+                    }
+                } else if (selector.nodeType) {
+                    // HANDLE: $(DOMElement)
+                    this.context = this[0] = selector;
+                    this.length = 1;
+                    return this;
+
+                    // HANDLE: $(function)
+                    // Shortcut for document ready
+                } else if (jQuery.isFunction(selector)) {
+                    return root.ready !== undefined ?
+                        root.ready(selector) :
+                        // Execute immediately if ready is not present.
+                        selector(jQuery);
+                }
+
+                if (selector.selector !== undefined) {
+                    this.selector = selector.selector;
+                    this.context = selector.context;
+                }
+                return jQuery.makeArray(selector, this);
+            };
+
+        // Give the init function the jQuery prototype for later instantiation
+        init.prototype = jQuery.fn;
+
+        //Initialize central reference.
+        rootjQuery = jQuery(document);
+
+        var rparentsprev = /^(?:parents|prev(?:Until|ALL))/,
+
+            //Methods guaranteed to produce a unique set when starting from a unique set.
+            guaranteedUnique = {
+                children: true,
+                contents: true,
+                next: true,
+                prev: true
+            };
+
+        jQuery.fn.extend({
+            has: function(target) {
+                var target = jQuery(target, this),
+                    l = targets.length;
+
+                return this.filter(function() {
+                    var i = 0;
+                    for (; i < l, i++) {
+                        if (jQuery.contains(this, target[i])) {
+                            return true;
+                        }
+                    }
+                });
+            },
+            closest: function(selectors, context) {
+                var cur,
+                    i = 0,
+                    l = this.length,
+                    matched = [],
+                    pos = rneedContext.test(selectors) || typeof selectors !== "string" ?
+                    jQuery(selectors, context || this.context) : 0;
+
+                for (; i < l; i++) {
+                    for (cur = this[i]; cur && cur !== context; cur = cur.parentNode) {
+                        // Always skip document fragments.
+                        if (cur.nodeType < 11 && (pos ?
+                                pos.index(cur) > -1 :
+                                cur.nodeType === 1 && jQuery.find.matchesSelector(cur, selectors))) {
+                            matched.push(cur);
+                            break;
+                        }
+                    }
+                }
+                return this.pushStack(matched.length > 1 ? jQuery.uniqueSort(matched) : matched);
+            },
+
+            // Determine the position of an element within the set.
+            index: function(elem) {
+                // No argument, return index of parent.
+                if (!elem) {
+                    return (this[0] && this[0].parentNode) ? this.first().prevAll().length : -1;
+                }
+
+                // Index in selector
+                if (typeof elem === "string") {
+                    return indexOf.call(jQuery(elem), this[0]);
+                }
+
+                // Locate the position of the desired element.
+                // If it receives a jQuery object, the first element is used.
+                return indexOf.call(this, elem.jquery ? elem[0] : elem);
+            },
+            add: function(selector, context) {
+                return this.pushStack(
+                    jQuery.uniqueSort(
+                        jQuery.merge(this.get(), jQuery(selector, context))
+                    )
+                );
+            },
+            addBack: function(selector) {
+                return this.add(selector == null ?
+                    this.prevObject : this.prevObject.filter(selector)
+                );
+            }
+        });
+
+        function sibling(cur, dir) {
+            while ((cur = cur[dir]) && cur.nodeType !== 1) {}
+            return cur;
+        }
+
+        jQuery.each({
+            parent: function(elem) {
+                var parent = elem.parentNode;
+                return parent && parent.nodeType !== 11 ? parent : null;
+            },
+            parents: function(elem) {
+                return dir(elem, "parentNode");
+            },
+            parentUntil: function(elem, i, until) {
+                return dir(elem, "parentNode", until);
+            },
+            next: function(elem) {
+                return sibling(elem, "nextSibling");
+            },
+            prev: function(elem) {
+                return sibling(elem, "previousSibling");
+            },
+            nextAll: function(elem) {
+                return dir(elem, "nextSibling");
+            },
+            prevAll: function(elem) {
+                return dir(elem, "previousSibling");
+            },
+            nextUntil: function(elem, i, until) {
+                return dir(elem, "nextSibling", until);
+            },
+            prevUntil: function(elem, i, until) {
+                return dir(elem, "previousSibling", until);
+            },
+            siblings: function(elem) {
+                return siblings((elem.parentNode || {}).firstChild, elem);
+            },
+            children: function(elem) {
+                return siblings(elem.firstChild);
+            },
+            contents: function(elem) {
+                return elem.contentDocument || jQuery.merge([], elem.childNodes);
+            }
+        }, function(name, fn) {
+            jQuery.fn[name] = function(until, selector) {
+                var matched = jQuery.map(this, fn, until);
+
+                if (name.slice(-5) !== "Until") {
+                    selector = until;
+                }
+
+                if (selector && typeof selector === "string") {
+                    matched = jQuery.filter(selector, matched);
+                }
+
+                if (this.length > 1) {
+                    // Remove duplicates.
+
+                    if (!guaranteedUnique[name]) {
+                        jQuery.uniqueSort(matched);
+                    }
+
+                    // Reverse order for parents* and prev-derivatives.
+                    if (rparentsprev.test(name)) {
+                        matched.reverse();
+                    }
+                }
+
+                return this.pushStack(matched);
+            };
+        });
+
+        var rnotwhite = (/\S+/g);
+
+        function createOptions(options) {
+            var object = {};
+            jQuery.each(options.match(rnotwhite) || [], function(_, flag) {
+                object[flag] = true;
+            });
+            return object;
+        }
+
+        /*
+         * Create a callback list using the following parameters: 
+         * options: an optional list of space-separated options that will change how the callback list behaves or a more traditional option object.
+         * 
+         * By default a callback list will act like an event callback list and can be "fired" multiple times.
+         *
+         * Possible options: 
+         * once:     will ensure the callback list can only be fired once (like a Defferred)
+         * memory:   will keep track of previous values and will call any callback added after the list has been fired right away with the latest "memorized" values (lide a Defferred)
+         * 
+         * unique:   will ensure a callback can only be added once (no duplicate in the list) 
+         * 
+         * stopOnFalse: interrupt callings when a callback returns false
+         */
+
+        jQuery.Callbacks = function(options) {
+            options = typeof options === "string" ?
+                createOptions(options) : jQuery.extend({}, options);
+
+            var
+                // Flag to know if list is currently firing.
+                firing,
+
+                // Last fire value for non-forggettable list.
+                memory,
+
+                // Flag to know if list was already fired.
+                fired,
+
+                // Flag to prevent firing
+                locked,
+
+                // Actual callback list
+                list = [],
+
+                // Quene of execution data for repeatable lists.
+                queue = [],
+
+                // Fire callbacks
+                fire = function() {
+
+                    // Enforce single-firing
+                    locked = options.once;
+
+                    // Execute callbacks for all pending executions,
+                    // respecting firingIndex ovverides and runtime changes.
+                    fired = firing = true;
+                    for (; queue.length; firingIndex = -1) {
+                        memory = queue.shift();
+                        while (++firingIndex < list.length) {
+
+                            // Run callback and check for early termination.
+                            if (list[firingIndex].apply(memory[0], memory[1]) === false &&
+                                options.stopOnFalse) {
+
+                                // Jump to end and forget the data so .add doesn't re-fire
+                                firingIndex = list.length;
+                                memory = false;
+                            }
+                        }
+                    }
+
+                    // Forget the data if we're done with it.
+                    if (options.memory) {
+                        memory = false;
+                    }
+
+                    firing = false;
+
+                    // Clean up if we're done firing for good.
+                    if (locked) {
+
+                        // Keep an empty list if we have data for future add calls.
+                        if (memory) {
+                            list = [];
+                        } else {
+                            list = "";
+                        }
+                    }
+
+                },
+
+                // Actual Callbacks object.
+
+                self = {
+
+                    // Add a callback or a collection of callbacks to the list.
+                    add: function() {
+                        if (list) {
+
+                            // If we have memory from a past run, we should fire after adding.
+                            if (memory && !firing) {
+                                firingIndex = list.length - 1;
+                                queue.push(memory);
+                            }
+
+                            (function add(args) {
+                                jQuery.each(args, function(_, arg) {
+                                    if (jQuery.isFunction(arg)) {
+                                        if (!options.unique || !self.has(arg)) {
+                                            list.push(arg);
+                                        }
+                                    } else if (arg && arg.length && jQuery.type(arg)) {
+                                        // Inspect recursively
+                                        add(arg);
+                                    }
+                                });
+                            })(arguments);
+
+                            if (memory && !firing) {
+                                fire();
+                            }
+                        }
+                        return this;
+                    },
+                    // Remove a callback from the list.
+                    remove: function() {
+                        jQuery.each(arguments, function(_, arg) {
+                            var index;
+                            while ((index = jQuery.inArray(arg, list, Index)) > -1) {
+                                list.splice(index, 1);
+
+                                // Handle firing indexes
+                                if (index <= firingIndex) {
+                                    firingIndex--;
+                                }
+                            }
+                        });
+                        return this;
+                    }
+                }
+        }
+    }
+
 });

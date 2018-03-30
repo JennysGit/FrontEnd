@@ -2,7 +2,7 @@
 $.get(0); //ajax获取url。
 $('.classname').get(0); // 获取class="classname"的第一个dom对象。
 $('.classname').eq(0); // 获取class="classname"的第一个jQuery对象
-$('.classname')[0]; //获取class="classname"的dom对象
+$('.classname')[0]; //获取class="classname"的dom对象,与$('.classname').get(0)效果相同
 
 2.简述JavaScript继承机制
 JS的继承通过原型链实现。基本思想是利用原型（prototype）让一个引用类型继承另一个引用类型的属性和方法。
@@ -23,11 +23,12 @@ cors：
 	cross origin resource sharing, 即跨域资源共享。使用自定义的HTTP头部让浏览器与服务器进行沟通。
 
 4.简述冒泡机制和代理委托
-冒泡机制：
+冒泡机制：事件冒泡，从里到外..
 代理委托：
 
 5.JS闭包
 经典的点击按钮案例作答，然后问JavaScript闭包的问题。
+
 
 6.使用Ajax同时发送三个请求1.html，2.html，3.html。待三个请求同时结束并返回后，执行某个函数ab。
 
@@ -38,6 +39,7 @@ cors：
 
 9.JS算法，递归实现查找DOM子节点的最后一个子节点。
 
+
 10.前端优化
 
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
@@ -46,6 +48,7 @@ cors：
 如何避免表单重复提交
 
 使用Math.Random 返回一个a到b之间的数。
+
 
 JavaScript如何实现继承（Student继承Person为例）。
 

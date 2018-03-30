@@ -5,8 +5,10 @@ function* helloWorldGenerator(){
 	yield 'hello';
 	yield 'world';
 	return 'ending';
+	//  函数有3种状态： hello,  world, return 
 }
 var hw = helloWorldGenerator();
+
 console.log(hw.next()); //{value: 'hello', done: fase}
 
 
